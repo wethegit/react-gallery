@@ -1,0 +1,59 @@
+.gallery {
+  --position-offset: 0px;
+  --touch-offset: 0;
+  --item-width: min(75%, 1000px);
+  --gap: 25vw;
+  --active-gap: 0px;
+  --active: 0;
+  --duration: 0;
+
+  position: relative;
+  width: 100%;
+
+  :global(.gallery__item--draggable) {
+    img {
+      pointer-events: none;
+    }
+  }
+}
+
+.main {
+  display: grid;
+  grid-template-areas: "item";
+  position: relative;
+}
+
+.item {
+  /* stylelint-disable */
+  --x: calc(
+    (var(--touch-offset, 0) * 1px) + var(--position-offset) +
+      (var(--active-gap) * var(--side)) + (var(--item-width) + var(--gap)) *
+      (var(--i) - var(--selected))
+  );
+  --delay: calc(0s * var(--center-offset, 0));
+  /* stylelint-enable */
+
+  grid-area: item;
+  margin: 0 auto;
+  transform: translateX(var(--x));
+  transition: transform 0.5s;
+  width: var(--item-width);
+  z-index: calc(var(--total) - var(--center-offset));
+}
+
+.itemDragging {
+  transition: none !important;
+}
+
+.pagination {
+  --gap: 10px;
+
+  display: grid;
+  gap: var(--gap);
+  grid-auto-flow: column;
+  justify-content: center;
+}
+
+.paginationItem {
+  line-height: 1;
+}
