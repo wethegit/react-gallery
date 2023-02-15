@@ -28,12 +28,10 @@ export const GalleryNav = ({
     (direction && activeIndex === galleryItems.length - 1) ||
     (!direction && activeIndex === 0)
 
-  const disabledProps = loop
-    ? {}
-    : {
-        disabled: shouldDisable ? true : null,
-        "aria-disabled": shouldDisable ? "true" : null,
-      }
+  const disabledProps = {
+    disabled: shouldDisable ? true : null,
+    "aria-disabled": shouldDisable ? "true" : null,
+  }
 
   if (!children && !renderNavItem) return null
 
@@ -45,10 +43,12 @@ export const GalleryNav = ({
         `gallery__nav--${direction ? "next" : "previous"}`,
       ])}
       onClick={handleClick}
-      {...disabledProps}
+      {...(!loop && disabledProps)}
       {...props}
     >
-      {children ? children : renderNavItem({ activeIndex, disabled: shouldDisable })}
+      {children
+        ? children
+        : renderNavItem({ activeIndex, disabled: !loop && shouldDisable })}
     </button>
   )
 }
