@@ -4,9 +4,6 @@ import { useGallery } from "../hooks/use-gallery"
 // utils
 import classnames from "../lib/classnames"
 
-// styles
-import * as styles from "./gallery.module.scss"
-
 export const GalleryItem = ({ index, active, className, children, ...props }) => {
   const {
     itemNodes,
@@ -28,12 +25,9 @@ export const GalleryItem = ({ index, active, className, children, ...props }) =>
       {...a11yProps}
       {...props}
       className={classnames([
-        // Any classes you think need to be easy for a user to override,
-        // should be strings (rather than css modules).
-        styles.item,
-        draggable && touchState.offsetting && styles.itemDragging,
         "gallery__item",
         draggable && "gallery__item--draggable",
+        draggable && touchState.offsetting && "gallery__item--dragging",
         active && "gallery__item--active",
         index === previouslyActiveIndex && "gallery__item--was-active",
         index < activeIndex && "gallery__item--left",

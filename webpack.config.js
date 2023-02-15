@@ -1,9 +1,6 @@
 const path = require("path")
 const webpack = require("webpack")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const { name } = require("./package.json")
-
-const WTC_PACKAGE_NAME = name.substring(1)
 
 module.exports = {
   entry: path.resolve(__dirname, "./src/index.js"),
@@ -11,31 +8,7 @@ module.exports = {
     rules: [
       {
         test: /\.s?css$/,
-        oneOf: [
-          {
-            test: /\.module\.s?css$/,
-            use: [
-              MiniCssExtractPlugin.loader,
-              {
-                loader: "css-loader",
-                options: {
-                  modules: {
-                    mode: "pure",
-                    auto: true,
-                    exportGlobals: true,
-                    localIdentName: `${WTC_PACKAGE_NAME}__[local]--[hash:base64:7]`,
-                    localIdentContext: path.resolve(__dirname, "src"),
-                    localIdentHashSalt: WTC_PACKAGE_NAME,
-                  },
-                },
-              },
-              "sass-loader",
-            ],
-          },
-          {
-            use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
-          },
-        ],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
       {
         test: /\.(js|jsx)$/,

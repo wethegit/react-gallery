@@ -6,7 +6,7 @@ import { createContext, useRef, useState } from "react"
 import classnames from "../lib/classnames"
 
 // styles
-import * as styles from "./gallery.module.scss"
+import "./gallery.scss"
 
 export const GalleryContext = createContext()
 
@@ -103,7 +103,7 @@ export const Gallery = ({
   return (
     <GalleryContext.Provider value={value}>
       <div
-        className={classnames([styles.gallery, "gallery", className])}
+        className={classnames(["gallery", className])}
         style={{ "--touch-offset": touchState.xOffset }}
       >
         {children}

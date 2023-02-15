@@ -7,9 +7,6 @@ import { useGallery } from "../hooks/use-gallery"
 // utils
 import classnames from "../lib/classnames"
 
-// styles
-import * as styles from "./gallery.module.scss"
-
 export const GalleryPaginationItem = ({
   index,
   active,
@@ -25,14 +22,7 @@ export const GalleryPaginationItem = ({
   }
 
   return (
-    <li
-      className={classnames([
-        styles.paginationItem,
-        "gallery__pagination-item",
-        className,
-      ])}
-      {...props}
-    >
+    <li className={classnames(["gallery__pagination-item", className])} {...props}>
       <button onClick={() => handleClick(index)} aria-current={active ? "true" : null}>
         {children}
       </button>

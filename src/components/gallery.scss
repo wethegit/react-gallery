@@ -9,21 +9,15 @@
 
   position: relative;
   width: 100%;
-
-  :global(.gallery__item--draggable) {
-    img {
-      pointer-events: none;
-    }
-  }
 }
 
-.main {
+.gallery__main {
   display: grid;
   grid-template-areas: "item";
   position: relative;
 }
 
-.item {
+.gallery__item {
   /* stylelint-disable */
   --x: calc(
     (var(--touch-offset, 0) * 1px) + var(--position-offset) +
@@ -41,11 +35,17 @@
   z-index: calc(var(--total) - var(--center-offset));
 }
 
-.itemDragging {
+.gallery__item--draggable {
+  img {
+    pointer-events: none;
+  }
+}
+
+.gallery__item--dragging {
   transition: none !important;
 }
 
-.pagination {
+.gallery__pagination {
   --gap: 10px;
 
   display: grid;
@@ -54,6 +54,6 @@
   justify-content: center;
 }
 
-.paginationItem {
+.gallery__pagination-item {
   line-height: 1;
 }

@@ -11,9 +11,6 @@ import { GalleryItem } from "./gallery-item"
 // utils
 import classnames from "../lib/classnames"
 
-// styles
-import * as styles from "./gallery.module.scss"
-
 export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
   const {
     activeIndex,
@@ -119,7 +116,7 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
 
   return (
     <ul
-      className={classnames([styles.main, "gallery__main", className])}
+      className={classnames(["gallery__main", className])}
       onPointerDown={draggable && handlePointerDown}
       onPointerMove={draggable && handlePointerMove}
       onPointerUp={draggable && handlePointerUp}
