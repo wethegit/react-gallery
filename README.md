@@ -191,7 +191,7 @@ This render prop wraps its return value in a list item (`<li>`), and receives a 
 
 ### &lt;GalleryNav&gt;
 
-The navigational "next" and "previous" buttons. Must be used within a `<Gallery>`. You can render your buttons either by passing regular JSX children them, or by using the `renderNavItem` render prop.
+The navigational "next" and "previous" buttons. Must be used within a `<Gallery>`. You can render your buttons either by passing regular JSX children to them, or by using the `renderNavItem` render prop.
 
 #### Props:
 
