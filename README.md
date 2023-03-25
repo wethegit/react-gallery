@@ -45,7 +45,7 @@ import {
 
 ### Import the base stylesheet
 
-This is an optional step, but it's highly recommended to use the base styles as a starting point. The most straightforward way to do this is to import the stylesheet into your app directly from the `/node_modules/@wethegit/react-gallery/dist/` directory.
+This is an optional step, but it's highly recommended to use the base styles as a starting point. The most straightforward way to do this is to import the stylesheet into your app directly from the `/node_modules/@wethegit/react-gallery/dist/` directory, but you can do this in whichever way is preferable within your build system or framework.
 
 ```jsx
 // app.js
@@ -53,13 +53,11 @@ This is an optional step, but it's highly recommended to use the base styles as 
 import "@wethegit/react-gallery/dist/main.css"
 ```
 
-💡 Using a custom Webpack setup, you can configure an `@import` resolver to allow for something like `@import "~@wethegit/react-gallery"` to be written directly in your app or component's stylesheet. Check out Webpack's [css-loader docs](https://webpack.js.org/loaders/css-loader/#import) for more information.
-
 ### Create a simple Gallery
 
 The `<Gallery>` component is a React context provider, which gives all child components access to relevant data. All child components that need access to gallery data must live within a `<Gallery>`. Here's an example of a gallery, given the following contrived data `GALLERY_ITEMS`. This will be explained in detail shortly.
 
-⚠️ Before continuing, make sure you have properly [imported the base stylesheet](#import-the-base-stylesheet) (if you intend to use it).
+⚠️ Before continuing, make sure you have properly [imported the base stylesheet](#import-the-base-stylesheet), if you intend to use it.
 
 <!-- prettier-ignore -->
 ```js
@@ -112,7 +110,7 @@ The first step is to give your data to the `<Gallery>` component via the `items`
 
 We're using the `<GalleryNav>` component to define our "next" and "previous" buttons. These components receive a `direction` prop, which expects either a `1` or a `0`, and corresponds to the direction the gallery should move in when the button in question is clicked (where `0` maps to "previous", and `1` maps to "next"). For a detailed breakdown of this component, see the [GalleryNav](#gallerynav) section.
 
-We're also using the `<GalleryPagination>` component here. If you're not familiar, "pagination" refers to what is often rendered as a set of "dots" below a gallery — but this can be _anything_. This component receives a render prop `renderPaginationItem`, which exposes a few arguments you can use in the JSX you return: `item`, `i`, `activeIndex`, and `active`. For a detailed breakdown of this component, jump ahead to the [GalleryPagination](#gallerypagination) section.
+We're also using the `<GalleryPagination>` component here. If you're not familiar, "pagination" refers to what is often rendered as a set of "dots" below a gallery — but this can be _anything_ (thumbnails, icons, and so on). This component receives the render prop, `renderPaginationItem`, which exposes a few arguments you can use in the JSX you return: `item`, `i`, `activeIndex`, and `active`. For a detailed breakdown of this component, jump ahead to the [GalleryPagination](#gallerypagination) section.
 
 ## Custom layouts
 
@@ -237,9 +235,37 @@ This render prop wraps its return value in a list item (`<li>`) and a `<button>`
 
 The gallery component handles tabbing, focus management, and live-region announcements out-of-the-box. All relevant patterns used in this component follow the guidelines for carousels as documented by the [Web Accessibility Initiative](https://www.w3.org/WAI/).
 
-That said, you must still code responsibly! Ensure that your gallery contents, nav buttons, and pagination items all have discernible text — whether that be image `alt` text, or [visually-hidden](https://css-tricks.com/inclusively-hidden/) text intended for screen readers.
+That said, you must still code responsibly! Ensure that your gallery contents, nav buttons, and pagination items all have discernible text — whether that be image `alt` text, or [visually-hidden](https://css-tricks.com/inclusively-hidden/) text intended for screen readers (the stylesheet included with the Gallery component inclues a CSS utility class for this: `.gallery-util-visually-hidden`).
 
 Regarding the ARIA-live text, check out the section on this gallery's [`ariaLiveText`](#arialivetext) prop.
+
+### Reduced motion
+
+For reduced motion implementations, you can detect the user's preference via the `matchMedia` API, and adjust the CSS custom property, `--duration` on the `.gallery` selector. Check out the example below, which adds a style tag to the gallery, and overrides the `--duration` property based on the preference. You could also do this via a conditional className, if you prefer. An alternative is be to pass this `prefersReducedMotion` value as a prop, which could be helpful if you use the Styled Components library.
+
+```jsx
+const YourGallery = () => {
+  // Get the user's motion preference:
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches
+
+  // Create an inline style object
+  const style = {
+    "--duration": prefersReducedMotion ? "0s" : "0.5s",
+  }
+
+  return (
+    // Pass the style overrides to the <Gallery> component
+    <Gallery items={GALLERY_ITEMS} style={style}>
+      <GalleryMain
+        renderGalleryItem={({ item }) => <img src={item.image} alt={item.alt} />}
+      />
+      // ...etc
+    </Gallery>
+  )
+}
+```
 
 ## useGallery hook
 

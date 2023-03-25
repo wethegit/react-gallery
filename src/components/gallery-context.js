@@ -109,7 +109,7 @@ export const Gallery = ({
         {children}
 
         {ariaLiveText && (
-          <p aria-live="polite" className="visually-hidden">
+          <p aria-live="polite" className="gallery-util-visually-hidden">
             {ariaLiveText.replace("$i", activeIndex + 1).replace("$t", items.length)}
           </p>
         )}
