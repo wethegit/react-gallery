@@ -1,3 +1,14 @@
+.gallery-util-visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
 .gallery {
   --position-offset: 0px;
   --touch-offset: 0;
@@ -5,7 +16,7 @@
   --gap: 25vw;
   --active-gap: 0px;
   --active: 0;
-  --duration: 0;
+  --duration: 0.5s;
 
   position: relative;
   width: 100%;
@@ -34,7 +45,7 @@
   margin: 0 auto;
   padding: 0;
   transform: translateX(var(--x));
-  transition: transform 0.5s;
+  transition: transform var(--duration);
   width: var(--item-width);
   z-index: calc(var(--total) - var(--center-offset));
 }
