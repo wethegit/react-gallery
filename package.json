@@ -4,8 +4,7 @@
   "description": "A customizable, accessible gallery component for React projects.",
   "main": "dist/main.mjs",
   "scripts": {
-    "build": "webpack --config ./webpack.config.js --mode production",
-    "prepare": "npm run build"
+    "build": "webpack --config ./webpack.config.js --mode production"
   },
   "keywords": [
     "react",
