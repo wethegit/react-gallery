@@ -10,7 +10,7 @@ export default defineConfig({
       // Could also be a dictionary or array of multiple entry points
       // eslint-disable-next-line no-undef
       entry: resolve(__dirname, "src/lib/index.js"),
-      name: "ReactModal",
+      name: "ReactGallery",
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
