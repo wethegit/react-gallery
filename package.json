@@ -1,6 +1,6 @@
 {
   "name": "@wethegit/react-gallery",
-  "version": "0.0.1",
+  "version": "1.0.0-beta.0",
   "description": "A customizable, accessible gallery component for React projects.",
   "files": [
     "dist"
