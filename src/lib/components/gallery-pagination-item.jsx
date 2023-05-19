@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import { useGallery } from "../hooks/use-gallery"
 
 // utils
-import classnames from "../lib/classnames"
+import classnames from "../utils/classnames"
 
 export const GalleryPaginationItem = ({
   index,
@@ -34,4 +34,5 @@ GalleryPaginationItem.propTypes = {
   index: PropTypes.number.isRequired,
   active: PropTypes.bool.isRequired,
   className: PropTypes.string,
+  children: PropTypes.node,
 }

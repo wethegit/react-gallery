@@ -1,12 +1,12 @@
 // packages
 import PropTypes from "prop-types"
-import { createContext, useRef, useState } from "react"
+import { createContext, useCallback, useRef, useState } from "react"
 
 // utils
-import classnames from "../lib/classnames"
+import classnames from "../utils/classnames"
 
 // styles
-import "./gallery.scss"
+import "./gallery.css"
 
 export const GalleryContext = createContext()
 
@@ -40,7 +40,7 @@ export const Gallery = ({
 
   if (!Array.isArray(items)) throw new Error("<Gallery> items prop must be an Array.")
 
-  const next = () => {
+  const next = useCallback(() => {
     setPreviouslyActiveIndex(activeIndex)
 
     setActiveIndex((currentIndex) => {
@@ -54,9 +54,9 @@ export const Gallery = ({
 
       return newIndex
     })
-  }
+  }, [activeIndex, items.length, loop, onChange])
 
-  const previous = () => {
+  const previous = useCallback(() => {
     setPreviouslyActiveIndex(activeIndex)
 
     setActiveIndex((currentIndex) => {
@@ -70,15 +70,18 @@ export const Gallery = ({
 
       return newIndex
     })
-  }
+  }, [activeIndex, items.length, loop, onChange])
 
-  const goToIndex = (index) => {
-    setPreviouslyActiveIndex(activeIndex)
+  const goToIndex = useCallback(
+    (index) => {
+      setPreviouslyActiveIndex(activeIndex)
 
-    setActiveIndex(index)
-    const direction = index - activeIndex > 0 ? 1 : 0
-    if (onChange) onChange({ oldIndex: activeIndex, newIndex: index, direction })
-  }
+      setActiveIndex(index)
+      const direction = index - activeIndex > 0 ? 1 : 0
+      if (onChange) onChange({ oldIndex: activeIndex, newIndex: index, direction })
+    },
+    [activeIndex, onChange]
+  )
 
   const value = {
     galleryItems: items,

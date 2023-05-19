@@ -9,7 +9,7 @@ import { useGallery } from "../hooks/use-gallery"
 import { GalleryItem } from "./gallery-item"
 
 // utils
-import classnames from "../lib/classnames"
+import classnames from "../utils/classnames"
 
 export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
   const {
@@ -23,14 +23,11 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
     swipeThreshold,
   } = useGallery()
 
-  const handlePointerDown = useCallback(
-    (event) => {
-      if (!draggable) return
+  const handlePointerDown = useCallback(() => {
+    if (!draggable) return
 
-      setTouchState((prevState) => ({ ...prevState, isDragging: true }))
-    },
-    [draggable]
-  )
+    setTouchState((prevState) => ({ ...prevState, isDragging: true }))
+  }, [draggable, setTouchState])
 
   const handlePointerMove = useCallback(
     (event) => {
@@ -82,37 +79,49 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
         }
       }
     },
-    [touchState, draggable]
+    [
+      draggable,
+      touchState.scrolling,
+      touchState.isDragging,
+      touchState.start,
+      touchState.offsetting,
+      setTouchState,
+    ]
   )
 
-  const handlePointerUp = useCallback(
-    (event) => {
-      if (!draggable) return
+  const handlePointerUp = useCallback(() => {
+    if (!draggable) return
 
-      if (touchState.isDragging) {
-        /* 
+    if (touchState.isDragging) {
+      /* 
           check if the offset value is more than the swipeThreshold.
           if it is then we'll move to the next or prev item in the gallery, 
           otherwise it'll just spring back to the current position.
         */
-        if (Math.abs(touchState.xOffset) > swipeThreshold) {
-          if (touchState.xOffset < 0) next()
-          else previous()
-        }
-
-        // reset all the touchState values.
-        setTouchState((prevState) => ({
-          ...prevState,
-          isDragging: false,
-          xOffset: 0,
-          start: 0,
-          offsetting: false,
-          scrolling: false,
-        }))
+      if (Math.abs(touchState.xOffset) > swipeThreshold) {
+        if (touchState.xOffset < 0) next()
+        else previous()
       }
-    },
-    [touchState, draggable]
-  )
+
+      // reset all the touchState values.
+      setTouchState((prevState) => ({
+        ...prevState,
+        isDragging: false,
+        xOffset: 0,
+        start: 0,
+        offsetting: false,
+        scrolling: false,
+      }))
+    }
+  }, [
+    draggable,
+    touchState.isDragging,
+    touchState.xOffset,
+    swipeThreshold,
+    setTouchState,
+    next,
+    previous,
+  ])
 
   return (
     <ul

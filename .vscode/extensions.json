@@ -3,5 +3,6 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "formulahendry.auto-rename-tag",
+    "stylelint.vscode-stylelint"
   ]
 }

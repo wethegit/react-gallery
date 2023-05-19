@@ -50,10 +50,8 @@
   z-index: calc(var(--total) - var(--center-offset));
 }
 
-.gallery__item--draggable {
-  img {
-    pointer-events: none;
-  }
+.gallery__item--draggable img {
+  pointer-events: none;
 }
 
 .gallery__item--dragging {
@@ -61,7 +59,7 @@
 }
 
 .gallery__nav {
-  // complete css reset
+  /* complete css reset */
   appearance: none;
   background: none;
   border: none;

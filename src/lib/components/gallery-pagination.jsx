@@ -8,7 +8,7 @@ import { useGallery } from "../hooks/use-gallery"
 import { GalleryPaginationItem } from "./gallery-pagination-item"
 
 // utils
-import classnames from "../lib/classnames"
+import classnames from "../utils/classnames"
 
 export const GalleryPagination = ({ renderPaginationItem, className, ...props }) => {
   const { activeIndex, galleryItems } = useGallery()
