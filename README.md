@@ -303,12 +303,12 @@ Here's an example of a custom component that uses the `useGallery` hook to simpl
 import { useGallery } from "@wethegit/react-gallery"
 
 const GalleryInfo = () => {
-  const { activeIndex, previousIndex, loop } = useGallery()
+  const { activeIndex, previouslyActiveIndex, loop } = useGallery()
 
   return (
     <p>
-      The gallery's current index is {activeIndex}, its last index was {previousIndex},
-      and its <code>loop</code> prop is set to {loop}!
+      The gallery's current index is {activeIndex}, its last index was {previouslyActiveIndex},
+      and its <code>loop</code> prop is set to {String(loop)}!
     </p>
   )
 }

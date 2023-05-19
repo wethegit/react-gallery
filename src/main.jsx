@@ -30,12 +30,12 @@ export const GALLERY_ITEMS = [
 ]
 
 function GalleryDescription() {
-  const { activeIndex, previousIndex, loop } = useGallery()
+  const { activeIndex, previouslyActiveIndex, loop } = useGallery()
 
   return (
     <p>
       The gallery&apos;s current index is {activeIndex}, its last index was{" "}
-      {previousIndex}, and its <code>loop</code> prop is set to {loop}!
+      {previouslyActiveIndex}, and its <code>loop</code> prop is set to {String(loop)}!
     </p>
   )
 }
