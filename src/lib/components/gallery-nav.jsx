@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import { useGallery } from "../hooks/use-gallery"
 
 // utils
-import classnames from "../lib/classnames"
+import classnames from "../utils/classnames"
 
 export const GalleryNav = ({
   direction,
@@ -16,7 +16,7 @@ export const GalleryNav = ({
 }) => {
   const { next, previous, loop, activeIndex, galleryItems } = useGallery()
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     if (direction) next()
     else previous()
   }

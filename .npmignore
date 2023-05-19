@@ -1,7 +1,10 @@
-.eslintrc.yml
 .github
-.nvmrc
-.prettierignore
-.prettierrc.yml
+.husky
 .vscode
+.eslintrc
+.prettierignore
+.prettierrc
+.stylelintrc
+index.html
+vite.config.js
 src

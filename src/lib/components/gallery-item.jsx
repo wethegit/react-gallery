@@ -1,8 +1,11 @@
+// packages
+import PropTypes from "prop-types"
+
 // hooks
 import { useGallery } from "../hooks/use-gallery"
 
 // utils
-import classnames from "../lib/classnames"
+import classnames from "../utils/classnames"
 
 export const GalleryItem = ({ index, active, className, children, ...props }) => {
   const {
@@ -47,4 +50,11 @@ export const GalleryItem = ({ index, active, className, children, ...props }) =>
       {children}
     </li>
   )
+}
+
+GalleryItem.propTypes = {
+  index: PropTypes.number.isRequired,
+  active: PropTypes.bool.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.node,
 }

@@ -16,4 +16,5 @@
     "*.json": "json",
   },
   "javascript.updateImportsOnFileMove.enabled": "always",
+  "stylelint.validate": ["css", "scss"]
 }
