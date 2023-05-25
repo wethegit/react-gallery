@@ -5,9 +5,6 @@ import { useCallback } from "react"
 // hooks
 import { useGallery } from "../hooks/use-gallery"
 
-// components
-import { GalleryItem } from "./gallery-item"
-
 // utils
 import classnames from "../utils/classnames"
 
@@ -58,7 +55,7 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
               the user appears to want to scroll in (vertical or horizontal)
             */
             if (Math.abs(yOffset) > 20) {
-              /*  
+              /*
                 if the user appears to be scrolling down ignore touch inputs
               */
               setTouchState((d) => ({ ...d, scrolling: true }))
@@ -93,9 +90,9 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
     if (!draggable) return
 
     if (touchState.isDragging) {
-      /* 
+      /*
           check if the offset value is more than the swipeThreshold.
-          if it is then we'll move to the next or prev item in the gallery, 
+          if it is then we'll move to the next or prev item in the gallery,
           otherwise it'll just spring back to the current position.
         */
       if (Math.abs(touchState.xOffset) > swipeThreshold) {
@@ -134,11 +131,7 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
     >
       {galleryItems.map((item, i) => {
         const active = activeIndex === i
-        return (
-          <GalleryItem key={i} index={i} active={active}>
-            {renderGalleryItem({ item, i, activeIndex, active })}
-          </GalleryItem>
-        )
+        return renderGalleryItem({ item, i, activeIndex, active })
       })}
     </ul>
   )
