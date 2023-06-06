@@ -50,7 +50,7 @@ This is an optional step, but it's highly recommended to use the base styles as 
 ```jsx
 // app.js
 
-import "@wethegit/react-gallery/dist/main.css"
+import "@wethegit/react-gallery/style.css"
 ```
 
 ### Create a simple Gallery
