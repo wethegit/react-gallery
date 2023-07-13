@@ -8,6 +8,7 @@ A slideshow-style gallery component for use in React projects.
 - [Components and options](#components-and-options)
   - [Gallery](#gallery)
   - [GalleryMain](#gallerymain)
+  - [GalleryItem](#galleryitem)
   - [GalleryNav](#gallerynav)
   - [GalleryPagination](#gallerypagination)
 - [Accessibility](#accessibility)
@@ -84,7 +85,7 @@ const YourGallery = () => {
 
       <GalleryMain
         renderGalleryItem={({ item, i, active }) => (
-          <GalleryItem key={i} i={i} active={active}>
+          <GalleryItem key={i} index={i} active={active}>
             <img src={item.image} alt={item.alt} />
           </GalleryItem>
         )}
@@ -108,7 +109,7 @@ export default YourGallery
 
 The first step is to give your data to the `<Gallery>` component via the `items` prop. At the very least, `items` is expected to be an Array. From there, you're free to arrange the child components this package provides as you see fit. Below is a brief description of each of the child components' usage. For a detailed breakdown of this component, jump ahead to the [Gallery](#gallery) section.
 
-`<GalleryMain>` is the primary gallery view where your item data is rendered. It receives a render prop, `renderGalleryItem`, which exposes a few arguments you can use in the JSX you return: `item`, `i`, `activeIndex`, and `active` and expectes a `<GalleryItem>` to be returned. For a detailed breakdown of this component, jump ahead to the [GalleryMain](#gallerymain) section.
+`<GalleryMain>` is the primary gallery view where your item data is rendered. It receives a render prop, `renderGalleryItem`, which exposes a few arguments you can use in the JSX you return: `item`, `i`, `activeIndex`, and `active` and expects a `<GalleryItem>` to be returned. For a detailed breakdown of this component, jump ahead to the [GalleryMain](#gallerymain) section.
 
 We're using the `<GalleryNav>` component to define our "next" and "previous" buttons. These components receive a `direction` prop, which expects either a `1` or a `0`, and corresponds to the direction the gallery should move in when the button in question is clicked (where `0` maps to "previous", and `1` maps to "next"). For a detailed breakdown of this component, see the [GalleryNav](#gallerynav) section.
 
