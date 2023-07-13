@@ -38,6 +38,7 @@ yarn add @wethegit/react-gallery
 import {
   Gallery,
   GalleryMain,
+  GalleryItem,
   GalleryNav,
   GalleryPagination,
   useGallery,
