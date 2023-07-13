@@ -1,6 +1,13 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { Gallery, GalleryMain, GalleryNav, GalleryPagination, useGallery } from "./lib"
+import {
+  Gallery,
+  GalleryMain,
+  GalleryItem,
+  GalleryNav,
+  GalleryPagination,
+  useGallery,
+} from "./lib"
 
 export const GALLERY_ITEMS = [
   {
@@ -44,7 +51,11 @@ function App() {
   return (
     <Gallery items={GALLERY_ITEMS}>
       <GalleryMain
-        renderGalleryItem={({ item }) => <img src={item.image} alt={item.alt} />}
+        renderGalleryItem={({ item, i, active }) => (
+          <GalleryItem key={i} index={i} active={active}>
+            <img src={item.image} alt={item.alt} />
+          </GalleryItem>
+        )}
       />
 
       <GalleryNav direction={0}>⬅️</GalleryNav>

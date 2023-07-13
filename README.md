@@ -8,6 +8,7 @@ A slideshow-style gallery component for use in React projects.
 - [Components and options](#components-and-options)
   - [Gallery](#gallery)
   - [GalleryMain](#gallerymain)
+  - [GalleryItem](#galleryitem)
   - [GalleryNav](#gallerynav)
   - [GalleryPagination](#gallerypagination)
 - [Accessibility](#accessibility)
@@ -76,15 +77,17 @@ export const GALLERY_ITEMS = [
 // your-gallery.js
 
 import { GALLERY_ITEMS } from "./some-data"
-import { Gallery, GalleryMain, GalleryNav, GalleryPagination } from "@wethegit/react-gallery"
+import { Gallery, GalleryMain, GalleryNav, GalleryPagination, GalleryItem } from "@wethegit/react-gallery"
 
 const YourGallery = () => {
   return (
     <Gallery items={GALLERY_ITEMS}>
 
       <GalleryMain
-        renderGalleryItem={({ item }) => (
-          <img src={item.image} alt={item.alt} />
+        renderGalleryItem={({ item, i, active }) => (
+          <GalleryItem key={i} index={i} active={active}>
+            <img src={item.image} alt={item.alt} />
+          </GalleryItem>
         )}
       />
 
@@ -106,7 +109,7 @@ export default YourGallery
 
 The first step is to give your data to the `<Gallery>` component via the `items` prop. At the very least, `items` is expected to be an Array. From there, you're free to arrange the child components this package provides as you see fit. Below is a brief description of each of the child components' usage. For a detailed breakdown of this component, jump ahead to the [Gallery](#gallery) section.
 
-`<GalleryMain>` is the primary gallery view where your item data is rendered. It receives a render prop, `renderGalleryItem`, which exposes a few arguments you can use in the JSX you return: `item`, `i`, `activeIndex`, and `active`. For a detailed breakdown of this component, jump ahead to the [GalleryMain](#gallerymain) section.
+`<GalleryMain>` is the primary gallery view where your item data is rendered. It receives a render prop, `renderGalleryItem`, which exposes a few arguments you can use in the JSX you return: `item`, `i`, `activeIndex`, and `active` and expects a `<GalleryItem>` to be returned. For a detailed breakdown of this component, jump ahead to the [GalleryMain](#gallerymain) section.
 
 We're using the `<GalleryNav>` component to define our "next" and "previous" buttons. These components receive a `direction` prop, which expects either a `1` or a `0`, and corresponds to the direction the gallery should move in when the button in question is clicked (where `0` maps to "previous", and `1` maps to "next"). For a detailed breakdown of this component, see the [GalleryNav](#gallerynav) section.
 
@@ -178,7 +181,7 @@ The primary gallery body. Must be used within a `<Gallery>`. Renders an unordere
 
 #### `renderGalleryItem`
 
-This render prop wraps its return value in a list item (`<li>`), and receives a handful of arguments:
+This render prop expects a `<GalleryItem>` to be returned, and receives a handful of arguments:
 
 | Argument    | Type    | Description                                                                                                    |
 | ----------- | ------- | -------------------------------------------------------------------------------------------------------------- |
@@ -186,6 +189,17 @@ This render prop wraps its return value in a list item (`<li>`), and receives a 
 | activeIndex | Number  | The index of the currently active gallery item.                                                                |
 | i           | Number  | The index of the current item being iterated over.                                                             |
 | item        | Any     | The current item being iterated over, as defined by the Array fed to the `<Gallery>` component's `items` prop. |
+
+### &lt;GalleryItem&gt;
+Required component that wraps each child inside the `renderGalleryitem` prop. Renders a list item (`<li>`) and can accept the following props:
+
+| Prop              | Type     | Description                                                                                                     |
+| ----------------- | -------- | --------------------------------------------------------------------------------------------------------------- |
+| children         | JSX   |                                                                                                                 |
+| className         | String   |                                                                                                                 |
+| active | Boolean | Whether the current item being iterated over is the active item. |
+| index | Number | The index of the currently active gallery item. |
+
 
 ### &lt;GalleryNav&gt;
 
