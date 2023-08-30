@@ -228,14 +228,18 @@ This render prop is a nice alternative to simply passing childern to the `<Galle
 
 Renders an unordered list (`<ul>`) of pagination items. Must be used within a `<Gallery>`.
 
+*Note: The use of renderPaginationItem is deprecated. [&lt;GalleryPaginationItem&gt;](#gallerypaginationitem) and `children` render props should be used here. This is still availiable to prevent breaking changes.*
+
 #### Props:
 
 | Prop                 | Type     | Description                                                                                                           |
 | -------------------- | -------- | --------------------------------------------------------------------------------------------------------------------- |
 | className            | String   |                                                                                                                       |
-| renderPaginationItem | Function | A render prop, returning the JSX to render for each pagination item. [More information](#renderpaginationitem) below. |
+| children             | JSX      | Pass children or use `<GalleryPaginationItem />` component to render pagination item buttons. This also is a render prop that will return some values to use [More information](#renderpaginationitem) below. |
+| renderPaginationItem *(deprecated)* | Function | A render prop, returning the JSX to render for each pagination item. [More information](#renderpaginationitem) below. |
 
-#### `renderPaginationItem`
+#### `renderPaginationItem`,
+#### `children` render props
 
 This render prop wraps its return value in a list item (`<li>`) and a `<button>`, and receives a handful of arguments:
 
@@ -243,8 +247,38 @@ This render prop wraps its return value in a list item (`<li>`) and a `<button>`
 | ----------- | ------- | ------------------------------------------------------------------------------------------------------------------------- |
 | active      | Boolean | Whether the current pagination item being iterated over corresponds to the active gallery item.                           |
 | activeIndex | Number  | The index of the currently active gallery item.                                                                           |
-| i           | Number  | The index of the current pagination item being iterated over.                                                             |
+| i *(deprecated)* | Number  | The index of the current pagination item being iterated over.                                                        |
+| index       | Number  | Same as the depreacted `i` The index of the current pagination item being iterated over.                                  |
 | item        | Any     | The current pagination item being iterated over, as defined by the Array fed to the `<Gallery>` component's `items` prop. |
+
+**Example usage of `children` render props**
+```jsx
+<GalleryPagination>
+  {({ index, active, activeIndex, item }) => {
+    return (
+      <GalleryPaginationItem active={active}>
+        <span>{index + 1}</span>
+      </GalleryPaginationItem>
+    )
+  }}
+</GalleryPagination>
+```
+### &lt;GalleryPaginationItem&gt;
+
+Used as children for `<GalleryPagination>`. This component with a return value in a list item (`<li>`) and a `<button>`, and receives a handful of arguments:
+
+#### Props:
+
+
+| Prop               | Type     | Description                                                                                                     |
+| ------------------ | -------- | --------------------------------------------------------------------------------------------------------------- |
+| active             | Boolean  | Boolean to set the `<button>`'s `aria-current` attribute.                                                       |
+| buttonClassName    | String   | Set the `<button>` element's class.                                                                             |
+| buttonProps        | Object   | Pass props to the `<button>` element.                                                                           |
+| children           | JSX      | Pass children to the component to render them as children of the implicit `<button>` element.                     |
+| className          | String   | Set the `<li>` element's class.                                                                                  |
+| index              | Number   | This needs to be a unique key for the `<li>` element. Used to set the gallery's active item to the associated pagination item button clicked/ |
+| onClick            | Function | Callback function to hook into the `onClick` handler on the `<button>` element.                                 |
 
 ## Accessibility
 

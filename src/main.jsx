@@ -6,6 +6,7 @@ import {
   GalleryItem,
   GalleryNav,
   GalleryPagination,
+  GalleryPaginationItem,
   useGallery,
 } from "./lib"
 
@@ -61,7 +62,20 @@ function App() {
       <GalleryNav direction={0}>⬅️</GalleryNav>
       <GalleryNav direction={1}>➡️</GalleryNav>
 
+      {/* Legacy Pagination Example
+       * <GalleryPagination renderPaginationItem={({ i }) => <span>{i + 1}</span>} />
+       */}
       <GalleryPagination renderPaginationItem={({ i }) => <span>{i + 1}</span>} />
+
+      <GalleryPagination>
+        {({ index, active }) => {
+          return (
+            <GalleryPaginationItem index={index} active={active}>
+              <span>{index + 1}</span>
+            </GalleryPaginationItem>
+          )
+        }}
+      </GalleryPagination>
       <GalleryDescription />
     </Gallery>
   )
