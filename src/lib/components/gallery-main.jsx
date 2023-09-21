@@ -1,6 +1,6 @@
 // packages
 import PropTypes from "prop-types"
-import { useCallback, useEffect } from "react"
+import { useCallback } from "react"
 
 // hooks
 import { useGallery } from "../hooks/use-gallery"
@@ -18,12 +18,7 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
     touchState,
     setTouchState,
     swipeThreshold,
-    goToIndex,
   } = useGallery()
-
-  useEffect(() => {
-    if (!galleryItems[activeIndex]) goToIndex(0)
-  }, [activeIndex, galleryItems, goToIndex])
 
   const handlePointerDown = useCallback(() => {
     if (!draggable) return
