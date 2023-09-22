@@ -1,6 +1,6 @@
 // packages
 import PropTypes from "prop-types"
-import { createContext, useCallback, useRef, useState } from "react"
+import { createContext, useCallback, useRef, useState, useEffect } from "react"
 
 // utils
 import classnames from "../utils/classnames"
@@ -74,14 +74,26 @@ export const Gallery = ({
 
   const goToIndex = useCallback(
     (index) => {
+      const validatedIndex = !items[index] ? 0 : index
+
       setPreviouslyActiveIndex(activeIndex)
 
-      setActiveIndex(index)
-      const direction = index - activeIndex > 0 ? 1 : 0
-      if (onChange) onChange({ oldIndex: activeIndex, newIndex: index, direction })
+      setActiveIndex(validatedIndex)
+      const direction = validatedIndex - activeIndex > 0 ? 1 : 0
+      if (onChange)
+        onChange({ oldIndex: activeIndex, newIndex: validatedIndex, direction })
     },
-    [activeIndex, onChange]
+    [activeIndex, onChange, items]
   )
+
+  // This useEffect checks to see if the gallery item (index) exists, and if it
+  // doesn't it resets the gallery to the first slide (0). The edge case here
+  // becomes apparent when or if the length of gallery items changes, for instance
+  // separating/grouping items based on screen size.
+
+  useEffect(() => {
+    if (!items[activeIndex]) goToIndex()
+  }, [activeIndex, items, goToIndex])
 
   const value = {
     galleryItems: items,
