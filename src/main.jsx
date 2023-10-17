@@ -62,20 +62,13 @@ function App() {
       <GalleryNav direction={0}>⬅️</GalleryNav>
       <GalleryNav direction={1}>➡️</GalleryNav>
 
-      {/* Legacy Pagination Example
-       * <GalleryPagination renderPaginationItem={({ i }) => <span>{i + 1}</span>} />
-       */}
-      <GalleryPagination renderPaginationItem={({ i }) => <span>{i + 1}</span>} />
-
-      <GalleryPagination>
-        {({ index, active }) => {
-          return (
-            <GalleryPaginationItem index={index} active={active}>
-              <span>{index + 1}</span>
-            </GalleryPaginationItem>
-          )
-        }}
-      </GalleryPagination>
+      <GalleryPagination
+        renderPaginationItem={({ index, active }) => (
+          <GalleryPaginationItem index={index} active={active} key={index}>
+            <span>{index + 1}</span>
+          </GalleryPaginationItem>
+        )}
+      />
       <GalleryDescription />
     </Gallery>
   )

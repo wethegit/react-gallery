@@ -22,15 +22,11 @@ export const GalleryPaginationItem = ({
   const handleClick = (i) => (event) => {
     goToIndex(i)
     itemNodes.current[i].focus({ preventScroll: true })
-    onClick && onClick({ event, index })
+    onClick?.({ event, index })
   }
 
   return (
-    <li
-      key={index}
-      className={classnames(["gallery__pagination-item", className])}
-      {...props}
-    >
+    <li className={classnames(["gallery__pagination-item", className])} {...props}>
       <button
         className={buttonClassName}
         onClick={handleClick(index)}
