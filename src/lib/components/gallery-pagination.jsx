@@ -9,21 +9,21 @@ import classnames from "../utils/classnames"
 
 /***
  *
- * Pagination Item
+ * Pagination Item component callback
  * ---
- * @typedef {element} renderPaginationItem - Expects a component of GallerPaginationItem
- * @returns {index, active, activeIndex, item}
- *
- * @property {number} index - The index of the current pagination item being iterated over.
- * @property {boolean} active - Whether the current pagination item being iterated over corresponds to the active gallery item.
- * @property {number} activeIndex - The index of the currently active gallery item.
- * @property {object} item - The current pagination item being iterated over, as defined by the Array fed to the `<Gallery>` component's `items` prop.
+ * @callback renderPaginationItem - Expects a component of GalleryPaginationItem
+ * @param {number} index - The index of the current pagination item being iterated over.
+ * @param {boolean} active - Whether the current pagination item being iterated over corresponds to the active gallery item.
+ * @param {number} activeIndex - The index of the currently active gallery item.
+ * @param {object} item - The current pagination item being iterated over, as defined by the Array fed to the `<Gallery>` component's `items` prop.
  */
 
 /**
- * Displays a greeting to the user.
- * @param {Props} renderPaginationItem
- * @param {string} className
+ * Pagination Component
+ * ---
+ * @param {object} props
+ * @param {renderPaginationItem} props.renderPaginationItem - The component to be rendered. This expects the main wrapper to be a GalleryPaginationItem component
+ * @param {string} [props.className] - Pass classname to <ul> element
  * @example
  *  <GalleryPagination
  *    renderPaginationItem={({ index, active }) => (

@@ -246,7 +246,7 @@ This render prop wraps its return value in a list item (`<li>`) and a `<button>`
 | index       | Number  | The index of the current pagination item being iterated over.                                  |
 | item        | Any     | The current pagination item being iterated over, as defined by the Array fed to the `<Gallery>` component's `items` prop. |
 
-**Example usage of `children` render props**
+**Example usage of `renderPaginationItem` render props**
 ```jsx
 <GalleryPagination
   renderPaginationItem={({ index, active }) => (
@@ -258,7 +258,7 @@ This render prop wraps its return value in a list item (`<li>`) and a `<button>`
 ```
 ### &lt;GalleryPaginationItem&gt;
 
-Used as children for `<GalleryPagination>`. This component with a return value in a list item (`<li>`) and a `<button>`, and receives a handful of arguments:
+Used in the prop `renderPaginationItem` of `<GalleryPagination>`. This component with a return value in a list item (`<li>`) and a `<button>`, and receives a handful of arguments:
 
 #### Props:
 
@@ -270,8 +270,23 @@ Used as children for `<GalleryPagination>`. This component with a return value i
 | buttonProps        | Object   | Pass props to the `<button>` element.                                                                           |
 | children           | JSX      | Pass children to the component to render them as children of the implicit `<button>` element.                     |
 | className          | String   | Set the `<li>` element's class.                                                                                  |
-| index              | Number   | This needs to be a unique key for the `<li>` element. Used to set the gallery's active item to the associated pagination item button clicked/ |
-| onClick            | Function | Callback function to hook into the `onClick` handler on the `<button>` element.                                 |
+| index              | Number   | This needs to be a unique identifier for the `<li>` element. Used to set the gallery's active item to the associated pagination item button clicked. |
+| onClick            | Function | This is a curried callback function to hook into the `onClick` handler on the `<button>` element. The curried callback returns an object containing `{event,index}`. `event` is a `MouseClickEvent` and `index` is the index of the *PaginationItem*.                                 |
+
+**Example usage of `onClick` render props**
+```jsx
+const handlePaginationItemClick = ({event, index}) => {
+  console.log(event, index)
+}
+
+<GalleryPagination
+  renderPaginationItem={({ index, active }) => (
+    <GalleryPaginationItem index={index} active={active} key={index} onClick={handlePaginationItemClick}>
+      <span>{index + 1}</span>
+    </GalleryPaginationItem>
+  )}
+/>
+```
 
 ## Accessibility
 

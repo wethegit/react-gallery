@@ -49,6 +49,11 @@ function GalleryDescription() {
 }
 
 function App() {
+  // Example of custom onClick handler
+  const handlePaginationItemClick = ({ event, index }) => {
+    console.log(event, index)
+  }
+
   return (
     <Gallery items={GALLERY_ITEMS}>
       <GalleryMain
@@ -64,7 +69,12 @@ function App() {
 
       <GalleryPagination
         renderPaginationItem={({ index, active }) => (
-          <GalleryPaginationItem index={index} active={active} key={index}>
+          <GalleryPaginationItem
+            index={index}
+            active={active}
+            key={index}
+            onClick={handlePaginationItemClick}
+          >
             <span>{index + 1}</span>
           </GalleryPaginationItem>
         )}
