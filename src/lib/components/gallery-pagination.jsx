@@ -15,7 +15,7 @@ import classnames from "../utils/classnames"
  * @param {number} index - The index of the current pagination item being iterated over.
  * @param {boolean} active - Whether the current pagination item being iterated over corresponds to the active gallery item.
  * @param {number} activeIndex - The index of the currently active gallery item.
- * @param {object} item - The current pagination item being iterated over, as defined by the Array fed to the `<Gallery>` component's `items` prop.
+ * @param {any} item - The current pagination item being iterated over, as defined by the Array fed to the `<Gallery>` component's `items` prop.
  */
 
 /**
