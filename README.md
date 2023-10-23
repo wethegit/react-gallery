@@ -91,7 +91,7 @@ const YourGallery = () => {
     <Gallery items={GALLERY_ITEMS}>
 
       <GalleryMain
-        renderGalleryItem={({ item, i, active }) => (
+        renderGalleryItem={({ item, index, active }) => (
           <GalleryItem key={item.id} index={i} active={active}>
             <img src={item.image} alt={item.alt} />
           </GalleryItem>
@@ -118,7 +118,7 @@ export default YourGallery
 
 The first step is to give your data to the `<Gallery>` component via the `items` prop. At the very least, `items` is expected to be an Array. From there, you're free to arrange the child components this package provides as you see fit. Below is a brief description of each of the child components' usage. For a detailed breakdown of this component, jump ahead to the [Gallery](#gallery) section.
 
-`<GalleryMain>` is the primary gallery view where your item data is rendered. It receives a render prop, `renderGalleryItem`, which exposes a few arguments you can use in the JSX you return: `item`, `i`, `activeIndex`, and `active` and expects a `<GalleryItem>` to be returned. For a detailed breakdown of this component, jump ahead to the [GalleryMain](#gallerymain) section.
+`<GalleryMain>` is the primary gallery view where your item data is rendered. It receives a render prop, `renderGalleryItem`, which exposes a few arguments you can use in the JSX you return: `item`, `index`, `activeIndex`, and `active` and expects a `<GalleryItem>` to be returned. For a detailed breakdown of this component, jump ahead to the [GalleryMain](#gallerymain) section.
 
 We're using the `<GalleryNav>` component to define our "next" and "previous" buttons. These components receive a `direction` prop, which expects either a `1` or a `0`, and corresponds to the direction the gallery should move in when the button in question is clicked (where `0` maps to "previous", and `1` maps to "next"). For a detailed breakdown of this component, see the [GalleryNav](#gallerynav) section.
 
@@ -196,7 +196,7 @@ This render prop expects a `<GalleryItem>` to be returned, and receives a handfu
 | ----------- | ------- | -------------------------------------------------------------------------------------------------------------- |
 | active      | Boolean | Whether the current item being iterated over is the active item.                                               |
 | activeIndex | Number  | The index of the currently active gallery item.                                                                |
-| i           | Number  | The index of the current item being iterated over.                                                             |
+| index       | Number  | The index of the current item being iterated over.                                                             |
 | item        | Any     | The current item being iterated over, as defined by the Array fed to the `<Gallery>` component's `items` prop. |
 
 ### &lt;GalleryItem&gt;
@@ -279,7 +279,7 @@ Used in the prop `renderPaginationItem` of `<GalleryPagination>`. This component
 | children           | JSX      | Pass children to the component to render them as children of the implicit `<button>` element.                     |
 | className          | String   | Set the `<li>` element's class.                                                                                  |
 | index              | Number   | **Required**. This needs to be a unique identifier for the `<li>` element, corresponding to the index of the Gallery Item being iterated over. It is used to set the gallery's active item to the associated pagination item button clicked. |
-| onClick            | Function | This is a curried callback function to hook into the `onClick` handler on the `<button>` element. The curried callback returns an object containing `{event,index}`. `event` is a `MouseClickEvent` and `index` is the index of the *PaginationItem*.                                 |
+| onClick            | Function | This is a curried callback function to hook into the `onClick` handler on the `<button>` element. The curried callback returns an object containing `{event,index}`. `event` is a `MouseClickEvent` and `index` is the index of the *PaginationItem*. Note that this is specific to the pagination buttons; if you want a piece of code to run when the active item changes _regarless_ of what triggered that change, opt for the `onChange` callback instead (passed to the `<Gallery>` component.)                                |
 
 **Example usage of `onClick` prop**
 ```jsx
@@ -329,8 +329,8 @@ const YourGallery = () => {
     // Pass the style overrides to the <Gallery> component
     <Gallery items={GALLERY_ITEMS} style={style}>
       <GalleryMain
-        renderGalleryItem={({ item, i, active }) => (
-          <GalleryItem key={item.id} index={i} active={active}>
+        renderGalleryItem={({ item, index, active }) => (
+          <GalleryItem key={item.id} index={index} active={active}>
             <img src={item.image} alt={item.alt} />
           </GalleryItem>
         )}

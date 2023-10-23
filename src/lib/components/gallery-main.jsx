@@ -129,9 +129,9 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
       style={{ "--selected": activeIndex, "--total": galleryItems.length }}
       {...props}
     >
-      {galleryItems.map((item, i) => {
-        const active = activeIndex === i
-        return renderGalleryItem({ item, i, activeIndex, active })
+      {galleryItems.map((item, index) => {
+        const active = activeIndex === index
+        return renderGalleryItem({ item, index, activeIndex, active })
       })}
     </ul>
   )

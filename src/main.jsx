@@ -57,8 +57,8 @@ function App() {
   return (
     <Gallery items={GALLERY_ITEMS}>
       <GalleryMain
-        renderGalleryItem={({ item, i, active }) => (
-          <GalleryItem key={i} index={i} active={active}>
+        renderGalleryItem={({ item, index, active }) => (
+          <GalleryItem key={item.id} index={index} active={active}>
             <img src={item.image} alt={item.alt} />
           </GalleryItem>
         )}
@@ -68,11 +68,11 @@ function App() {
       <GalleryNav direction={1}>➡️</GalleryNav>
 
       <GalleryPagination
-        renderPaginationItem={({ index, active }) => (
+        renderPaginationItem={({ index, active, item }) => (
           <GalleryPaginationItem
             index={index}
             active={active}
-            key={index}
+            key={item.id}
             onClick={handlePaginationItemClick}
           >
             <span>{index + 1}</span>
