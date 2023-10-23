@@ -11,6 +11,7 @@ A slideshow-style gallery component for use in React projects.
   - [GalleryItem](#galleryitem)
   - [GalleryNav](#gallerynav)
   - [GalleryPagination](#gallerypagination)
+  - [GalleryPaginationItem](#gallerypaginationitem)
 - [Accessibility](#accessibility)
 - [useGallery hook](#useGallery)
   - [Advanced customization](#advanced-customization)
@@ -41,6 +42,7 @@ import {
   GalleryItem,
   GalleryNav,
   GalleryPagination,
+  GalleryPaginationItem,
   useGallery,
 } from "@wethegit/react-gallery"
 ```
@@ -78,7 +80,8 @@ export const GALLERY_ITEMS = [
 // your-gallery.js
 
 import { GALLERY_ITEMS } from "./some-data"
-import { Gallery,
+import {
+  Gallery,
   GalleryMain,
   GalleryNav,
   GalleryPagination,
@@ -281,7 +284,7 @@ Used in the prop `renderPaginationItem` of `<GalleryPagination>`. This component
 | index              | Number   | **Required**. This needs to be a unique identifier for the `<li>` element, corresponding to the index of the Gallery Item being iterated over. It is used to set the gallery's active item to the associated pagination item button clicked. |
 | onClick            | Function | This is a curried callback function to hook into the `onClick` handler on the `<button>` element. The curried callback returns an object containing `{event,index}`. `event` is a `MouseClickEvent` and `index` is the index of the *PaginationItem*. Note that this is specific to the pagination buttons; if you want a piece of code to run when the active item changes _regarless_ of what triggered that change, opt for the `onChange` callback instead (passed to the `<Gallery>` component.)                                |
 
-**Example usage of `onClick` prop**
+**Example usage of `GalleryPaginationItem`**
 ```jsx
 const handlePaginationItemClick = ({ event, index }) => {
   console.log(event, index)
