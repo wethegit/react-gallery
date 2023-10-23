@@ -6,6 +6,7 @@ import {
   GalleryItem,
   GalleryNav,
   GalleryPagination,
+  GalleryPaginationItem,
   useGallery,
 } from "./lib"
 
@@ -48,11 +49,16 @@ function GalleryDescription() {
 }
 
 function App() {
+  // Example of custom onClick handler
+  const handlePaginationItemClick = ({ event, index }) => {
+    console.log(event, index)
+  }
+
   return (
     <Gallery items={GALLERY_ITEMS}>
       <GalleryMain
-        renderGalleryItem={({ item, i, active }) => (
-          <GalleryItem key={i} index={i} active={active}>
+        renderGalleryItem={({ item, index, active }) => (
+          <GalleryItem key={item.id} index={index} active={active}>
             <img src={item.image} alt={item.alt} />
           </GalleryItem>
         )}
@@ -61,7 +67,18 @@ function App() {
       <GalleryNav direction={0}>⬅️</GalleryNav>
       <GalleryNav direction={1}>➡️</GalleryNav>
 
-      <GalleryPagination renderPaginationItem={({ i }) => <span>{i + 1}</span>} />
+      <GalleryPagination
+        renderPaginationItem={({ index, active, item }) => (
+          <GalleryPaginationItem
+            index={index}
+            active={active}
+            key={item.id}
+            onClick={handlePaginationItemClick}
+          >
+            <span>{index + 1}</span>
+          </GalleryPaginationItem>
+        )}
+      />
       <GalleryDescription />
     </Gallery>
   )

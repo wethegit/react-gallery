@@ -78,15 +78,21 @@ export const GALLERY_ITEMS = [
 // your-gallery.js
 
 import { GALLERY_ITEMS } from "./some-data"
-import { Gallery, GalleryMain, GalleryNav, GalleryPagination, GalleryItem } from "@wethegit/react-gallery"
+import { Gallery,
+  GalleryMain,
+  GalleryNav,
+  GalleryPagination,
+  GalleryPaginationItem,
+  GalleryItem,
+} from "@wethegit/react-gallery"
 
 const YourGallery = () => {
   return (
     <Gallery items={GALLERY_ITEMS}>
 
       <GalleryMain
-        renderGalleryItem={({ item, i, active }) => (
-          <GalleryItem key={i} index={i} active={active}>
+        renderGalleryItem={({ item, index, active }) => (
+          <GalleryItem key={item.id} index={i} active={active}>
             <img src={item.image} alt={item.alt} />
           </GalleryItem>
         )}
@@ -96,8 +102,10 @@ const YourGallery = () => {
       <GalleryNav direction={1}>➡️</GalleryNav>
 
       <GalleryPagination
-        renderPaginationItem={({ i }) => (
-          <span>{i + 1}</span>
+        renderPaginationItem={({ item, index, active }) => (
+          <GalleryPaginationItem key={item.id} index={index} active={active}>
+            <span>{i + 1}</span>
+          </GalleryPaginationItem>
         )}
       />
 
@@ -110,11 +118,11 @@ export default YourGallery
 
 The first step is to give your data to the `<Gallery>` component via the `items` prop. At the very least, `items` is expected to be an Array. From there, you're free to arrange the child components this package provides as you see fit. Below is a brief description of each of the child components' usage. For a detailed breakdown of this component, jump ahead to the [Gallery](#gallery) section.
 
-`<GalleryMain>` is the primary gallery view where your item data is rendered. It receives a render prop, `renderGalleryItem`, which exposes a few arguments you can use in the JSX you return: `item`, `i`, `activeIndex`, and `active` and expects a `<GalleryItem>` to be returned. For a detailed breakdown of this component, jump ahead to the [GalleryMain](#gallerymain) section.
+`<GalleryMain>` is the primary gallery view where your item data is rendered. It receives a render prop, `renderGalleryItem`, which exposes a few arguments you can use in the JSX you return: `item`, `index`, `activeIndex`, and `active` and expects a `<GalleryItem>` to be returned. For a detailed breakdown of this component, jump ahead to the [GalleryMain](#gallerymain) section.
 
 We're using the `<GalleryNav>` component to define our "next" and "previous" buttons. These components receive a `direction` prop, which expects either a `1` or a `0`, and corresponds to the direction the gallery should move in when the button in question is clicked (where `0` maps to "previous", and `1` maps to "next"). For a detailed breakdown of this component, see the [GalleryNav](#gallerynav) section.
 
-We're also using the `<GalleryPagination>` component here. If you're not familiar, "pagination" refers to what is often rendered as a set of "dots" below a gallery — but this can be _anything_ (thumbnails, icons, and so on). This component receives the render prop, `renderPaginationItem`, which exposes a few arguments you can use in the JSX you return: `item`, `i`, `activeIndex`, and `active`. For a detailed breakdown of this component, jump ahead to the [GalleryPagination](#gallerypagination) section.
+We're also using the `<GalleryPagination>` and `GalleryPaginationItem` components here. If you're not familiar, "pagination" refers to what is often rendered as a set of "dots" below a gallery — but this can be _anything_ (thumbnails, icons, and so on). This component receives the render prop, `renderPaginationItem`, which exposes a few arguments you can use in the JSX you return: `item`, `i`, `activeIndex`, and `active`. The easiest way to link up you pagination is to use the `<GalleryPaginationItem>` component, as shown in the example above. For a detailed breakdown of this component, jump ahead to the [GalleryPagination](#gallerypagination) section.
 
 ## Custom layouts
 
@@ -188,7 +196,7 @@ This render prop expects a `<GalleryItem>` to be returned, and receives a handfu
 | ----------- | ------- | -------------------------------------------------------------------------------------------------------------- |
 | active      | Boolean | Whether the current item being iterated over is the active item.                                               |
 | activeIndex | Number  | The index of the currently active gallery item.                                                                |
-| i           | Number  | The index of the current item being iterated over.                                                             |
+| index       | Number  | The index of the current item being iterated over.                                                             |
 | item        | Any     | The current item being iterated over, as defined by the Array fed to the `<Gallery>` component's `items` prop. |
 
 ### &lt;GalleryItem&gt;
@@ -237,14 +245,61 @@ Renders an unordered list (`<ul>`) of pagination items. Must be used within a `<
 
 #### `renderPaginationItem`
 
-This render prop wraps its return value in a list item (`<li>`) and a `<button>`, and receives a handful of arguments:
+This render prop receives a handful of arguments, and is necessary for rendering pagination UI:
 
 | Argument    | Type    | Description                                                                                                               |
 | ----------- | ------- | ------------------------------------------------------------------------------------------------------------------------- |
 | active      | Boolean | Whether the current pagination item being iterated over corresponds to the active gallery item.                           |
 | activeIndex | Number  | The index of the currently active gallery item.                                                                           |
-| i           | Number  | The index of the current pagination item being iterated over.                                                             |
+| index       | Number  | The index of the current pagination item being iterated over.                                  |
 | item        | Any     | The current pagination item being iterated over, as defined by the Array fed to the `<Gallery>` component's `items` prop. |
+
+**Example usage of `renderPaginationItem` render prop**
+```jsx
+<GalleryPagination
+  renderPaginationItem={({ index, active, activeIndex, item }) => (
+    <GalleryPaginationItem index={index} active={active} key={item.id}>
+      <span>{index + 1}</span>
+    </GalleryPaginationItem>
+  )}
+/>
+```
+### &lt;GalleryPaginationItem&gt;
+
+Used in the prop `renderPaginationItem` of `<GalleryPagination>`. This component with a return value in a list item (`<li>`) and a `<button>`, and receives a handful of arguments:
+
+#### Props:
+
+
+| Prop               | Type     | Description                                                                                                     |
+| ------------------ | -------- | --------------------------------------------------------------------------------------------------------------- |
+| active             | Boolean  | **Required**. Boolean to set the `<button>`'s `aria-current` attribute.                                                       |
+| buttonClassName    | String   | Set the `<button>` element's class.                                                                             |
+| buttonProps        | Object   | Pass props to the `<button>` element.                                                                           |
+| children           | JSX      | Pass children to the component to render them as children of the implicit `<button>` element.                     |
+| className          | String   | Set the `<li>` element's class.                                                                                  |
+| index              | Number   | **Required**. This needs to be a unique identifier for the `<li>` element, corresponding to the index of the Gallery Item being iterated over. It is used to set the gallery's active item to the associated pagination item button clicked. |
+| onClick            | Function | This is a curried callback function to hook into the `onClick` handler on the `<button>` element. The curried callback returns an object containing `{event,index}`. `event` is a `MouseClickEvent` and `index` is the index of the *PaginationItem*. Note that this is specific to the pagination buttons; if you want a piece of code to run when the active item changes _regarless_ of what triggered that change, opt for the `onChange` callback instead (passed to the `<Gallery>` component.)                                |
+
+**Example usage of `onClick` prop**
+```jsx
+const handlePaginationItemClick = ({ event, index }) => {
+  console.log(event, index)
+}
+
+<GalleryPagination
+  renderPaginationItem={({ index, active, item }) => (
+    <GalleryPaginationItem
+      index={index}
+      active={active}
+      key={item.id}
+      onClick={handlePaginationItemClick}
+    >
+      <span>{index + 1}</span>
+    </GalleryPaginationItem>
+  )}
+/>
+```
 
 ## Accessibility
 
@@ -274,9 +329,13 @@ const YourGallery = () => {
     // Pass the style overrides to the <Gallery> component
     <Gallery items={GALLERY_ITEMS} style={style}>
       <GalleryMain
-        renderGalleryItem={({ item }) => <img src={item.image} alt={item.alt} />}
+        renderGalleryItem={({ item, index, active }) => (
+          <GalleryItem key={item.id} index={index} active={active}>
+            <img src={item.image} alt={item.alt} />
+          </GalleryItem>
+        )}
       />
-      // ...etc
+      {/* ...etc */}
     </Gallery>
   )
 }
@@ -284,7 +343,8 @@ const YourGallery = () => {
 
 ## useGallery hook
 
-The gallery package exposes a `useGallery` React hook. It returns a single object, the properties of which are outlined below:
+The gallery package exposes a `useGallery` React hook. It returns a single object, the properties of which are outlined below.  
+⚠️ `useGallery` _must_ be called from within a `<Gallery>` context.
 
 | Property                 | Type      | Description                                                                                                                                                                                  |
 | ------------------------ | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

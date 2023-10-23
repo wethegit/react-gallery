@@ -1,6 +1,7 @@
 export { Gallery } from "./components/gallery-context"
 export { GalleryMain } from "./components/gallery-main"
 export { GalleryPagination } from "./components/gallery-pagination"
+export { GalleryPaginationItem } from "./components/gallery-pagination-item"
 export { GalleryNav } from "./components/gallery-nav"
 export { GalleryItem } from "./components/gallery-item"
 export { useGallery } from "./hooks/use-gallery"
