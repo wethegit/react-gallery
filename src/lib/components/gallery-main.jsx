@@ -123,9 +123,9 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
   return (
     <ul
       className={classnames(["gallery__main", className])}
-      onPointerDown={draggable && handlePointerDown}
-      onPointerMove={draggable && handlePointerMove}
-      onPointerUp={draggable && handlePointerUp}
+      onPointerDown={draggable ? handlePointerDown : null}
+      onPointerMove={draggable ? handlePointerMove : null}
+      onPointerUp={draggable ? handlePointerUp : null}
       style={{ "--selected": activeIndex, "--total": galleryItems.length }}
       {...props}
     >
