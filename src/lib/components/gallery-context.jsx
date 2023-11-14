@@ -118,7 +118,7 @@ export const Gallery = ({
   return (
     <GalleryContext.Provider value={value}>
       <div
-        className={classnames(["gallery", className])}
+        className={classnames(["gallery", draggable && "gallery--draggable", className])}
         style={{ "--touch-offset": touchState.xOffset }}
       >
         {children}
