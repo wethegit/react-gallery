@@ -22,6 +22,10 @@
   width: 100%;
 }
 
+.gallery--draggable {
+  touch-action: pan-y;
+}
+
 .gallery__main {
   display: grid;
   grid-template-areas: "item";
