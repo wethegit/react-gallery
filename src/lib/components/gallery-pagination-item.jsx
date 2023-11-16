@@ -1,11 +1,9 @@
-// packages
 import PropTypes from "prop-types"
 
-// hooks
 import { useGallery } from "../hooks/use-gallery"
-
-// utils
 import classnames from "../utils/classnames"
+
+import styles from "./gallery.module.css"
 
 export const GalleryPaginationItem = ({
   index,
@@ -14,23 +12,24 @@ export const GalleryPaginationItem = ({
   buttonClassName,
   buttonProps,
   children,
-  onClick,
   ...props
 }) => {
   const { goToIndex, itemNodes } = useGallery()
 
-  const handleClick = (i) => (event) => {
+  const handleClick = (i) => {
     goToIndex(i)
     itemNodes.current[i].focus({ preventScroll: true })
-    onClick?.({ event, index })
   }
 
   return (
-    <li className={classnames(["gallery__pagination-item", className])} {...props}>
+    <li
+      className={classnames([styles["gallery__pagination-item"], className])}
+      {...props}
+    >
       <button
         className={buttonClassName}
-        onClick={handleClick(index)}
         aria-current={active ? "true" : null}
+        onClick={() => handleClick(index)}
         {...buttonProps}
       >
         {children}

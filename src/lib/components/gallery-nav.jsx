@@ -1,11 +1,9 @@
-// packages
 import PropTypes from "prop-types"
 
-// hooks
 import { useGallery } from "../hooks/use-gallery"
-
-// utils
 import classnames from "../utils/classnames"
+
+import styles from "./gallery.module.css"
 
 export const GalleryNav = ({
   direction,
@@ -38,9 +36,9 @@ export const GalleryNav = ({
   return (
     <button
       className={classnames([
+        styles.gallery__nav,
+        styles[`gallery__nav--${direction ? "next" : "previous"}`],
         className,
-        "gallery__nav",
-        `gallery__nav--${direction ? "next" : "previous"}`,
       ])}
       onClick={handleClick}
       {...(!loop && disabledProps)}

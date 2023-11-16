@@ -1,11 +1,9 @@
-// packages
 import PropTypes from "prop-types"
 
-// hooks
 import { useGallery } from "../hooks/use-gallery"
-
-// utils
 import classnames from "../utils/classnames"
+
+import styles from "./gallery.module.css"
 
 /***
  *
@@ -37,7 +35,7 @@ export const GalleryPagination = ({ renderPaginationItem, className, ...props })
   const { activeIndex, galleryItems } = useGallery()
 
   return (
-    <ul className={classnames(["gallery__pagination", className])} {...props}>
+    <ul className={classnames([styles.gallery__pagination, className])} {...props}>
       {galleryItems.map((item, index) => {
         const active = activeIndex === index
         return renderPaginationItem({ index, active, activeIndex, item })

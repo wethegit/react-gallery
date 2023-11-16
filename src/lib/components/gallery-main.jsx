@@ -1,12 +1,10 @@
-// packages
 import PropTypes from "prop-types"
 import { useCallback } from "react"
 
-// hooks
 import { useGallery } from "../hooks/use-gallery"
-
-// utils
 import classnames from "../utils/classnames"
+
+import styles from "./gallery.module.css"
 
 export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
   const {
@@ -122,7 +120,7 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
 
   return (
     <ul
-      className={classnames(["gallery__main", className])}
+      className={classnames([styles.gallery__main, className])}
       onPointerDown={draggable ? handlePointerDown : null}
       onPointerMove={draggable ? handlePointerMove : null}
       onPointerUp={draggable ? handlePointerUp : null}
