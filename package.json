@@ -1,6 +1,6 @@
 {
   "name": "@wethegit/react-gallery",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "A customizable, accessible gallery component for React projects.",
   "files": [
     "dist"
@@ -19,7 +19,7 @@
   },
   "scripts": {
     "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
-    "dev": "vite",
+    "start": "vite",
     "build": "npm run lint:scripts && npm run lint:styles && vite build",
     "lint:scripts": "eslint --fix --ext .jsx,js --ignore-path .gitignore .",
     "lint:styles": "stylelint src/**/*.{css,scss}"
@@ -54,8 +54,8 @@
   "author": "Andrew Rubin <andrew@wethecollective.com> (https://wethecollective.com)",
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "~8.3.0",
@@ -75,12 +75,12 @@
     "vite": "^4.3.2"
   },
   "peerDependencies": {
-    "react": "17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "17 - 18",
+    "react-dom": "17 - 18"
   },
   "dependencies": {
     "prop-types": "~15.8.1",
-    "react": "17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
