@@ -1,4 +1,4 @@
-.gallery-util-visually-hidden {
+.visually-hidden {
   border: 0;
   clip: rect(0 0 0 0);
   height: 1px;
@@ -36,14 +36,12 @@
 }
 
 .gallery__item {
-  /* stylelint-disable */
   --x: calc(
     (var(--touch-offset, 0) * 1px) + var(--position-offset) +
       (var(--active-gap) * var(--side)) + (var(--item-width) + var(--gap)) *
       (var(--i) - var(--selected))
   );
   --delay: calc(0s * var(--center-offset, 0));
-  /* stylelint-enable */
 
   grid-area: item;
   margin: 0 auto;
@@ -56,6 +54,7 @@
 
 .gallery__item--draggable img {
   pointer-events: none;
+  user-select: none;
 }
 
 .gallery__item--dragging {

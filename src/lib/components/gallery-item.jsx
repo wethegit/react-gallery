@@ -1,11 +1,9 @@
-// packages
 import PropTypes from "prop-types"
 
-// hooks
 import { useGallery } from "../hooks/use-gallery"
-
-// utils
 import classnames from "../utils/classnames"
+
+import styles from "./gallery.module.css"
 
 export const GalleryItem = ({ index, active, className, children, ...props }) => {
   const {
@@ -28,15 +26,15 @@ export const GalleryItem = ({ index, active, className, children, ...props }) =>
       {...a11yProps}
       {...props}
       className={classnames([
-        "gallery__item",
-        draggable && "gallery__item--draggable",
-        draggable && touchState.offsetting && "gallery__item--dragging",
-        active && "gallery__item--active",
-        index === previouslyActiveIndex && "gallery__item--was-active",
-        index < activeIndex && "gallery__item--left",
-        index > activeIndex && "gallery__item--right",
+        styles.gallery__item,
+        draggable && styles["gallery__item--draggable"],
+        draggable && touchState.offsetting && styles["gallery__item--dragging"],
+        active && styles["gallery__item--active"],
+        index === previouslyActiveIndex && styles["gallery__item--was-active"],
+        index < activeIndex && styles["gallery__item--left"],
+        index > activeIndex && styles["gallery__item--right"],
         (visibleRange === -1 || Math.abs(index - activeIndex) <= visibleRange) &&
-          "gallery__item--visible",
+          styles["gallery__item--visible"],
         className,
       ])}
       style={{

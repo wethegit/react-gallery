@@ -1,12 +1,9 @@
-// packages
 import PropTypes from "prop-types"
 import { createContext, useCallback, useRef, useState, useEffect } from "react"
 
-// utils
 import classnames from "../utils/classnames"
 
-// styles
-import "./gallery.css"
+import styles from "./gallery.module.css"
 
 export const GalleryContext = createContext()
 
@@ -118,13 +115,17 @@ export const Gallery = ({
   return (
     <GalleryContext.Provider value={value}>
       <div
-        className={classnames(["gallery", draggable && "gallery--draggable", className])}
+        className={classnames([
+          styles.gallery,
+          draggable && styles["gallery--draggable"],
+          className,
+        ])}
         style={{ "--touch-offset": touchState.xOffset }}
       >
         {children}
 
         {ariaLiveText && (
-          <p aria-live="polite" className="gallery-util-visually-hidden">
+          <p aria-live="polite" className={styles["visually-hidden"]}>
             {ariaLiveText.replace("$i", activeIndex + 1).replace("$t", items.length)}
           </p>
         )}
