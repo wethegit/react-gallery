@@ -1,5 +1,3 @@
-import PropTypes from "prop-types"
-
 import { useGallery } from "../hooks/use-gallery"
 import classnames from "../utils/classnames"
 
@@ -42,9 +40,4 @@ export const GalleryPagination = ({ renderPaginationItem, className, ...props })
       })}
     </ul>
   )
-}
-
-GalleryPagination.propTypes = {
-  renderPaginationItem: PropTypes.func.isRequired,
-  className: PropTypes.string,
 }

@@ -1,4 +1,3 @@
-import PropTypes from "prop-types"
 import { createContext, useCallback, useRef, useState, useEffect } from "react"
 
 import classnames from "../utils/classnames"
@@ -18,13 +17,13 @@ export const INITIAL_TOUCH_STATE = {
 export const swipeThreshold = 50
 
 export const Gallery = ({
+  loop = false,
+  draggable = true,
+  startIndex = 0,
+  visibleRange = -1,
+  ariaLiveText = "Item $i of $t.",
   items,
-  loop,
-  draggable,
   onChange,
-  startIndex,
-  visibleRange,
-  ariaLiveText,
   className,
   children,
 }) => {
@@ -132,24 +131,4 @@ export const Gallery = ({
       </div>
     </GalleryContext.Provider>
   )
-}
-
-Gallery.propTypes = {
-  items: PropTypes.array.isRequired,
-  loop: PropTypes.bool,
-  draggable: PropTypes.bool,
-  onChange: PropTypes.func,
-  startIndex: PropTypes.number,
-  visibleRange: PropTypes.number,
-  ariaLiveText: PropTypes.string,
-  className: PropTypes.string,
-  children: PropTypes.node,
-}
-
-Gallery.defaultProps = {
-  loop: false,
-  draggable: true,
-  startIndex: 0,
-  visibleRange: -1,
-  ariaLiveText: "Item $i of $t.",
 }
