@@ -1,4 +1,3 @@
-import PropTypes from "prop-types"
 import { useCallback } from "react"
 
 import { useGallery } from "../hooks/use-gallery"
@@ -133,9 +132,4 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
       })}
     </ul>
   )
-}
-
-GalleryMain.propTypes = {
-  renderGalleryItem: PropTypes.func.isRequired,
-  className: PropTypes.string,
 }

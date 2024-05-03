@@ -1,5 +1,3 @@
-import PropTypes from "prop-types"
-
 import { useGallery } from "../hooks/use-gallery"
 import classnames from "../utils/classnames"
 
@@ -49,11 +47,4 @@ export const GalleryNav = ({
         : renderNavItem({ activeIndex, disabled: !loop && shouldDisable })}
     </button>
   )
-}
-
-GalleryNav.propTypes = {
-  direction: PropTypes.oneOf([0, 1]).isRequired,
-  renderNavItem: PropTypes.func,
-  className: PropTypes.string,
-  children: PropTypes.node,
 }

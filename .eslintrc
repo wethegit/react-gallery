@@ -11,6 +11,7 @@
   "settings": { "react": { "version": "18.2" }, "jest": { "version": 26 } },
   "plugins": ["react-refresh"],
   "rules": {
-    "react-refresh/only-export-components": "off"
+    "react-refresh/only-export-components": "off",
+    "react/prop-types": "off"
   }
 }
