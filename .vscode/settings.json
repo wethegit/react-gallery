@@ -1,19 +1,8 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
-  },
-  "eslint.format.enable": true,
-  "eslint.nodePath": "",
-  "eslint.packageManager": "npm",
-  "files.associations": {
-    "*.js": "javascriptreact",
-    "*.jsx": "javascriptreact",
-    "*.json": "json",
   },
   "javascript.updateImportsOnFileMove.enabled": "always",
   "stylelint.validate": ["css", "scss"]
