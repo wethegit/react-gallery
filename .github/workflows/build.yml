@@ -3,10 +3,6 @@ name: Build
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
-    paths:
-      - src/**
-      - package.json
-      - vite.config.js
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
