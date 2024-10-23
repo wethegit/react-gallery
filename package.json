@@ -20,9 +20,10 @@
   "scripts": {
     "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
     "start": "vite",
-    "build": "npm run lint:scripts && npm run lint:styles && vite build",
+    "build": "vite build",
     "lint:scripts": "eslint --fix --ext .jsx,js --ignore-path .gitignore .",
-    "lint:styles": "stylelint src/**/*.{css,scss}"
+    "lint:styles": "stylelint src/**/*.{css,scss}",
+    "lint": "npm run lint:scripts && npm run lint:styles"
   },
   "publishConfig": {
     "access": "public"
