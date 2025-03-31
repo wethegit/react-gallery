@@ -1,3 +1,5 @@
+"use client"
+
 import { useGallery } from "../hooks/use-gallery"
 import classnames from "../utils/classnames"
 

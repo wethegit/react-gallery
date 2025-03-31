@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback } from "react"
 
 import { useGallery } from "../hooks/use-gallery"

@@ -55,8 +55,8 @@
   "author": "Andrew Rubin <andrew@wethecollective.com> (https://wethecollective.com)",
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
+    "@types/react": "~19.0.12",
+    "@types/react-dom": "~19.0.4",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "eslint": "^8.5.7",
     "eslint-config-prettier": "~9.1.0",
@@ -67,8 +67,8 @@
     "lint-staged": "^15.2.2",
     "postcss": "^8.4.23",
     "prettier": "^3.2.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "~19.1.0",
+    "react-dom": "~19.1.0",
     "stylelint": "^15.6.2",
     "stylelint-config-recommended": "^13.0.0",
     "stylelint-config-standard": "^34.0.0",
@@ -78,7 +78,7 @@
     "vite": "^5.2.11"
   },
   "peerDependencies": {
-    "react": "17 - 18",
-    "react-dom": "17 - 18"
+    "react": "17 - 19",
+    "react-dom": "17 - 19"
   }
 }
