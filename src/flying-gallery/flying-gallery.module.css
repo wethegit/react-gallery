@@ -1,0 +1,206 @@
+.root {
+  --perspective: 100px;
+  --xoffset: 600px;
+  --yoffset: 200px;
+  --rotation: 16deg;
+  --blur: 2px;
+
+  background: #0a0a0f;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 100vh;
+  padding: 3rem 0 2rem;
+  overflow: hidden;
+}
+
+.slideArea {
+  position: relative;
+}
+
+/*
+ * The gallery is configured with --item-width: 4px; --gap: 0, so all <li>
+ * elements collapse to near-zero horizontal positions.
+ * All visual positioning is handled here on .slide using CSS vars inherited
+ * from the library-managed <li>:
+ *
+ *   --center-offset   absolute distance from active (0, 1, 2 …)
+ *   --duration        transition speed
+ *
+ * className={styles.item} is appended to the library's class list on each <li>.
+ * Since this CSS module is loaded after the library's, same-specificity rules here
+ * win on source order..
+ */
+.item {
+  transform: translateX(0) !important;
+}
+
+[data-side="prev"].item {
+  z-index: calc(20 - var(--center-offset, 0));
+}
+
+.slide {
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  transition:
+    transform var(--duration, 0.5s),
+    filter var(--duration, 0.5s),
+    opacity var(--duration, 0.5s);
+  width: 100%;
+}
+
+.slide img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+[data-side="active"] .slide {
+  filter: none;
+  opacity: 1;
+  transform: perspective(var(--perspective, 1000px));
+}
+
+[data-side="prev"] .slide {
+  filter: blur(calc(var(--center-offset, 0) * var(--blur, 2px)));
+  opacity: calc(1 - var(--center-offset, 0) * 0.68);
+  transform: perspective(var(--perspective, 1000px))
+    translateX(calc(var(--center-offset, 0) * -1 * var(--xoffset, 600px)))
+    translateY(calc(var(--center-offset, 0) * -1 * var(--yoffset, 200px)))
+    translateZ(calc(var(--center-offset, 0) * 40px))
+    rotateZ(
+      calc(
+        var(--center-offset, 0) * -1 * var(--rotation, 16deg) +
+          sin(calc(var(--i, 0) * 1rad)) * 6deg
+      )
+    );
+}
+
+[data-side="next"] .slide {
+  filter: blur(calc(var(--center-offset, 0) * var(--blur, 2px)));
+  opacity: calc(1 - var(--center-offset, 0) * 0.3);
+  transform: perspective(var(--perspective, 1000px))
+    translateX(calc(var(--center-offset, 0) * var(--xoffset, 600px)))
+    translateY(calc(var(--center-offset, 0) * var(--yoffset, 200px)))
+    translateZ(calc(var(--center-offset, 0) * -80px))
+    rotateZ(
+      calc(
+        var(--center-offset, 0) * var(--rotation, 16deg) +
+          sin(calc(var(--i, 0) * 1.7rad)) * 6deg
+      )
+    );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: none;
+  }
+}
+
+.navPrev,
+.navNext {
+  align-items: center;
+  appearance: none;
+  background: rgb(255 255 255 / 12%);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  height: 3rem;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+  width: 3rem;
+  z-index: 1000;
+}
+
+.navPrev:hover,
+.navNext:hover {
+  background: rgb(255 255 255 / 25%);
+  border-color: rgb(255 255 255 / 40%);
+}
+
+.navPrev:disabled,
+.navNext:disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.navPrev {
+  left: 1rem;
+}
+
+.navNext {
+  right: 1rem;
+}
+
+.thumbs {
+  display: flex !important;
+  gap: 0.5rem !important;
+  justify-content: center;
+  list-style: none;
+  margin-top: 10px;
+  overflow-x: auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+.thumbItem {
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.thumbButton {
+  appearance: none;
+  background: none;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  display: block;
+  height: 52px;
+  opacity: 0.45;
+  overflow: hidden;
+  padding: 0;
+  transition:
+    opacity 0.2s,
+    border-color 0.2s;
+  width: 88px;
+}
+
+.thumbButton img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.thumbButton[aria-current="true"] {
+  border-color: #fff;
+  opacity: 1;
+}
+
+.thumbButton:hover {
+  opacity: 0.8;
+}
+
+.srOnly {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
