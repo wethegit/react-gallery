@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
 
+import { HamburgerNav } from "./nav/HamburgerNav"
 import {
   Gallery,
   GalleryMain,
@@ -87,6 +88,7 @@ function App() {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    <HamburgerNav />
     <App />
   </React.StrictMode>
 )
