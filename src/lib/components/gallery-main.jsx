@@ -19,6 +19,17 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
     swipeThreshold,
   } = useGallery()
 
+  const handlePointerCancel = useCallback(() => {
+    setTouchState((prevState) => ({
+      ...prevState,
+      isDragging: false,
+      xOffset: 0,
+      start: 0,
+      offsetting: false,
+      scrolling: false,
+    }))
+  }, [setTouchState])
+
   const handlePointerDown = useCallback(() => {
     if (!draggable) return
 
@@ -99,24 +110,16 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
         else previous()
       }
 
-      // reset all the touchState values.
-      setTouchState((prevState) => ({
-        ...prevState,
-        isDragging: false,
-        xOffset: 0,
-        start: 0,
-        offsetting: false,
-        scrolling: false,
-      }))
+      handlePointerCancel()
     }
   }, [
     draggable,
     touchState.isDragging,
     touchState.xOffset,
     swipeThreshold,
-    setTouchState,
     next,
     previous,
+    handlePointerCancel,
   ])
 
   return (
@@ -125,6 +128,7 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
       onPointerDown={draggable ? handlePointerDown : null}
       onPointerMove={draggable ? handlePointerMove : null}
       onPointerUp={draggable ? handlePointerUp : null}
+      onPointerCancel={draggable ? handlePointerCancel : null}
       style={{ "--selected": activeIndex, "--total": galleryItems.length }}
       {...props}
     >
