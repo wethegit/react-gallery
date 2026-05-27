@@ -23,7 +23,10 @@
     "build": "vite build",
     "lint:scripts": "eslint --fix --ext .jsx,js --ignore-path .gitignore .",
     "lint:styles": "stylelint src/**/*.{css,scss}",
-    "lint": "npm run lint:scripts && npm run lint:styles"
+    "lint": "npm run lint:scripts && npm run lint:styles",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "npm run build && changeset publish"
   },
   "publishConfig": {
     "access": "public"
