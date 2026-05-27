@@ -16,7 +16,7 @@ export const GALLERY_ITEMS = [
     image:
       "https://images.unsplash.com/photo-1680212703757-2565f02a653e?auto=format&fit=crop&w=1000&height=500&q=80",
     alt: "",
-    id: 131789,
+    id: 13178,
   },
   {
     image:
