@@ -119,12 +119,41 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
     previous,
   ])
 
+  const handlePointerLeave = useCallback(() => {
+    if (!draggable) return
+
+    if (touchState.isDragging) {
+      if (Math.abs(touchState.xOffset) > swipeThreshold) {
+        if (touchState.xOffset < 0) next()
+        else previous()
+      }
+
+      setTouchState((prevState) => ({
+        ...prevState,
+        isDragging: false,
+        xOffset: 0,
+        start: 0,
+        offsetting: false,
+        scrolling: false,
+      }))
+    }
+  }, [
+    draggable,
+    touchState.isDragging,
+    touchState.xOffset,
+    swipeThreshold,
+    setTouchState,
+    next,
+    previous,
+  ])
+
   return (
     <ul
       className={classnames([styles.gallery__main, className])}
       onPointerDown={draggable ? handlePointerDown : null}
       onPointerMove={draggable ? handlePointerMove : null}
       onPointerUp={draggable ? handlePointerUp : null}
+      onPointerLeave={draggable ? handlePointerLeave : null}
       style={{ "--selected": activeIndex, "--total": galleryItems.length }}
       {...props}
     >
