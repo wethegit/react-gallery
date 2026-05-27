@@ -23,7 +23,10 @@
     "build": "vite build",
     "lint:scripts": "eslint --fix --ext .jsx,js --ignore-path .gitignore .",
     "lint:styles": "stylelint src/**/*.{css,scss}",
-    "lint": "npm run lint:scripts && npm run lint:styles"
+    "lint": "npm run lint:scripts && npm run lint:styles",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "npm run build && changeset publish"
   },
   "publishConfig": {
     "access": "public"
@@ -55,6 +58,8 @@
   "author": "Andrew Rubin <andrew@wethecollective.com> (https://wethecollective.com)",
   "license": "MIT",
   "devDependencies": {
+    "@changesets/changelog-github": "~0.7.0",
+    "@changesets/cli": "~2.31.0",
     "@types/react": "~19.0.12",
     "@types/react-dom": "~19.0.4",
     "@vitejs/plugin-react-swc": "^3.0.0",

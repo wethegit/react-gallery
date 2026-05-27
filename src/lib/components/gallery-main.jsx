@@ -19,11 +19,25 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
     swipeThreshold,
   } = useGallery()
 
-  const handlePointerDown = useCallback(() => {
-    if (!draggable) return
+  const resetTouchState = useCallback(() => {
+    setTouchState((prevState) => ({
+      ...prevState,
+      isDragging: false,
+      xOffset: 0,
+      start: 0,
+      offsetting: false,
+      scrolling: false,
+    }))
+  }, [setTouchState])
 
-    setTouchState((prevState) => ({ ...prevState, isDragging: true }))
-  }, [draggable, setTouchState])
+  const handlePointerDown = useCallback(
+    (event) => {
+      if (!draggable) return
+      event.currentTarget.setPointerCapture?.(event.pointerId)
+      setTouchState((prevState) => ({ ...prevState, isDragging: true }))
+    },
+    [draggable, setTouchState]
+  )
 
   const handlePointerMove = useCallback(
     (event) => {
@@ -85,39 +99,43 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
     ]
   )
 
-  const handlePointerUp = useCallback(() => {
-    if (!draggable) return
+  const handlePointerUp = useCallback(
+    (event) => {
+      if (!draggable) return
 
-    if (touchState.isDragging) {
-      /*
+      event.currentTarget.releasePointerCapture?.(event.pointerId)
+      if (touchState.isDragging) {
+        /*
           check if the offset value is more than the swipeThreshold.
           if it is then we'll move to the next or prev item in the gallery,
           otherwise it'll just spring back to the current position.
         */
-      if (Math.abs(touchState.xOffset) > swipeThreshold) {
-        if (touchState.xOffset < 0) next()
-        else previous()
-      }
+        if (Math.abs(touchState.xOffset) > swipeThreshold) {
+          if (touchState.xOffset < 0) next()
+          else previous()
+        }
 
-      // reset all the touchState values.
-      setTouchState((prevState) => ({
-        ...prevState,
-        isDragging: false,
-        xOffset: 0,
-        start: 0,
-        offsetting: false,
-        scrolling: false,
-      }))
-    }
-  }, [
-    draggable,
-    touchState.isDragging,
-    touchState.xOffset,
-    swipeThreshold,
-    setTouchState,
-    next,
-    previous,
-  ])
+        resetTouchState()
+      }
+    },
+    [
+      draggable,
+      touchState.isDragging,
+      touchState.xOffset,
+      swipeThreshold,
+      next,
+      previous,
+      resetTouchState,
+    ]
+  )
+
+  const handlePointerCancel = useCallback(
+    (event) => {
+      event.currentTarget.releasePointerCapture?.(event.pointerId)
+      resetTouchState()
+    },
+    [resetTouchState]
+  )
 
   return (
     <ul
@@ -125,6 +143,7 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
       onPointerDown={draggable ? handlePointerDown : null}
       onPointerMove={draggable ? handlePointerMove : null}
       onPointerUp={draggable ? handlePointerUp : null}
+      onPointerCancel={draggable ? handlePointerCancel : null}
       style={{ "--selected": activeIndex, "--total": galleryItems.length }}
       {...props}
     >
