@@ -20,6 +20,7 @@
   "scripts": {
     "prepare": "husky",
     "start": "vite",
+    "prebuild": "rm -rf dist",
     "build": "vite build",
     "lint:scripts": "eslint --fix --ext .jsx,js --ignore-path .gitignore .",
     "lint:styles": "stylelint src/**/*.{css,scss}",
