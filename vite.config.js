@@ -16,6 +16,12 @@ export default defineConfig({
       // make sure to externalize deps that shouldn't be bundled
       // into your library
       external: ["react", "react-dom"],
+      input: {
+        // eslint-disable-next-line no-undef
+        main: resolve(__dirname, "index.html"),
+        // eslint-disable-next-line no-undef
+        flyingGallery: resolve(__dirname, "flying-gallery/index.html"),
+      },
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps
