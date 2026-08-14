@@ -95,7 +95,7 @@ const YourGallery = () => {
 
       <GalleryMain
         renderGalleryItem={({ item, index, active }) => (
-          <GalleryItem key={item.id} index={i} active={active}>
+          <GalleryItem key={item.id} index={index} active={active}>
             <img src={item.image} alt={item.alt} />
           </GalleryItem>
         )}
@@ -107,7 +107,7 @@ const YourGallery = () => {
       <GalleryPagination
         renderPaginationItem={({ item, index, active }) => (
           <GalleryPaginationItem key={item.id} index={index} active={active}>
-            <span>{i + 1}</span>
+            <span>{index + 1}</span>
           </GalleryPaginationItem>
         )}
       />
@@ -282,6 +282,8 @@ Used in the prop `renderPaginationItem` of `<GalleryPagination>`. This component
 | children           | JSX      | Pass children to the component to render them as children of the implicit `<button>` element.                     |
 | className          | String   | Set the `<li>` element's class.                                                                                  |
 | index              | Number   | **Required**. This needs to be a unique identifier for the `<li>` element, corresponding to the index of the Gallery Item being iterated over. It is used to set the gallery's active item to the associated pagination item button clicked. |
+| decorativeOnly     | Boolean  | A boolean to use the `onClick` callback and the interactive functionlity that sets the active state with a click event |
+| itemTag            | React.ElementType | Element type to replace the default `<button>` element, so that the pagination can be used for decorative purposes |
 | onClick            | Function | This is a curried callback function to hook into the `onClick` handler on the `<button>` element. The curried callback returns an object containing `{event,index}`. `event` is a `MouseClickEvent` and `index` is the index of the *PaginationItem*. Note that this is specific to the pagination buttons; if you want a piece of code to run when the active item changes _regarless_ of what triggered that change, opt for the `onChange` callback instead (passed to the `<Gallery>` component.)                                |
 
 **Example usage of `GalleryPaginationItem`**
