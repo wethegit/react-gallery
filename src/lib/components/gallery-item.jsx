@@ -6,14 +6,7 @@ import classnames from "../utils/classnames"
 import styles from "./gallery.module.css"
 
 export const GalleryItem = ({ index, active, className, children, ...props }) => {
-  const {
-    itemNodes,
-    activeIndex,
-    previouslyActiveIndex,
-    draggable,
-    touchState,
-    visibleRange,
-  } = useGallery()
+  const { itemNodes, activeIndex, draggable, touchState, visibleRange } = useGallery()
 
   const a11yProps = {
     "aria-hidden": active ? null : "true",
@@ -29,14 +22,11 @@ export const GalleryItem = ({ index, active, className, children, ...props }) =>
         styles.gallery__item,
         draggable && styles["gallery__item--draggable"],
         draggable && touchState.offsetting && styles["gallery__item--dragging"],
-        active && styles["gallery__item--active"],
-        index === previouslyActiveIndex && styles["gallery__item--was-active"],
-        index < activeIndex && styles["gallery__item--left"],
-        index > activeIndex && styles["gallery__item--right"],
-        (visibleRange === -1 || Math.abs(index - activeIndex) <= visibleRange) &&
-          styles["gallery__item--visible"],
         className,
       ])}
+      data-item-visible={
+        visibleRange === -1 || Math.abs(index - activeIndex) <= visibleRange
+      }
       style={{
         "--i": index,
         "--center-offset": Math.abs(index - activeIndex),
