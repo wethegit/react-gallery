@@ -23,7 +23,7 @@
     "prebuild": "rm -rf dist",
     "build": "vite build",
     "lint:scripts": "eslint --fix --ext .jsx,js --ignore-path .gitignore .",
-    "lint:styles": "stylelint src/**/*.{css,scss}",
+    "lint:styles": "stylelint src/**/*.css",
     "lint": "npm run lint:scripts && npm run lint:styles",
     "changeset": "changeset",
     "version": "changeset version",
@@ -39,7 +39,7 @@
   },
   "lint-staged": {
     "*.{js,jsx}": "eslint --fix",
-    "*.{css,scss}": "stylelint --fix",
+    "*.css": "stylelint --fix",
     "*": "prettier -w -u"
   },
   "keywords": [
@@ -63,7 +63,7 @@
     "@changesets/cli": "~2.31.0",
     "@types/react": "~19.0.12",
     "@types/react-dom": "~19.0.4",
-    "@vitejs/plugin-react-swc": "^3.0.0",
+    "@vitejs/plugin-react-swc": "^4.3.3",
     "eslint": "^8.5.7",
     "eslint-config-prettier": "~9.1.0",
     "eslint-plugin-react": "^7.32.2",
@@ -78,10 +78,9 @@
     "stylelint": "^15.6.2",
     "stylelint-config-recommended": "^13.0.0",
     "stylelint-config-standard": "^34.0.0",
-    "stylelint-config-standard-scss": "^11.1.0",
     "stylelint-order": "^6.0.3",
     "stylelint-selector-bem-pattern": "^3.0.1",
-    "vite": "^5.2.11"
+    "vite": "^7.3.6"
   },
   "peerDependencies": {
     "react": "17 - 19",
