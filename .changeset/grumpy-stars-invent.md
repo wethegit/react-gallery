@@ -1,5 +1,5 @@
 ---
-"@wethegit/react-gallery": minor
+"@wethegit/react-gallery": major
 ---
 
 - Fixes a broken `onClick` prop/callback on GalleryPaginationItem.
