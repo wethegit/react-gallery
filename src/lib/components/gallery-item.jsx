@@ -10,7 +10,7 @@ export const GalleryItem = ({ index, active, className, children, ...props }) =>
 
   const a11yProps = {
     "aria-hidden": active ? null : "true",
-    tabIndex: active ? 0 : -1,
+    tabIndex: -1,
   }
 
   return (
