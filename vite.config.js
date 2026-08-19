@@ -11,6 +11,7 @@ export default defineConfig({
       // eslint-disable-next-line no-undef
       entry: resolve(__dirname, "src/lib/index.js"),
       name: "ReactGallery",
+      cssFileName: "style",
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled

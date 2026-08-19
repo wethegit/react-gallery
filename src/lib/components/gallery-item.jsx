@@ -9,15 +9,15 @@ export const GalleryItem = ({ index, active, className, children, ...props }) =>
   const {
     itemNodes,
     activeIndex,
-    previouslyActiveIndex,
     draggable,
     touchState,
     visibleRange,
+    previouslyActiveIndex,
   } = useGallery()
 
   const a11yProps = {
     "aria-hidden": active ? null : "true",
-    tabIndex: active ? 0 : -1,
+    tabIndex: -1,
   }
 
   return (
@@ -29,14 +29,12 @@ export const GalleryItem = ({ index, active, className, children, ...props }) =>
         styles.gallery__item,
         draggable && styles["gallery__item--draggable"],
         draggable && touchState.offsetting && styles["gallery__item--dragging"],
-        active && styles["gallery__item--active"],
-        index === previouslyActiveIndex && styles["gallery__item--was-active"],
-        index < activeIndex && styles["gallery__item--left"],
-        index > activeIndex && styles["gallery__item--right"],
-        (visibleRange === -1 || Math.abs(index - activeIndex) <= visibleRange) &&
-          styles["gallery__item--visible"],
         className,
       ])}
+      data-item-visible={
+        visibleRange === -1 || Math.abs(index - activeIndex) <= visibleRange
+      }
+      data-was-active={index === previouslyActiveIndex}
       style={{
         "--i": index,
         "--center-offset": Math.abs(index - activeIndex),

@@ -1,25 +1,25 @@
 .visually-hidden {
   border: 0;
   clip: rect(0 0 0 0);
-  height: 1px;
+  block-size: 1px;
   margin: -1px;
   overflow: hidden;
   padding: 0;
   position: absolute;
-  width: 1px;
+  inline-size: 1px;
 }
 
 .gallery {
   --position-offset: 0px;
   --touch-offset: 0;
   --item-width: min(75%, 1000px);
-  --gap: 25vw;
+  --inline-gap: 25vw;
   --active-gap: 0px;
   --active: 0;
   --duration: 0.5s;
 
   position: relative;
-  width: 100%;
+  inline-size: 100%;
 }
 
 .gallery--draggable {
@@ -38,7 +38,7 @@
 .gallery__item {
   --x: calc(
     (var(--touch-offset, 0) * 1px) + var(--position-offset) +
-      (var(--active-gap) * var(--side)) + (var(--item-width) + var(--gap)) *
+      (var(--active-gap) * var(--side)) + (var(--item-width) + var(--inline-gap)) *
       (var(--i) - var(--selected))
   );
   --delay: calc(0s * var(--center-offset, 0));
@@ -48,7 +48,7 @@
   padding: 0;
   transform: translateX(var(--x));
   transition: transform var(--duration);
-  width: var(--item-width);
+  inline-size: var(--item-width);
   z-index: calc(var(--total) - var(--center-offset));
 }
 
@@ -75,14 +75,15 @@
 }
 
 .gallery__pagination {
-  --gap: 10px;
+  --inline-gap: 10px;
 
   display: grid;
-  gap: var(--gap);
+  gap: var(--inline-gap);
   grid-auto-flow: column;
   justify-content: center;
 }
 
 .gallery__pagination-item {
   line-height: 1;
+  list-style: none;
 }

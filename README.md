@@ -95,7 +95,7 @@ const YourGallery = () => {
 
       <GalleryMain
         renderGalleryItem={({ item, index, active }) => (
-          <GalleryItem key={item.id} index={i} active={active}>
+          <GalleryItem key={item.id} index={index} active={active}>
             <img src={item.image} alt={item.alt} />
           </GalleryItem>
         )}
@@ -107,7 +107,7 @@ const YourGallery = () => {
       <GalleryPagination
         renderPaginationItem={({ item, index, active }) => (
           <GalleryPaginationItem key={item.id} index={index} active={active}>
-            <span>{i + 1}</span>
+            <span>{index + 1}</span>
           </GalleryPaginationItem>
         )}
       />
@@ -164,7 +164,7 @@ The parent component for all gallery instances. This serves as a React context p
 | loop         | Boolean  | false            | Allows for looping behavior — i.e. when the last gallery item is active, a user can navigate to the "next" slide, which will take them back to the start of the gallery.                                                                                                                                                                                                                               |
 | onChange     | Function |                  | Function to run on gallery state update, as a result of a "next", "previous", or "pagination" action. [More information](#onchange) below.                                                                                                                                                                                                                                                             |
 | startIndex   | Number   | 0                | The index of the gallery item that should be active to start.                                                                                                                                                                                                                                                                                                                                          |
-| visibleRange | Number   | -1               | The number of gallery items "visible" to the left or right of the active one. This option adds a CSS class to all elements within this range, allowing for layout customization. The default value of `-1` specifies that all items are visible, while setting the value to `1` for example, would add the `"gallery__item--visible"` class those items within immediate proximity to the active item. |
+| visibleRange | Number   | -1               | The number of gallery items "visible" to the left or right of the active one. This option adds `data-item-visible="true"` all elements within this range, allowing for layout customization. The default value of `-1` specifies that all items are visible, while setting the value to `1` for example, would add the `data-item-visible="true"` to those items within immediate proximity to the active item and the ones that are not in the proximity would have `data-item-visible="false"`
 
 #### `ariaLiveText`
 
@@ -282,6 +282,8 @@ Used in the prop `renderPaginationItem` of `<GalleryPagination>`. This component
 | children           | JSX      | Pass children to the component to render them as children of the implicit `<button>` element.                     |
 | className          | String   | Set the `<li>` element's class.                                                                                  |
 | index              | Number   | **Required**. This needs to be a unique identifier for the `<li>` element, corresponding to the index of the Gallery Item being iterated over. It is used to set the gallery's active item to the associated pagination item button clicked. |
+| decorativeOnly     | Boolean  | A boolean to disable the interactive functionality and the `onClick` callback |
+| itemTag            | React.ElementType | Element type to replace the default `<button>` element, so that the pagination can be used for decorative purposes |
 | onClick            | Function | This is a curried callback function to hook into the `onClick` handler on the `<button>` element. The curried callback returns an object containing `{event,index}`. `event` is a `MouseClickEvent` and `index` is the index of the *PaginationItem*. Note that this is specific to the pagination buttons; if you want a piece of code to run when the active item changes _regarless_ of what triggered that change, opt for the `onChange` callback instead (passed to the `<Gallery>` component.)                                |
 
 **Example usage of `GalleryPaginationItem`**
