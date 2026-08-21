@@ -10,8 +10,10 @@
   "type": "module",
   "main": "./dist/react-gallery.umd.cjs",
   "module": "./dist/react-gallery.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/react-gallery.js",
       "require": "./dist/react-gallery.umd.cjs"
     },
@@ -22,9 +24,10 @@
     "start": "vite",
     "prebuild": "rm -rf dist",
     "build": "vite build",
-    "lint:scripts": "eslint --fix --ext .jsx,js --ignore-path .gitignore .",
+    "typecheck": "tsc --noEmit",
+    "lint:scripts": "eslint --fix --ext .tsx,ts --ignore-path .gitignore .",
     "lint:styles": "stylelint src/**/*.css",
-    "lint": "npm run lint:scripts && npm run lint:styles",
+    "lint": "npm run typecheck && npm run lint:scripts && npm run lint:styles",
     "changeset": "changeset",
     "version": "changeset version",
     "release": "npm run build && changeset publish"
@@ -61,8 +64,11 @@
   "devDependencies": {
     "@changesets/changelog-github": "~0.7.0",
     "@changesets/cli": "~2.31.0",
+    "@types/node": "^26.2.0",
     "@types/react": "~19.0.12",
     "@types/react-dom": "~19.0.4",
+    "@typescript-eslint/eslint-plugin": "^8.67.0",
+    "@typescript-eslint/parser": "^8.67.0",
     "@vitejs/plugin-react-swc": "^4.3.3",
     "eslint": "^8.5.7",
     "eslint-config-prettier": "~9.1.0",
@@ -80,7 +86,9 @@
     "stylelint-config-standard": "^34.0.0",
     "stylelint-order": "^6.0.3",
     "stylelint-selector-bem-pattern": "^3.0.1",
-    "vite": "^7.3.6"
+    "typescript": "^6.0.3",
+    "vite": "^7.3.6",
+    "vite-plugin-dts": "^5.0.3"
   },
   "peerDependencies": {
     "react": "17 - 19",
