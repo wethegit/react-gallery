@@ -1,5 +1,5 @@
 import React from "react"
-import ReactDOM from "react-dom/client"
+import { createRoot, Root } from "react-dom/client"
 
 import {
   Gallery,
@@ -10,8 +10,20 @@ import {
   GalleryPaginationItem,
   useGallery,
 } from "./lib"
+import { GalleryPaginationItemClickArgs } from "./lib/components/gallery-pagination-item"
 
-export const GALLERY_ITEMS = [
+interface GalleryItemData {
+  image: string
+  alt: string
+  id: number
+}
+
+// 1. Define a custom type extending the standard HTMLElement
+interface RootHTMLElement extends HTMLElement {
+  _reactRoot?: Root
+}
+
+export const GALLERY_ITEMS: GalleryItemData[] = [
   {
     image:
       "https://images.unsplash.com/photo-1680212703757-2565f02a653e?auto=format&fit=crop&w=1000&height=500&q=80",
@@ -51,13 +63,16 @@ function GalleryDescription() {
 
 function App() {
   // Example of custom onClick handler
-  const handlePaginationItemClick = ({ event, index }) => {
+  const handlePaginationItemClick = ({
+    event,
+    index,
+  }: GalleryPaginationItemClickArgs) => {
     console.log(event, index)
   }
 
   return (
     <Gallery items={GALLERY_ITEMS}>
-      <GalleryMain
+      <GalleryMain<GalleryItemData>
         renderGalleryItem={({ item, index, active }) => (
           <GalleryItem key={item.id} index={index} active={active}>
             <img src={item.image} alt={item.alt} />
@@ -68,7 +83,7 @@ function App() {
       <GalleryNav direction={0}>⬅️</GalleryNav>
       <GalleryNav direction={1}>➡️</GalleryNav>
 
-      <GalleryPagination
+      <GalleryPagination<GalleryItemData>
         renderPaginationItem={({ index, active, item }) => (
           <GalleryPaginationItem
             index={index}
@@ -85,7 +100,15 @@ function App() {
   )
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+const rootElement = document.getElementById("root") as RootHTMLElement | null
+if (!rootElement) throw new Error("Root element not found")
+
+// Check if a root already exists on this rootElement to prevent re-intializing error on dev
+if (!rootElement._reactRoot) {
+  rootElement._reactRoot = createRoot(rootElement)
+}
+
+rootElement._reactRoot.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
