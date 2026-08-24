@@ -2,7 +2,7 @@
 
 import type { ComponentPropsWithoutRef, ReactNode } from "react"
 
-import { RenderrenderPaginationItemArgs } from "../types/types"
+import { RenderPaginationItemArgs } from "../types/types"
 
 import { useGallery } from "../hooks/use-gallery"
 import { classnames } from "../utils/classnames"
@@ -13,7 +13,7 @@ export interface GalleryPaginationProps<T> extends Omit<
   ComponentPropsWithoutRef<"ul">,
   "children"
 > {
-  renderPaginationItem: (args: RenderrenderPaginationItemArgs<T>) => ReactNode
+  renderPaginationItem: (args: RenderPaginationItemArgs<T>) => ReactNode
 }
 
 /**

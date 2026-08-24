@@ -12,7 +12,7 @@ import {
 } from "./lib"
 import { GalleryPaginationItemClickArgs } from "./lib/components/gallery-pagination-item"
 
-interface GalleryItemData {
+interface GalleryItemDataType {
   image: string
   alt: string
   id: number
@@ -23,7 +23,7 @@ interface RootHTMLElement extends HTMLElement {
   _reactRoot?: Root
 }
 
-export const GALLERY_ITEMS: GalleryItemData[] = [
+export const GALLERY_ITEMS: GalleryItemDataType[] = [
   {
     image:
       "https://images.unsplash.com/photo-1680212703757-2565f02a653e?auto=format&fit=crop&w=1000&height=500&q=80",
@@ -72,7 +72,7 @@ function App() {
 
   return (
     <Gallery items={GALLERY_ITEMS}>
-      <GalleryMain<GalleryItemData>
+      <GalleryMain<GalleryItemDataType>
         renderGalleryItem={({ item, index, active }) => (
           <GalleryItem key={item.id} index={index} active={active}>
             <img src={item.image} alt={item.alt} />
@@ -83,7 +83,7 @@ function App() {
       <GalleryNav direction={0}>⬅️</GalleryNav>
       <GalleryNav direction={1}>➡️</GalleryNav>
 
-      <GalleryPagination<GalleryItemData>
+      <GalleryPagination<GalleryItemDataType>
         renderPaginationItem={({ index, active, item }) => (
           <GalleryPaginationItem
             index={index}
