@@ -8,7 +8,7 @@ import {
   useEffect,
   CSSProperties,
 } from "react"
-import type { GalleryContextValue, GalleryProps } from "../types/types"
+import type { GalleryContextValue, GalleryProps } from "../index"
 
 import { classnames } from "../utils/classnames"
 

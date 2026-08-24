@@ -23,5 +23,5 @@ export type {
   GalleryContextValue,
   RenderGalleryItemArgs,
   RenderNavItemArgs,
-  RenderrenderPaginationItemArgs,
+  RenderPaginationItemArgs,
 } from "./types/types"

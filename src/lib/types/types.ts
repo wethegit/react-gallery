@@ -65,7 +65,7 @@ export interface RenderNavItemArgs {
   disabled: boolean
 }
 
-export interface RenderrenderPaginationItemArgs<T> {
+export interface RenderPaginationItemArgs<T> {
   index: number
   active: boolean
   activeIndex: number
