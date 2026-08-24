@@ -22,6 +22,7 @@ A slideshow-style gallery component for use in React projects.
 - Accessibility. Built with careful attention to focus management and assistive technology.
 - Fully-customizable layouts, using CSS Custom Properties.
 - Provides a custom React hook for accessing gallery data, state, updater functions, and more. Build anything on top of the existing gallery components!
+- Written in typescript
 
 ## Getting started
 
@@ -52,7 +53,7 @@ import {
 This is an optional step, but it's highly recommended to use the base styles as a starting point. The most straightforward way to do this is to import the stylesheet into your app directly from the `/node_modules/@wethegit/react-gallery/dist/` directory, but you can do this in whichever way is preferable within your build system or framework.
 
 ```jsx
-// app.js
+// app.js | app.ts
 
 import "@wethegit/react-gallery/style.css"
 ```
@@ -62,6 +63,8 @@ import "@wethegit/react-gallery/style.css"
 The `<Gallery>` component is a React context provider, which gives all child components access to relevant data. All child components that need access to gallery data must live within a `<Gallery>`. Here's an example of a gallery, given the following contrived data `GALLERY_ITEMS`. This will be explained in detail shortly.
 
 ⚠️ Before continuing, make sure you have properly [imported the base stylesheet](#import-the-base-stylesheet), if you intend to use it.
+
+#### Usage: Javascript
 
 <!-- prettier-ignore -->
 ```js
@@ -117,6 +120,70 @@ const YourGallery = () => {
 }
 
 export default YourGallery
+
+```
+#### Usage: Typescript
+
+<!-- prettier-ignore -->
+```ts
+// some-data.ts
+
+interface GalleryItemDataType {
+  image: string
+  alt: string
+  id: number
+}
+
+export const GALLERY_ITEMS : GalleryItemDataType[] = [
+  { image: "/my-image-1.png", alt: "Description of image!", id: 131789 },
+  { image: "/my-image-2.png", alt: "Description of image!", id: 235233 },
+  { image: "/my-image-3.png", alt: "Description of image!", id: 987432 },
+  { image: "/my-image-4.png", alt: "Description of image!", id: 768324 },
+]
+```
+
+<!-- prettier-ignore -->
+```tsx
+// your-gallery.ts
+
+import { GALLERY_ITEMS } from "./some-data"
+import {
+  Gallery,
+  GalleryMain,
+  GalleryNav,
+  GalleryPagination,
+  GalleryPaginationItem,
+  GalleryItem,
+} from "@wethegit/react-gallery"
+
+const YourGallery = () => {
+  return (
+    <Gallery items={GALLERY_ITEMS}>
+
+      <GalleryMain<GalleryItemDataType>
+        renderGalleryItem={({ item, index, active }) => (
+          <GalleryItem key={item.id} index={index} active={active}>
+            <img src={item.image} alt={item.alt} />
+          </GalleryItem>
+        )}
+      />
+
+      <GalleryNav direction={0}>⬅️</GalleryNav>
+      <GalleryNav direction={1}>➡️</GalleryNav>
+
+      <GalleryPagination<GalleryItemDataType>
+        renderPaginationItem={({ item, index, active }) => (
+          <GalleryPaginationItem key={item.id} index={index} active={active}>
+            <span>{index + 1}</span>
+          </GalleryPaginationItem>
+        )}
+      />
+
+    </Gallery>
+  )
+}
+
+export default YourGallery
 ```
 
 The first step is to give your data to the `<Gallery>` component via the `items` prop. At the very least, `items` is expected to be an Array. From there, you're free to arrange the child components this package provides as you see fit. Below is a brief description of each of the child components' usage. For a detailed breakdown of this component, jump ahead to the [Gallery](#gallery) section.
@@ -153,7 +220,8 @@ Assuming the base stylesheet is being used, the `<GalleryMain>` component render
 
 The parent component for all gallery instances. This serves as a React context provider to its children.
 
-#### Props:
+#### Props: `<GalleryProps>`
+
 
 | Prop         | Type     | Default value    | Description                                                                                                                                                                                                                                                                                                                                                                                            |
 | ------------ | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -174,6 +242,8 @@ Per the WAI-ARIA spec, browsers using assistive technology such as screen reader
 
 The `onChange` callback allows you to run code whenever the active gallery item changes. It receives a single Object as an argument, containing the following properties:
 
+##### Props: `<GalleryChangeCallback>`
+
 | Argument  | Type   | Description                                                |
 | --------- | ------ | ---------------------------------------------------------- |
 | oldIndex  | Number | The index before the onChange function fired.              |
@@ -184,7 +254,7 @@ The `onChange` callback allows you to run code whenever the active gallery item 
 
 The primary gallery body. Must be used within a `<Gallery>`. Renders an unordered list (`<ul>`) of your gallery items.
 
-#### Props:
+#### Props: `<GalleryMainProps>`
 
 | Prop              | Type     | Description                                                                                                     |
 | ----------------- | -------- | --------------------------------------------------------------------------------------------------------------- |
@@ -194,6 +264,8 @@ The primary gallery body. Must be used within a `<Gallery>`. Renders an unordere
 #### `renderGalleryItem`
 
 This render prop expects a `<GalleryItem>` to be returned, and receives a handful of arguments:
+
+#### Props: `<RenderGalleryItemArgs>`
 
 | Argument    | Type    | Description                                                                                                    |
 | ----------- | ------- | -------------------------------------------------------------------------------------------------------------- |
@@ -205,6 +277,8 @@ This render prop expects a `<GalleryItem>` to be returned, and receives a handfu
 ### &lt;GalleryItem&gt;
 Required component that wraps each child inside the `renderGalleryitem` prop. Renders a list item (`<li>`) and can accept the following props:
 
+#### Props: `<GalleryItemProps>`
+
 | Prop              | Type     | Description                                                                                                     |
 | ----------------- | -------- | --------------------------------------------------------------------------------------------------------------- |
 | children         | JSX   |                                                                                                                 |
@@ -212,12 +286,11 @@ Required component that wraps each child inside the `renderGalleryitem` prop. Re
 | active | Boolean | Whether the current item being iterated over is the active item. |
 | index | Number | The index of the currently active gallery item. |
 
-
 ### &lt;GalleryNav&gt;
 
 The navigational "next" and "previous" buttons. Must be used within a `<Gallery>`. You can render your buttons either by passing regular JSX children to them, or by using the `renderNavItem` render prop.
 
-#### Props:
+#### Props: `<GalleryNavProps>`
 
 | Prop          | Type     | Description                                                                                                                                                                       |
 | ------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -230,6 +303,8 @@ The navigational "next" and "previous" buttons. Must be used within a `<Gallery>
 
 This render prop is a nice alternative to simply passing childern to the `<GalleryNav>`, as it provides you with a handful of arguments, as outlined below:
 
+#### Props: `<RenderNavItemArgs>`
+
 | Argument    | Type    | Description                                                                                                                                                                                                                                                                                                                                                                                             |
 | ----------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | activeIndex | Number  | The index of the currently-active gallery item.                                                                                                                                                                                                                                                                                                                                                         |
@@ -239,16 +314,25 @@ This render prop is a nice alternative to simply passing childern to the `<Galle
 
 Renders an unordered list (`<ul>`) of pagination items. Must be used within a `<Gallery>`.
 
-#### Props:
+#### Props: `<GalleryPaginationProps>`
 
 | Prop                 | Type     | Description                                                                                                           |
 | -------------------- | -------- | --------------------------------------------------------------------------------------------------------------------- |
 | className            | String   |                                                                                                                       |
 | renderPaginationItem | Function | A render prop, returning the JSX to render for each pagination item. [More information](#renderpaginationitem) below. |
 
+##### Type import
+
+```ts
+// your-gallery.ts
+import type { GalleryPaginationProps } from "@wethegit/react-gallery"
+```
+
 #### `renderPaginationItem`
 
 This render prop receives a handful of arguments, and is necessary for rendering pagination UI:
+
+#### Props: `<RenderPaginationItemArgs>`
 
 | Argument    | Type    | Description                                                                                                               |
 | ----------- | ------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -259,7 +343,25 @@ This render prop receives a handful of arguments, and is necessary for rendering
 
 **Example usage of `renderPaginationItem` render prop**
 ```jsx
+// your-gallery.js
 <GalleryPagination
+  renderPaginationItem={({ index, active, activeIndex, item }) => (
+    <GalleryPaginationItem index={index} active={active} key={item.id}>
+      <span>{index + 1}</span>
+    </GalleryPaginationItem>
+  )}
+/>
+```
+
+```tsx
+// your-gallery.ts
+interface GalleryItemDataType {
+  image: string
+  alt: string
+  id: number
+}
+
+<GalleryPagination<GalleryItemDataType>
   renderPaginationItem={({ index, active, activeIndex, item }) => (
     <GalleryPaginationItem index={index} active={active} key={item.id}>
       <span>{index + 1}</span>
@@ -271,7 +373,7 @@ This render prop receives a handful of arguments, and is necessary for rendering
 
 Used in the prop `renderPaginationItem` of `<GalleryPagination>`. This component with a return value in a list item (`<li>`) and a `<button>`, and receives a handful of arguments:
 
-#### Props:
+#### Props: `<GalleryPaginationItemProps>`
 
 
 | Prop               | Type     | Description                                                                                                     |
@@ -288,11 +390,34 @@ Used in the prop `renderPaginationItem` of `<GalleryPagination>`. This component
 
 **Example usage of `GalleryPaginationItem`**
 ```jsx
+// your-gallery.js
+
 const handlePaginationItemClick = ({ event, index }) => {
   console.log(event, index)
 }
 
 <GalleryPagination
+  renderPaginationItem={({ index, active, item }) => (
+    <GalleryPaginationItem
+      index={index}
+      active={active}
+      key={item.id}
+      onClick={handlePaginationItemClick}
+    >
+      <span>{index + 1}</span>
+    </GalleryPaginationItem>
+  )}
+/>
+```
+
+```tsx
+// your-gallery.ts
+
+const handlePaginationItemClick = ({ event, index }: GalleryPaginationItemClickArgs) => {
+  console.log(event, index)
+}
+
+<GalleryPagination<GalleryItemDataType>
   renderPaginationItem={({ index, active, item }) => (
     <GalleryPaginationItem
       index={index}
@@ -319,6 +444,8 @@ Regarding the ARIA-live text, check out the section on this gallery's [`ariaLive
 For reduced motion implementations, you can detect the user's preference via the `matchMedia` API, and adjust the CSS custom property, `--duration` on the `.gallery` selector. Check out the example below, which adds a style tag to the gallery, and overrides the `--duration` property based on the preference. You could also do this via a conditional className, if you prefer. An alternative is be to pass this `prefersReducedMotion` value as a prop, which could be helpful if you use the Styled Components library.
 
 ```jsx
+// your-gallery.js
+
 const YourGallery = () => {
   // Get the user's motion preference:
   const prefersReducedMotion = window.matchMedia(
@@ -334,6 +461,36 @@ const YourGallery = () => {
     // Pass the style overrides to the <Gallery> component
     <Gallery items={GALLERY_ITEMS} style={style}>
       <GalleryMain
+        renderGalleryItem={({ item, index, active }) => (
+          <GalleryItem key={item.id} index={index} active={active}>
+            <img src={item.image} alt={item.alt} />
+          </GalleryItem>
+        )}
+      />
+      {/* ...etc */}
+    </Gallery>
+  )
+}
+```
+
+```tsx
+// your-gallery.ts
+
+const YourGallery = () => {
+  // Get the user's motion preference:
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches
+
+  // Create an inline style object
+  const style = {
+    "--duration": prefersReducedMotion ? "0s" : "0.5s",
+  } as CSSProperties
+
+  return (
+    // Pass the style overrides to the <Gallery> component
+    <Gallery items={GALLERY_ITEMS} style={style}>
+      <GalleryMain<GalleryItemDataType>
         renderGalleryItem={({ item, index, active }) => (
           <GalleryItem key={item.id} index={index} active={active}>
             <img src={item.image} alt={item.alt} />
