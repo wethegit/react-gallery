@@ -18,7 +18,6 @@ interface GalleryItemDataType {
   id: number
 }
 
-// 1. Define a custom type extending the standard HTMLElement
 interface RootHTMLElement extends HTMLElement {
   _reactRoot?: Root
 }

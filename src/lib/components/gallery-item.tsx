@@ -1,8 +1,9 @@
 "use client"
 
-import { ComponentPropsWithoutRef, CSSProperties } from "react"
 import { useGallery } from "../hooks/use-gallery"
 import { classnames } from "../utils/classnames"
+
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
 import styles from "./gallery.module.css"
 
