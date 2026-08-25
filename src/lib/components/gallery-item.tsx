@@ -1,11 +1,24 @@
 "use client"
 
 import { useGallery } from "../hooks/use-gallery"
-import classnames from "../utils/classnames"
+import { classnames } from "../utils/classnames"
+
+import type { ComponentPropsWithoutRef, CSSProperties } from "react"
 
 import styles from "./gallery.module.css"
 
-export const GalleryItem = ({ index, active, className, children, ...props }) => {
+export interface GalleryItemProps extends ComponentPropsWithoutRef<"li"> {
+  index: number
+  active: boolean
+}
+
+export const GalleryItem = ({
+  index,
+  active,
+  className,
+  children,
+  ...props
+}: GalleryItemProps) => {
   const {
     itemNodes,
     activeIndex,
@@ -16,13 +29,15 @@ export const GalleryItem = ({ index, active, className, children, ...props }) =>
   } = useGallery()
 
   const a11yProps = {
-    "aria-hidden": active ? null : "true",
+    "aria-hidden": active ? undefined : ("true" as const),
     tabIndex: -1,
   }
 
   return (
     <li
-      ref={(node) => (itemNodes.current[index] = node)}
+      ref={(node) => {
+        itemNodes.current[index] = node
+      }}
       {...a11yProps}
       {...props}
       className={classnames([
@@ -35,13 +50,15 @@ export const GalleryItem = ({ index, active, className, children, ...props }) =>
         visibleRange === -1 || Math.abs(index - activeIndex) <= visibleRange
       }
       data-was-active={index === previouslyActiveIndex}
-      style={{
-        "--i": index,
-        "--center-offset": Math.abs(index - activeIndex),
-        "--index-offset": index - activeIndex,
-        "--side": index < activeIndex ? -1 : index > activeIndex ? 1 : 0,
-        "--active": active ? 1 : 0,
-      }}
+      style={
+        {
+          "--i": index,
+          "--center-offset": Math.abs(index - activeIndex),
+          "--index-offset": index - activeIndex,
+          "--side": index < activeIndex ? -1 : index > activeIndex ? 1 : 0,
+          "--active": active ? 1 : 0,
+        } as CSSProperties
+      }
     >
       {children}
     </li>
