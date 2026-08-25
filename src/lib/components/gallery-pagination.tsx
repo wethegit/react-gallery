@@ -2,7 +2,7 @@
 
 import type { ComponentPropsWithoutRef, ReactNode } from "react"
 
-import { RenderPaginationItemArgs } from "../types/types"
+import type { RenderPaginationItemArgs } from "../types/types"
 
 import { useGallery } from "../hooks/use-gallery"
 import { classnames } from "../utils/classnames"

@@ -1,9 +1,14 @@
 "use client"
 
-import { CSSProperties, ReactNode, useCallback } from "react"
-import { ComponentPropsWithoutRef, PointerEvent } from "react"
+import { useCallback } from "react"
 
 import type { RenderGalleryItemArgs } from "../types/types"
+import type {
+  CSSProperties,
+  ReactNode,
+  ComponentPropsWithoutRef,
+  PointerEvent,
+} from "react"
 
 import { useGallery } from "../hooks/use-gallery"
 import { classnames } from "../utils/classnames"

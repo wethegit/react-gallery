@@ -1,9 +1,9 @@
 "use client"
 
-import { ComponentPropsWithRef, ReactNode } from "react"
 import { useGallery } from "../hooks/use-gallery"
 import { classnames } from "../utils/classnames"
 
+import type { ComponentPropsWithRef, ReactNode } from "react"
 import type { RenderNavItemArgs } from "../types/types"
 
 import styles from "./gallery.module.css"
