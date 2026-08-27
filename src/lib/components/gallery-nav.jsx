@@ -34,7 +34,7 @@ export const GalleryNav = ({
   if (!children && !renderNavItem) return null
 
   /*
-   * When the clicked/pressed button gets disabled, safari resets the focus
+   * When the clicked/pressed button gets disabled, focus is reset
    * to the document, so we are redirecting the focus within the gallery
    */
   if (shouldDisable) {
