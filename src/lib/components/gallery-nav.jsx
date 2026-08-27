@@ -12,7 +12,7 @@ export const GalleryNav = ({
   children,
   ...props
 }) => {
-  const { next, previous, loop, activeIndex, galleryItems } = useGallery()
+  const { next, previous, loop, activeIndex, galleryItems, itemNodes } = useGallery()
 
   const handleClick = () => {
     if (direction) next()
@@ -30,6 +30,17 @@ export const GalleryNav = ({
     disabled: shouldDisable ? true : null,
     "aria-disabled": shouldDisable ? "true" : null,
   }
+
+  /*
+   * IFFE - avoiding use of useEffect
+   * When the clicked/pressed button gets disabled, safari resets the focus
+   * to the document, so we are redirecting the focus within the gallery
+   */
+  ;(function handleLostFocus() {
+    if (shouldDisable) {
+      itemNodes.current[activeIndex]?.focus({ focusVisible: false })
+    }
+  })()
 
   if (!children && !renderNavItem) return null
 
