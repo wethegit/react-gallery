@@ -1,5 +1,11 @@
 # @wethegit/react-gallery
 
+## 5.0.1
+
+### Patch Changes
+
+- 819e5c2: Fix the lost focus in Safari when the pressed nav button is disabled
+
 ## 5.0.0
 
 ### Major Changes
