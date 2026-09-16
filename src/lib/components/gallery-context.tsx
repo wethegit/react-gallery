@@ -1,16 +1,24 @@
 "use client"
 
-import { createContext, useCallback, useRef, useState, useEffect } from "react"
+import {
+  createContext,
+  useCallback,
+  useRef,
+  useState,
+  useEffect,
+  CSSProperties,
+} from "react"
+import type { GalleryContextValue, GalleryProps } from "../index"
 
-import classnames from "../utils/classnames"
+import { classnames } from "../utils/classnames"
 
 import styles from "./gallery.module.css"
 
-export const GalleryContext = createContext()
+export const GalleryContext = createContext<GalleryContextValue<unknown> | null>(null)
 
 export const INITIAL_TOUCH_STATE = {
   isDragging: false,
-  start: 0,
+  start: { x: 0, y: 0 },
   xOffset: 0,
   offsetting: false,
   scrolling: true,
@@ -18,7 +26,21 @@ export const INITIAL_TOUCH_STATE = {
 
 export const swipeThreshold = 50
 
-export const Gallery = ({
+/**
+ * Gallery Component
+ * ---
+ * @example
+    <Gallery items={GALLERY_ITEMS}>
+      <GalleryMain<GalleryItemData>
+        renderGalleryItem={({ item, index, active }) => (
+          <GalleryItem key={item.id} index={index} active={active}>
+            <img src={item.image} alt={item.alt} />
+          </GalleryItem>
+        )}
+      />
+    </Gallery>
+ */
+export const Gallery = <T,>({
   loop = false,
   draggable = true,
   startIndex = 0,
@@ -28,7 +50,7 @@ export const Gallery = ({
   onChange,
   className,
   children,
-}) => {
+}: GalleryProps<T>) => {
   const [activeIndex, setActiveIndex] = useState(() => startIndex || 0)
   const [previouslyActiveIndex, setPreviouslyActiveIndex] = useState(
     () => startIndex || 0
@@ -71,8 +93,8 @@ export const Gallery = ({
   }, [activeIndex, items.length, loop, onChange])
 
   const goToIndex = useCallback(
-    (index) => {
-      const validatedIndex = !items[index] ? 0 : index
+    (index?: number) => {
+      const validatedIndex = index === undefined || !items[index] ? 0 : index
 
       setPreviouslyActiveIndex(activeIndex)
 
@@ -90,10 +112,10 @@ export const Gallery = ({
   // separating/grouping items based on screen size.
 
   useEffect(() => {
-    if (!items[activeIndex]) goToIndex()
+    if (!items[activeIndex]) goToIndex(0)
   }, [activeIndex, items, goToIndex])
 
-  const value = {
+  const value: GalleryContextValue<T> = {
     galleryItems: items,
     itemNodes,
     startIndex,
@@ -121,13 +143,15 @@ export const Gallery = ({
           draggable && styles["gallery--draggable"],
           className,
         ])}
-        style={{ "--touch-offset": touchState.xOffset }}
+        style={{ "--touch-offset": touchState.xOffset } as CSSProperties}
       >
         {children}
 
         {ariaLiveText && (
           <p aria-live="polite" className={styles["visually-hidden"]}>
-            {ariaLiveText.replace("$i", activeIndex + 1).replace("$t", items.length)}
+            {ariaLiveText
+              .replace("$i", String(activeIndex + 1))
+              .replace("$t", String(items.length))}
           </p>
         )}
       </div>
