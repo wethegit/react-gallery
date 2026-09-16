@@ -28,7 +28,7 @@ export const GalleryNav = ({
   className,
   children,
   ...props
-}) => {
+}: GalleryNavProps) => {
   const { next, previous, loop, activeIndex, galleryItems, itemNodes } = useGallery()
 
   const handleClick = () => {
