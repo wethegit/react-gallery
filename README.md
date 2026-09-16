@@ -22,7 +22,7 @@ A slideshow-style gallery component for use in React projects.
 - Accessibility. Built with careful attention to focus management and assistive technology.
 - Fully-customizable layouts, using CSS Custom Properties.
 - Provides a custom React hook for accessing gallery data, state, updater functions, and more. Build anything on top of the existing gallery components!
-- Written in typescript
+- Written in TypeScript
 
 ## Getting started
 

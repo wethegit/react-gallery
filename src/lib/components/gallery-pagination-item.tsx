@@ -73,7 +73,7 @@ export const GalleryPaginationItem = ({
     >
       <Tag
         className={buttonClassName}
-        aria-current={active ? "true" : null}
+        aria-current={active ? "true" : undefined}
         {...onClickCallback}
         {...buttonProps}
       >
