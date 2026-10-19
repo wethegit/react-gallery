@@ -411,7 +411,7 @@ const handlePaginationItemClick = ({ event, index }) => {
 ```
 
 ```tsx
-// your-gallery.ts
+// your-gallery.tsx
 
 const handlePaginationItemClick = ({ event, index }: GalleryPaginationItemClickArgs) => {
   console.log(event, index)
