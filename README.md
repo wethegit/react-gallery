@@ -354,7 +354,7 @@ This render prop receives a handful of arguments, and is necessary for rendering
 ```
 
 ```tsx
-// your-gallery.ts
+// your-gallery.tsx
 interface GalleryItemDataType {
   image: string
   alt: string
