@@ -144,7 +144,7 @@ export const GALLERY_ITEMS : GalleryItemDataType[] = [
 
 <!-- prettier-ignore -->
 ```tsx
-// your-gallery.ts
+// your-gallery.tsx
 
 import { GALLERY_ITEMS } from "./some-data"
 import {
