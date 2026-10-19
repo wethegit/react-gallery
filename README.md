@@ -474,7 +474,7 @@ const YourGallery = () => {
 ```
 
 ```tsx
-// your-gallery.ts
+// your-gallery.tsx
 
 const YourGallery = () => {
   // Get the user's motion preference:
