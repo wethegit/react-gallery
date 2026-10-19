@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback } from "react"
-import type { ComponentPropsWithoutRef, ElementType, MouseEvent } from "react"
+import type { ComponentPropsWithRef, ElementType, MouseEvent } from "react"
 
 import { useGallery } from "../hooks/use-gallery"
 import { classnames } from "../utils/classnames"
@@ -14,7 +14,7 @@ export interface GalleryPaginationItemClickArgs {
 }
 
 export interface GalleryPaginationItemProps extends Omit<
-  ComponentPropsWithoutRef<"li">,
+  ComponentPropsWithRef<"li">,
   "onClick"
 > {
   index: number

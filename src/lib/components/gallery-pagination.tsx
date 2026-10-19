@@ -1,6 +1,6 @@
 "use client"
 
-import type { ComponentPropsWithoutRef, ReactNode } from "react"
+import type { ComponentPropsWithRef, ReactNode } from "react"
 
 import type { RenderPaginationItemArgs } from "../types/types"
 
@@ -10,7 +10,7 @@ import { classnames } from "../utils/classnames"
 import styles from "./gallery.module.css"
 
 export interface GalleryPaginationProps<T> extends Omit<
-  ComponentPropsWithoutRef<"ul">,
+  ComponentPropsWithRef<"ul">,
   "children"
 > {
   renderPaginationItem: (args: RenderPaginationItemArgs<T>) => ReactNode
