@@ -49,6 +49,7 @@ export const Gallery = <T,>({
   items,
   onChange,
   className,
+  style,
   children,
 }: GalleryProps<T>) => {
   const [activeIndex, setActiveIndex] = useState(() => startIndex || 0)
@@ -143,7 +144,7 @@ export const Gallery = <T,>({
           draggable && styles["gallery--draggable"],
           className,
         ])}
-        style={{ "--touch-offset": touchState.xOffset } as CSSProperties}
+        style={{ ...style, "--touch-offset": touchState.xOffset } as CSSProperties}
       >
         {children}
 

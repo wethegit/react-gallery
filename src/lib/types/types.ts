@@ -1,4 +1,4 @@
-import type { RefObject, Dispatch, SetStateAction, ReactNode } from "react"
+import type { CSSProperties, RefObject, Dispatch, SetStateAction, ReactNode } from "react"
 
 export interface GalleryChangeEvent {
   oldIndex: number
@@ -30,6 +30,7 @@ export interface GalleryProps<T> {
   items: T[]
   onChange?: GalleryChangeCallback
   className?: string
+  style?: CSSProperties
   children: ReactNode
 }
 
