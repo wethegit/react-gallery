@@ -413,6 +413,14 @@ const handlePaginationItemClick = ({ event, index }) => {
 ```tsx
 // your-gallery.tsx
 
+import type { GalleryPaginationItemClickArgs } from "@wethegit/react-gallery"
+
+interface GalleryItemDataType {
+  image: string
+  alt: string
+  id: number
+}
+
 const handlePaginationItemClick = ({ event, index }: GalleryPaginationItemClickArgs) => {
   console.log(event, index)
 }
