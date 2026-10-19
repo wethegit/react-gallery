@@ -64,7 +64,7 @@ The `<Gallery>` component is a React context provider, which gives all child com
 
 ⚠️ Before continuing, make sure you have properly [imported the base stylesheet](#import-the-base-stylesheet), if you intend to use it.
 
-#### Usage: Javascript
+#### Usage: JavaScript
 
 <!-- prettier-ignore -->
 ```js
