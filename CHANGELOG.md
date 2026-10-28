@@ -1,5 +1,16 @@
 # @wethegit/react-gallery
 
+## 6.0.0-beta.0
+
+### Major Changes
+
+- 3fafc9f: - Converts the package to TypeScript.
+  - Updates docs with TypeScript examples.
+  - Requires React 19, dropping support for React 17 and 18.
+  - Fixes swiping via touch/pointer
+  - Adds support for passing refs directlty as props
+  - Adds style prop option to pass style properties without overriding the exisiting ones.
+
 ## 5.0.1
 
 ### Patch Changes

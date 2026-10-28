@@ -1,8 +1,4 @@
 {
   "mode": "pre",
-  "tag": "beta",
-  "initialVersions": {
-    "@wethegit/react-gallery": "5.0.1"
-  },
-  "changesets": []
+  "tag": "beta"
 }
