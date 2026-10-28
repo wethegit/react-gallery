@@ -67,7 +67,16 @@ export const GalleryMain = <T,>({
     (event: PointerEvent<HTMLUListElement>) => {
       if (!draggable) return
       event.currentTarget.setPointerCapture?.(event.pointerId)
-      setTouchState((prevState) => ({ ...prevState, isDragging: true }))
+      /*
+        We are storing the start positions on touch down instead on first move, so the the dragging works from the first interaction
+      */
+      setTouchState((prevState) => ({
+        ...prevState,
+        start: { x: event.clientX, y: event.clientY },
+        isDragging: true,
+        offsetting: false,
+        scrolling: false,
+      }))
     },
     [draggable, setTouchState]
   )
@@ -83,43 +92,32 @@ export const GalleryMain = <T,>({
         touch point data
       */
       if (!touchState.scrolling && touchState.isDragging === true && event.clientY) {
-        if (!touchState.start) {
+        const start = touchState.start
+        const xOffset = event.clientX - start.x
+        const yOffset = event.clientY - start.y
+        if (!touchState.offsetting) {
           /*
-            this is the first move event after touch start
-            we need to store the start x/y position
-          */
-          setTouchState((d) => ({
-            ...d,
-            start: { x: event.clientX, y: event.clientY },
-          }))
-        } else {
-          const start = touchState.start
-          const xOffset = event.clientX - start.x
-          const yOffset = event.clientY - start.y
-          if (!touchState.offsetting) {
-            /*
               We're not yet in a scrolling mode. We want to determine which direction
               the user appears to want to scroll in (vertical or horizontal)
             */
-            if (Math.abs(yOffset) > 20) {
-              /*
+          if (Math.abs(yOffset) > 20) {
+            /*
                 if the user appears to be scrolling down ignore touch inputs
               */
-              setTouchState((d) => ({ ...d, scrolling: true }))
-            }
-            if (Math.abs(xOffset) > 10) {
-              /*
+            setTouchState((d) => ({ ...d, scrolling: true }))
+          }
+          if (Math.abs(xOffset) > 10) {
+            /*
                 if the user appears to be scrolling sideways we'll set the
                 offset position and put this in offseting mode (scrolling horizontally)
               */
-              setTouchState((d) => ({ ...d, offsetting: true, xOffset }))
-            }
-          } else {
-            /*
+            setTouchState((d) => ({ ...d, offsetting: true, xOffset }))
+          }
+        } else {
+          /*
               we've already checked the scroll direction and we're srolling horizonatally
             */
-            setTouchState((d) => ({ ...d, xOffset }))
-          }
+          setTouchState((d) => ({ ...d, xOffset }))
         }
       }
     },
