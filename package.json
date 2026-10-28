@@ -41,9 +41,9 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "ESLINT_USE_FLAT_CONFIG=false eslint --fix",
-    "*.css": "stylelint --fix",
-    "*": "prettier -w -u"
+    "*.{js,jsx,ts,tsx}": "npx cross-env ESLINT_USE_FLAT_CONFIG=false eslint --fix",
+    "*.css": "npx stylelint --fix",
+    "*": "npx prettier -w -u"
   },
   "keywords": [
     "react",
