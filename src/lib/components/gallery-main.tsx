@@ -39,6 +39,7 @@ export interface GalleryMainProps<T = unknown> extends Omit<
 export const GalleryMain = <T,>({
   renderGalleryItem,
   className,
+  style,
   ...props
 }: GalleryMainProps<T>) => {
   const {
@@ -177,7 +178,11 @@ export const GalleryMain = <T,>({
       onPointerUp={draggable ? handlePointerUp : undefined}
       onPointerCancel={draggable ? handlePointerCancel : undefined}
       style={
-        { "--selected": activeIndex, "--total": galleryItems.length } as CSSProperties
+        {
+          ...style,
+          "--selected": activeIndex,
+          "--total": galleryItems.length,
+        } as CSSProperties
       }
       {...props}
     >

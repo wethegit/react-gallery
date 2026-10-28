@@ -17,6 +17,7 @@ export const GalleryItem = ({
   active,
   className,
   children,
+  style,
   ...props
 }: GalleryItemProps) => {
   const {
@@ -52,6 +53,7 @@ export const GalleryItem = ({
       data-was-active={index === previouslyActiveIndex}
       style={
         {
+          ...style,
           "--i": index,
           "--center-offset": Math.abs(index - activeIndex),
           "--index-offset": index - activeIndex,
