@@ -1,8 +1,20 @@
+import path from "path"
+import fs from "fs"
 import { themes as prismThemes } from "prism-react-renderer"
 import type { Config } from "@docusaurus/types"
 import type * as Preset from "@docusaurus/preset-classic"
+import packageJson from "react/package.json"
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
+
+// The installed package is the single source of truth for the version the docs describe,
+// so upgrading it updates every page. Its `exports` doesn't expose package.json,
+// so reading it from next to dist/style.css.
+const galleryDist = path.dirname(require.resolve("@wethegit/react-gallery/style.css"))
+const GALLERY_VERSION: string = JSON.parse(
+  fs.readFileSync(path.join(galleryDist, "..", "package.json"), "utf8")
+).version
+const REACT_VERSION: string = packageJson.version
 
 const config: Config = {
   title: "React Gallery",
@@ -15,7 +27,7 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: "https://your-docusaurus-site.example.com",
+  url: "https://wethegit.github.io",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
@@ -27,6 +39,11 @@ const config: Config = {
 
   onBrokenLinks: "throw",
 
+  customFields: {
+    galleryVersion: GALLERY_VERSION,
+    reactVersion: REACT_VERSION,
+  },
+
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
   // may want to replace "en" with "zh-Hans".
@@ -34,6 +51,36 @@ const config: Config = {
     defaultLocale: "en",
     locales: ["en"],
   },
+  plugins: [
+    "docusaurus-plugin-sass",
+    // This is becase using the latest gallery throwing me an error with usage of require()
+    // Somthing we need to look into and see if this just here in doc build or everywhere
+    () => ({
+      name: "react-gallery-umd",
+      configureWebpack: () => ({
+        resolve: {
+          alias: {
+            "@wethegit/react-gallery$": path.join(
+              path.dirname(require.resolve("@wethegit/react-gallery/style.css")),
+              "react-gallery.umd.cjs"
+            ),
+          },
+        },
+      }),
+    }),
+    // `!!ts-to-js!./File.tsx` imports a TypeScript file as JavaScript source
+    // text, for the JS tab of <SourceTabs>.
+    () => ({
+      name: "ts-to-js-loader",
+      configureWebpack: () => ({
+        resolveLoader: {
+          alias: {
+            "ts-to-js": path.resolve(__dirname, "src/loaders/ts-to-js.cjs"),
+          },
+        },
+      }),
+    }),
+  ],
 
   presets: [
     [
@@ -43,8 +90,7 @@ const config: Config = {
           sidebarPath: "./sidebars.ts",
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+          editUrl: "https://github.com/wethegit/react-gallery/",
         },
         blog: {
           showReadingTime: true,
@@ -54,15 +100,14 @@ const config: Config = {
           },
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+          editUrl: "https://github.com/wethegit/react-gallery/",
           // Useful options to enforce blogging best practices
           onInlineTags: "warn",
           onInlineAuthors: "warn",
           onUntruncatedBlogPosts: "warn",
         },
         theme: {
-          customCss: "./src/css/custom.css",
+          customCss: "./src/styles/custom.scss",
         },
       } satisfies Preset.Options,
     ],
@@ -77,11 +122,11 @@ const config: Config = {
       items: [
         {
           type: "docSidebar",
-          sidebarId: "tutorialSidebar",
+          sidebarId: "docsSidebar",
           position: "left",
           label: "Docs",
         },
-        { to: "/demos", label: "Demos", position: "left" },
+        { to: "/docs/demos/basic", label: "Demos", position: "left" },
         {
           href: "https://www.npmjs.com/package/@wethegit/react-gallery",
           label: "npm",
@@ -128,12 +173,12 @@ const config: Config = {
           items: [
             {
               label: "GitHub",
-              href: "https://github.com/wethegit/corgi",
+              href: "https://github.com/wethegit/react-gallery",
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} We the Collective.`,
+      copyright: `Copyright © @wethegit/react-gallery v${GALLERY_VERSION} | ${new Date().getFullYear()} We the Collective.`,
     },
     prism: {
       theme: prismThemes.github,
