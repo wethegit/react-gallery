@@ -1,47 +1,38 @@
 ---
 sidebar_position: 1
+slug: /intro
 ---
 
-# Tutorial Intro
+import { GalleryVersion } from "@site/src/components/versions/gallery-versions"
 
-Let's discover **Docusaurus in less than 5 minutes**.
+# Introduction
 
-## Getting Started
+[`@wethegit/react-gallery`](https://www.npmjs.com/package/@wethegit/react-gallery) is a customizable, accessible gallery component for React projects. This site documents **version <GalleryVersion/>** and pairs every concept with a live, interactive demo.
 
-Get started by **creating a new site**.
+:::info
+This demo and documentation playground is built around the react gallery package. The official source is available at [wethegit/react-gallery](https://github.com/wethegit/react-gallery).
+:::
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+## Why this gallery?
 
-### What you'll need
+- **Accessible by default.** Focus management, tabbing, and live-region announcements follow the [WAI carousel pattern](https://www.w3.org/WAI/tutorials/carousels/). You provide `alt` text and visually-hidden labels; the gallery handles the rest.
+- **Compound components.** Instead of one monolithic component with dozens of props, you compose `<Gallery>`, `<GalleryMain>`, `<GalleryNav>`, and `<GalleryPagination>` however your layout needs.
+- **Render props for full markup control.** `renderGalleryItem` and `renderPaginationItem` let you render any markup for slides and pagination, from simple dots to thumbnail strips.
+- **Styling via CSS custom properties.** Item width, gaps, and transition duration are all plain CSS variables, so theming requires no JavaScript.
+- **Headless-friendly.** The `useGallery` hook exposes the full gallery state (`activeIndex`, `next`, `previous`, `goToIndex`, and more) for completely custom UIs.
+- **Light footprint.** Two peer dependencies (`react`, `react-dom`, versions 17 through 19) and a single small stylesheet.
 
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+## How the rendering works
 
-## Generate a new site
+Under the hood the gallery is a CSS grid with a single grid area. Every item occupies the same cell and is moved with a `transform` computed from CSS variables the library sets per item (`--i`, `--center-offset`, `--side`, and friends). That means:
 
-Generate a new Docusaurus site using the **classic template**.
+- Transitions are pure CSS, driven by the `--duration` variable.
+- The layout never reflows when slides change; only transforms update.
+- Drag/swipe support works on both touch and mouse pointers via the `draggable` prop.
 
-The classic template will automatically be added to your project after you run the command:
+## Where to go next
 
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+- [Getting started](/docs/getting-started) walks through install and a first gallery.
+- The [demos](/docs/demos/basic) show common patterns with source code.
+- The [API reference](/docs/api/gallery) documents every component and prop.
+- The [styling](/docs/guides/styling) and [accessibility](/docs/guides/accessibility) guides cover theming and inclusive usage.
