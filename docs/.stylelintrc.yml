@@ -1,0 +1,34 @@
+extends: stylelint-config-standard-scss
+plugins:
+  - stylelint-order
+rules:
+  block-no-empty: null
+  color-hex-length: null
+  custom-property-no-missing-var-function: null
+  custom-property-pattern: null
+  declaration-block-no-redundant-longhand-properties: null
+  length-zero-no-unit: null
+  max-nesting-depth:
+    - 3
+    - ignore:
+        - blockless-at-rules
+        - pseudo-classes
+  no-descending-specificity: null
+  no-invalid-position-at-import-rule: null
+  selector-class-pattern: null
+  selector-pseudo-class-no-unknown: null
+  value-no-vendor-prefix: null
+
+  order/order:
+    - dollar-variables
+    - custom-properties
+    - declarations
+  order/properties-alphabetical-order: true
+
+  scss/at-if-no-null: null
+  scss/at-mixin-pattern: null
+  scss/dollar-variable-colon-newline-after: null
+  scss/double-slash-comment-whitespace-inside: null
+  scss/no-global-function-names: null
+  scss/operator-no-newline-after: null
+  scss/operator-no-unspaced: null
