@@ -18,6 +18,7 @@ $control-size: 2.5rem;
   background: var(--ifm-background-surface-color);
   border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: $radius-card;
+  container-type: inline-size;
   margin-bottom: 1.5rem;
   overflow: clip;
   padding: 1.5rem 0 1.25rem;
@@ -32,7 +33,7 @@ $control-size: 2.5rem;
 }
 
 .gallery {
-  --item-width: min(70%, 800px);
+  --item-width: min(70cqi, 640px);
   --item-gap: 4rem;
   --duration: 0.45s;
 
