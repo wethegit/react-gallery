@@ -1,0 +1,54 @@
+---
+sidebar_position: 7
+---
+
+import { CardStackGallery } from "@site/src/components/demos/card-stack/card-stack"
+import { SourceTabs } from "@site/src/components/source-tabs/source-tabs"
+import { OpenInCodePen } from "@site/src/components/codepen/open-in-codepen"
+
+import CodeBlock from "@theme/CodeBlock"
+import cardStackSource from "!!raw-loader!@site/src/components/demos/card-stack/card-stack.tsx"
+import cardStackJs from "!!ts-to-js!@site/src/components/demos/card-stack/card-stack.tsx"
+import cardStackStyles from "!!raw-loader!@site/src/components/demos/card-stack/card-stack.module.scss"
+import basicPen from "!!ts-to-js?codepen!@site/src/components/demos/card-stack/card-stack.tsx"
+
+# Card stack
+
+A pile of cards. Drag the top card left to throw it away and reveal the next, drag right to bring the last one back, or use the arrows.
+
+<CardStackGallery />
+
+<OpenInCodePen title="basic gallery" source={basicPen} />
+
+## How it works
+
+Instead of sitting side by side, the cards stay piled in one place: the transform leaves out `translateX(var(--x))`, the position the gallery normally calculates. Everything else comes from `--index-offset`, which `GalleryItem` sets to each card's distance from the active one:
+
+- **Cards still to come** (`--index-offset` of 1, 2, 3...) drop down and shrink a little per place, so their edges peek out under the top card.
+- **Cards already gone** (negative `--index-offset`) are moved off to the left, tilted, and faded out. Going back plays it in reverse.
+- **Dragging:** while you drag, the gallery sets `--touch-offset` to the distance in pixels. Multiplying it by `--active` (`1` only for the top card) makes just that card follow the pointer, tilting as it goes. Let go past 50px and the gallery moves to the next or previous card, as with any draggable gallery.
+- **Only three deep:** `visibleRange={3}` marks the cards further down the pile, and the CSS hides them.
+
+The CSS turns `--index-offset` into the two values it needs with `max()` and `min()`:
+
+```scss
+--ahead: max(var(--index-offset), 0); // 1, 2, 3... for cards still to come
+--gone: min(max(calc(var(--index-offset) * -1), 0), 1); // 1 for cards gone
+```
+
+## Source
+
+<SourceTabs file="CardStackGallery" ts={cardStackSource} js={cardStackJs} />
+
+## Styles
+
+<CodeBlock language="scss" title="card-stack.module.scss">
+  {cardStackStyles}
+</CodeBlock>
+
+`styles.*` in the component (the card, controls, arrows, and counter) comes from the demos' shared SCSS module; see the [basic gallery demo](/docs/demos/basic#styles).
+
+## Notes
+
+- "Start over" calls `goToIndex(0)` from `useGallery()`, so the gallery's `onChange` would fire as usual. It's disabled on the first card rather than hidden, so the controls don't shift when it appears.
+- `loop` is off: a pile has a last card. With `loop` on, "next" on the last card would jump back to the first, and every thrown-away card would fly back in from the left at once.

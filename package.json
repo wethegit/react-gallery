@@ -30,7 +30,8 @@
     "lint": "npm run typecheck && npm run lint:scripts && npm run lint:styles",
     "changeset": "changeset",
     "version": "changeset version",
-    "release": "npm run build && changeset publish"
+    "release": "npm run build && changeset publish",
+    "docs:start": "npm --prefix docs run start"
   },
   "publishConfig": {
     "access": "public"
