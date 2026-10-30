@@ -1,4 +1,3 @@
-import { classnames } from "@site/src/utils/classnames"
 import {
   Gallery,
   GalleryItem,
@@ -19,12 +18,7 @@ export function BasicGallery() {
       <Gallery items={SLIDES} className={styles.gallery}>
         <GalleryMain<Slide>
           renderGalleryItem={({ item, index, active }) => (
-            <GalleryItem
-              key={item.id}
-              index={index}
-              active={active}
-              className={classnames([styles.slide, active && styles.isActive])}
-            >
+            <GalleryItem key={item.id} index={index} active={active}>
               <img src={item.image} alt={item.alt} />
             </GalleryItem>
           )}

@@ -2,19 +2,23 @@
 sidebar_position: 7
 ---
 
-import CodeBlock from "@theme/CodeBlock"
 import { CardStackGallery } from "@site/src/components/demos/card-stack/card-stack"
 import { SourceTabs } from "@site/src/components/source-tabs/source-tabs"
+import { OpenInCodePen } from "@site/src/components/codepen/open-in-codepen"
 
+import CodeBlock from "@theme/CodeBlock"
 import cardStackSource from "!!raw-loader!@site/src/components/demos/card-stack/card-stack.tsx"
 import cardStackJs from "!!ts-to-js!@site/src/components/demos/card-stack/card-stack.tsx"
 import cardStackStyles from "!!raw-loader!@site/src/components/demos/card-stack/card-stack.module.scss"
+import basicPen from "!!ts-to-js?codepen!@site/src/components/demos/card-stack/card-stack.tsx"
 
 # Card stack
 
 A pile of cards. Drag the top card left to throw it away and reveal the next, drag right to bring the last one back, or use the arrows.
 
 <CardStackGallery />
+
+<OpenInCodePen title="basic gallery" source={basicPen} />
 
 ## How it works
 

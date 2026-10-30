@@ -4,14 +4,19 @@ sidebar_position: 1
 
 import { SourceTabs } from "@site/src/components/source-tabs/source-tabs"
 import { BasicGallery } from "@site/src/components/demos/basic-gallery/basic-gallery"
+import { OpenInCodePen } from "@site/src/components/codepen/open-in-codepen"
+
 import basicSource from "!!raw-loader!@site/src/components/demos/basic-gallery/basic-gallery.tsx"
 import basicJs from "!!ts-to-js!@site/src/components/demos/basic-gallery/basic-gallery.tsx"
+import basicPen from "!!ts-to-js?codepen!@site/src/components/demos/basic-gallery/basic-gallery.tsx"
 
 # Basic Gallery
 
 The canonical setup: a main view, previous/next arrows, and dot pagination. Slides can also be dragged with a mouse or finger (`draggable` defaults to `true`).
 
 <BasicGallery />
+
+<OpenInCodePen title="basic gallery" source={basicPen} />
 
 ## Source
 

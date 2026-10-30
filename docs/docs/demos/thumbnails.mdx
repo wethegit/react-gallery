@@ -4,14 +4,19 @@ sidebar_position: 3
 
 import { SourceTabs } from "@site/src/components/source-tabs/source-tabs"
 import { ThumbnailGallery } from "@site/src/components/demos/thumbnail-gallery/thumbnail-gallery"
+import { OpenInCodePen } from "@site/src/components/codepen/open-in-codepen"
+
 import thumbnailSource from "!!raw-loader!@site/src/components/demos/thumbnail-gallery/thumbnail-gallery.tsx"
 import thumbnailJs from "!!ts-to-js!@site/src/components/demos/thumbnail-gallery/thumbnail-gallery.tsx"
+import basicPen from "!!ts-to-js?codepen!@site/src/components/demos/thumbnail-gallery/thumbnail-gallery.tsx"
 
 # Thumbnail pagination
 
 `renderPaginationItem` gives you full control over pagination markup, so "dots" can just as easily be thumbnails, labels, or icons. Here each pagination button renders a small copy of its slide.
 
 <ThumbnailGallery />
+
+<OpenInCodePen title="basic gallery" source={basicPen} />
 
 ## Source
 
