@@ -10,3 +10,10 @@ declare module "!!ts-to-js!*" {
   const content: string
   export default content
 }
+
+// A demo prepared for "Edit in CodePen": JavaScript with the site's own
+// modules pasted in, plus its CSS modules compiled to CSS.
+declare module "!!ts-to-js?codepen!*" {
+  const content: { js: string; css: string }
+  export default content
+}
