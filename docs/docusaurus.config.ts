@@ -139,6 +139,11 @@ const config: Config = {
         },
       ],
     },
+    sidebar: {
+      autoCollapseCategories: true,
+      breakcrumbs: true,
+      hideable: true,
+    },
     footer: {
       style: "dark",
       links: [
@@ -187,6 +192,7 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ["scss"],
     },
   } satisfies Preset.ThemeConfig,
 }
