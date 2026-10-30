@@ -1,0 +1,54 @@
+---
+sidebar_position: 3
+---
+
+import { SourceTabs } from "@site/src/components/source-tabs/source-tabs"
+import { ThumbnailGallery } from "@site/src/components/demos/thumbnail-gallery/thumbnail-gallery"
+import thumbnailSource from "!!raw-loader!@site/src/components/demos/thumbnail-gallery/thumbnail-gallery.tsx"
+import thumbnailJs from "!!ts-to-js!@site/src/components/demos/thumbnail-gallery/thumbnail-gallery.tsx"
+
+# Thumbnail pagination
+
+`renderPaginationItem` gives you full control over pagination markup, so "dots" can just as easily be thumbnails, labels, or icons. Here each pagination button renders a small copy of its slide.
+
+<ThumbnailGallery />
+
+## Source
+
+<SourceTabs file="ThumbnailGallery" ts={thumbnailSource} js={thumbnailJs} />
+
+## Styles
+
+The thumbnail styling from the shared SCSS module. The active button carries `aria-current="true"`, so the highlight needs no extra class wiring:
+
+```scss title="shared.module.scss"
+.thumbs {
+  --inline-gap: 0.5rem;
+
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.thumb {
+  border: 2px solid transparent;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+
+  img {
+    aspect-ratio: 8 / 5;
+    object-fit: cover;
+    width: 4.5rem;
+  }
+
+  &[aria-current="true"] {
+    border-color: var(--ifm-color-primary);
+  }
+}
+```
+
+## Notes
+
+- The thumbnail `<img>` uses an empty `alt` because the visually-hidden span already labels the button; announcing the image description twice would be noise for screen reader users.
+- `GalleryPagination` renders a CSS grid with `grid-auto-flow: column`; its spacing is controlled by the `--inline-gap` custom property, set here inside the `thumbs` class.
