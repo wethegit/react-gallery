@@ -1,0 +1,27 @@
+---
+sidebar_position: 2
+---
+
+import { LoopingGallery } from "@site/src/components/demos/looping-gallery/looping-gallery"
+import { SourceTabs } from "@site/src/components/source-tabs/source-tabs"
+import loopingSource from "!!raw-loader!@site/src/components/demos/looping-gallery/looping-gallery.tsx"
+import loopingJs from "!!ts-to-js!@site/src/components/demos/looping-gallery/looping-gallery.tsx"
+
+# Looping Gallery
+
+Set `loop` on `<Gallery>` to wrap around: advancing past the last item returns to the first, and going back from the first jumps to the last.
+
+The difference only shows at the ends of the gallery, so this demo adds a `loop` toggle and a position counter. Jump to slide 6 and press next with the toggle on, then again with it off:
+
+<LoopingGallery />
+
+## Source
+
+<SourceTabs file="BasicGallery" ts={loopingSource} js={loopingJs} />
+
+## Notes
+
+- With `loop` off, `GalleryNav` disables the previous arrow on the first item and the next arrow on the last; with `loop` on, the arrows never disable.
+- `loop` is a plain prop: toggling it takes effect immediately, no remount needed.
+- When wrapping from the last item to the first, the gallery transitions across the whole row rather than teleporting. Combine `loop` with `startIndex` to begin anywhere in the set.
+- `styles.*` comes from the demos' shared SCSS module; see the [basic gallery demo](/docs/demos/basic#styles) for the relevant excerpt.
