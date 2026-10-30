@@ -1,0 +1,91 @@
+.gallery {
+  --item-width: min(70cqi, 360px);
+  --duration: 0.45s;
+
+  @media (prefers-reduced-motion: reduce) {
+    --duration: 0s;
+  }
+}
+
+// Room under the top card for the ones peeking out below it.
+.stack {
+  padding-block: 0.5rem 2.75rem;
+}
+
+// Two classes, so this beats the gallery stylesheet's own item `transform`
+// whatever order the stylesheets load in.
+.stack .stackCard {
+  // 1, 2, 3... for cards still to come, 0 for the rest.
+  --ahead: max(var(--index-offset), 0);
+
+  // 1 for cards already swiped away, 0 for the rest.
+  --gone: min(max(calc(var(--index-offset) * -1), 0), 1);
+
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 18%);
+  cursor: grab;
+  opacity: calc(1 - var(--gone));
+  overflow: hidden;
+
+  // No translateX(var(--x)) here: the cards stay piled in one place instead
+  // of sitting side by side. In order:
+  //  1. While dragging, --touch-offset is the distance dragged in pixels.
+  //     --active is 1 only for the top card, so only it follows the
+  //     pointer, tilting as it goes.
+  //  2. Cards already gone fly off to the left.
+  //  3. Cards still to come drop down and shrink a little per place in the
+  //     pile, up to three deep.
+  transform: translateX(calc(var(--touch-offset, 0) * 1px * var(--active)))
+    rotate(calc(var(--touch-offset, 0) * 0.04deg * var(--active)))
+    translateX(calc(var(--gone) * -140%)) rotate(calc(var(--gone) * -16deg))
+    translateY(calc(min(var(--ahead), 3) * 1.4rem))
+    scale(calc(1 - min(var(--ahead), 3) * 0.06));
+  transition:
+    transform var(--duration),
+    opacity var(--duration);
+
+  // visibleRange={3}: hide cards deeper than three in the pile.
+  &[data-item-visible="false"] {
+    opacity: 0;
+  }
+
+  img {
+    aspect-ratio: 8 / 5;
+    display: block;
+    object-fit: cover;
+    width: 100%;
+  }
+}
+
+.body {
+  padding: 0.75rem 1rem 1rem;
+}
+
+.title {
+  font-weight: 700;
+  margin: 0;
+}
+
+.description {
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.9rem;
+  margin: 0.25rem 0 0;
+}
+
+.restart {
+  background: none;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 999px;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.9rem;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
+  }
+}
