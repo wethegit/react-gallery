@@ -7,7 +7,7 @@ import { BasicGallery } from "@site/src/components/demos/basic-gallery/basic-gal
 import basicSource from "!!raw-loader!@site/src/components/demos/basic-gallery/basic-gallery.tsx"
 import basicJs from "!!ts-to-js!@site/src/components/demos/basic-gallery/basic-gallery.tsx"
 
-# Basic gallery
+# Basic Gallery
 
 The canonical setup: a main view, previous/next arrows, and dot pagination. Slides can also be dragged with a mouse or finger (`draggable` defaults to `true`).
 
@@ -66,7 +66,3 @@ The relevant pieces of the shared SCSS module:
 - The active slide gets full opacity through `styles.isActive`; the `active` flag comes straight from `renderGalleryItem`.
 - The dot styling targets `aria-current="true"`, which `GalleryPaginationItem` sets on the active button, so no extra class wiring is needed.
 - The gallery's own class names are CSS-module hashed too, so passing your module's classes through `className`/`buttonClassName` props (rather than targeting library selectors) is the supported way to style it.
-
-```
-
-```
