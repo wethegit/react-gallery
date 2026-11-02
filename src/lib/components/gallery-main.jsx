@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback } from "react"
+import { useCallback, useRef } from "react"
 
 import { useGallery } from "../hooks/use-gallery"
 import classnames from "../utils/classnames"
@@ -19,15 +19,56 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
     swipeThreshold,
   } = useGallery()
 
-  const handlePointerDown = useCallback(() => {
-    if (!draggable) return
+  /*
+    Only the primary pointer can drive the drag; any other pointers (e.g. a
+    second finger) are ignored. A new primary pointer can only go down once
+    every previous touch has lifted, so if one arrives while a drag is still
+    recorded we've missed its up/cancel event and it simply takes over.
+  */
+  const activePointerId = useRef(null)
 
-    setTouchState((prevState) => ({ ...prevState, isDragging: true }))
-  }, [draggable, setTouchState])
+  const resetDrag = useCallback(() => {
+    activePointerId.current = null
+
+    setTouchState((prevState) => ({
+      ...prevState,
+      isDragging: false,
+      xOffset: 0,
+      start: 0,
+      offsetting: false,
+      scrolling: false,
+    }))
+  }, [setTouchState])
+
+  const handlePointerDown = useCallback(
+    (event) => {
+      if (!draggable) return
+      if (!event.isPrimary) return
+
+      const isStale = activePointerId.current !== null
+      activePointerId.current = event.pointerId
+
+      setTouchState((prevState) =>
+        isStale
+          ? // discard whatever was left over from the missed release
+            {
+              ...prevState,
+              isDragging: true,
+              xOffset: 0,
+              start: 0,
+              offsetting: false,
+              scrolling: false,
+            }
+          : { ...prevState, isDragging: true }
+      )
+    },
+    [draggable, setTouchState]
+  )
 
   const handlePointerMove = useCallback(
     (event) => {
       if (!draggable) return
+      if (event.pointerId !== activePointerId.current) return
 
       /*
         first check if we haven't already determined if
@@ -63,7 +104,13 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
               /*
                 if the user appears to be scrolling sideways we'll set the
                 offset position and put this in offseting mode (scrolling horizontally)
+
+                Capture the pointer only now that it's a real drag, so it keeps
+                tracking outside the gallery. Capturing on pointerdown would
+                retarget the click from a plain tap away from links/buttons
+                inside the slides.
               */
+              event.currentTarget.setPointerCapture?.(event.pointerId)
               setTouchState((d) => ({ ...d, offsetting: true, xOffset }))
             }
           } else {
@@ -85,39 +132,50 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
     ]
   )
 
-  const handlePointerUp = useCallback(() => {
-    if (!draggable) return
+  const handlePointerUp = useCallback(
+    (event) => {
+      if (!draggable) return
+      if (event.pointerId !== activePointerId.current) return
 
-    if (touchState.isDragging) {
-      /*
+      if (touchState.isDragging) {
+        /*
           check if the offset value is more than the swipeThreshold.
           if it is then we'll move to the next or prev item in the gallery,
           otherwise it'll just spring back to the current position.
         */
-      if (Math.abs(touchState.xOffset) > swipeThreshold) {
-        if (touchState.xOffset < 0) next()
-        else previous()
+        if (Math.abs(touchState.xOffset) > swipeThreshold) {
+          if (touchState.xOffset < 0) next()
+          else previous()
+        }
       }
 
       // reset all the touchState values.
-      setTouchState((prevState) => ({
-        ...prevState,
-        isDragging: false,
-        xOffset: 0,
-        start: 0,
-        offsetting: false,
-        scrolling: false,
-      }))
-    }
-  }, [
-    draggable,
-    touchState.isDragging,
-    touchState.xOffset,
-    swipeThreshold,
-    setTouchState,
-    next,
-    previous,
-  ])
+      resetDrag()
+    },
+    [
+      draggable,
+      touchState.isDragging,
+      touchState.xOffset,
+      swipeThreshold,
+      resetDrag,
+      next,
+      previous,
+    ]
+  )
+
+  /*
+    The browser can cancel the pointer (e.g. when it takes over for a vertical
+    scroll) or capture can be lost; in that case reset without navigating.
+  */
+  const handlePointerCancel = useCallback(
+    (event) => {
+      if (!draggable) return
+      if (event.pointerId !== activePointerId.current) return
+
+      resetDrag()
+    },
+    [draggable, resetDrag]
+  )
 
   return (
     <ul
@@ -125,6 +183,8 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
       onPointerDown={draggable ? handlePointerDown : null}
       onPointerMove={draggable ? handlePointerMove : null}
       onPointerUp={draggable ? handlePointerUp : null}
+      onPointerCancel={draggable ? handlePointerCancel : null}
+      onLostPointerCapture={draggable ? handlePointerCancel : null}
       style={{ "--selected": activeIndex, "--total": galleryItems.length }}
       {...props}
     >
