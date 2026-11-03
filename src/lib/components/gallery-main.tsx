@@ -2,12 +2,46 @@
 
 import { useCallback, useRef } from "react"
 
+import type { RenderGalleryItemArgs } from "../types/types"
+import type {
+  CSSProperties,
+  ReactNode,
+  ComponentPropsWithoutRef,
+  PointerEvent,
+} from "react"
+
 import { useGallery } from "../hooks/use-gallery"
-import classnames from "../utils/classnames"
+import { classnames } from "../utils/classnames"
 
 import styles from "./gallery.module.css"
 
-export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
+export interface GalleryMainProps<T = unknown> extends Omit<
+  ComponentPropsWithoutRef<"ul">,
+  "children"
+> {
+  renderGalleryItem: (args: RenderGalleryItemArgs<T>) => ReactNode
+}
+
+/**
+ * GalleryMain Component
+ * ---
+ * @example
+    <Gallery items={GALLERY_ITEMS}>
+      <GalleryMain<GalleryItemDataType>
+        renderGalleryItem={({ item, index, active }) => (
+          <GalleryItem key={item.id} index={index} active={active}>
+            <img src={item.image} alt={item.alt} />
+          </GalleryItem>
+        )}
+      />
+    </Gallery>
+ */
+export const GalleryMain = <T,>({
+  renderGalleryItem,
+  className,
+  style,
+  ...props
+}: GalleryMainProps<T>) => {
   const {
     activeIndex,
     galleryItems,
@@ -17,7 +51,7 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
     touchState,
     setTouchState,
     swipeThreshold,
-  } = useGallery()
+  } = useGallery<T>()
 
   /*
     Only the primary pointer can drive the drag; any other pointers (e.g. a
@@ -25,48 +59,46 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
     every previous touch has lifted, so if one arrives while a drag is still
     recorded we've missed its up/cancel event and it simply takes over.
   */
-  const activePointerId = useRef(null)
+  const activePointerId = useRef<number | null>(null)
 
-  const resetDrag = useCallback(() => {
+  const resetTouchState = useCallback(() => {
     activePointerId.current = null
 
     setTouchState((prevState) => ({
       ...prevState,
       isDragging: false,
       xOffset: 0,
-      start: 0,
+      start: { x: 0, y: 0 },
       offsetting: false,
       scrolling: false,
     }))
   }, [setTouchState])
 
   const handlePointerDown = useCallback(
-    (event) => {
+    (event: PointerEvent<HTMLUListElement>) => {
       if (!draggable) return
       if (!event.isPrimary) return
 
-      const isStale = activePointerId.current !== null
       activePointerId.current = event.pointerId
 
-      setTouchState((prevState) =>
-        isStale
-          ? // discard whatever was left over from the missed release
-            {
-              ...prevState,
-              isDragging: true,
-              xOffset: 0,
-              start: 0,
-              offsetting: false,
-              scrolling: false,
-            }
-          : { ...prevState, isDragging: true }
-      )
+      /*
+        We are storing the start positions on touch down instead on first move, so the the dragging works from the first interaction.
+        Everything else is cleared too, discarding whatever a missed release left over.
+      */
+      setTouchState((prevState) => ({
+        ...prevState,
+        start: { x: event.clientX, y: event.clientY },
+        isDragging: true,
+        xOffset: 0,
+        offsetting: false,
+        scrolling: false,
+      }))
     },
     [draggable, setTouchState]
   )
 
   const handlePointerMove = useCallback(
-    (event) => {
+    (event: PointerEvent<HTMLUListElement>) => {
       if (!draggable) return
       if (event.pointerId !== activePointerId.current) return
 
@@ -77,31 +109,22 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
         touch point data
       */
       if (!touchState.scrolling && touchState.isDragging === true && event.clientY) {
-        if (!touchState.start) {
+        const start = touchState.start
+        const xOffset = event.clientX - start.x
+        const yOffset = event.clientY - start.y
+        if (!touchState.offsetting) {
           /*
-            this is the first move event after touch start
-            we need to store the start x/y position
-          */
-          setTouchState((d) => ({
-            ...d,
-            start: { x: event.clientX, y: event.clientY },
-          }))
-        } else {
-          const xOffset = event.clientX - touchState.start.x
-          const yOffset = event.clientY - touchState.start.y
-          if (!touchState.offsetting) {
-            /*
               We're not yet in a scrolling mode. We want to determine which direction
               the user appears to want to scroll in (vertical or horizontal)
             */
-            if (Math.abs(yOffset) > 20) {
-              /*
+          if (Math.abs(yOffset) > 20) {
+            /*
                 if the user appears to be scrolling down ignore touch inputs
               */
-              setTouchState((d) => ({ ...d, scrolling: true }))
-            }
-            if (Math.abs(xOffset) > 10) {
-              /*
+            setTouchState((d) => ({ ...d, scrolling: true }))
+          }
+          if (Math.abs(xOffset) > 10) {
+            /*
                 if the user appears to be scrolling sideways we'll set the
                 offset position and put this in offseting mode (scrolling horizontally)
 
@@ -110,15 +133,14 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
                 retarget the click from a plain tap away from links/buttons
                 inside the slides.
               */
-              event.currentTarget.setPointerCapture?.(event.pointerId)
-              setTouchState((d) => ({ ...d, offsetting: true, xOffset }))
-            }
-          } else {
-            /*
+            event.currentTarget.setPointerCapture?.(event.pointerId)
+            setTouchState((d) => ({ ...d, offsetting: true, xOffset }))
+          }
+        } else {
+          /*
               we've already checked the scroll direction and we're srolling horizonatally
             */
-            setTouchState((d) => ({ ...d, xOffset }))
-          }
+          setTouchState((d) => ({ ...d, xOffset }))
         }
       }
     },
@@ -133,10 +155,11 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
   )
 
   const handlePointerUp = useCallback(
-    (event) => {
+    (event: PointerEvent<HTMLUListElement>) => {
       if (!draggable) return
       if (event.pointerId !== activePointerId.current) return
 
+      event.currentTarget.releasePointerCapture?.(event.pointerId)
       if (touchState.isDragging) {
         /*
           check if the offset value is more than the swipeThreshold.
@@ -150,42 +173,49 @@ export const GalleryMain = ({ renderGalleryItem, className, ...props }) => {
       }
 
       // reset all the touchState values.
-      resetDrag()
+      resetTouchState()
     },
     [
       draggable,
       touchState.isDragging,
       touchState.xOffset,
       swipeThreshold,
-      resetDrag,
       next,
       previous,
+      resetTouchState,
     ]
   )
 
   /*
     The browser can cancel the pointer (e.g. when it takes over for a vertical
     scroll) or capture can be lost; in that case reset without navigating.
+    Capture is released implicitly in both cases, so there's nothing to release.
   */
   const handlePointerCancel = useCallback(
-    (event) => {
+    (event: PointerEvent<HTMLUListElement>) => {
       if (!draggable) return
       if (event.pointerId !== activePointerId.current) return
 
-      resetDrag()
+      resetTouchState()
     },
-    [draggable, resetDrag]
+    [draggable, resetTouchState]
   )
 
   return (
     <ul
       className={classnames([styles.gallery__main, className])}
-      onPointerDown={draggable ? handlePointerDown : null}
-      onPointerMove={draggable ? handlePointerMove : null}
-      onPointerUp={draggable ? handlePointerUp : null}
-      onPointerCancel={draggable ? handlePointerCancel : null}
-      onLostPointerCapture={draggable ? handlePointerCancel : null}
-      style={{ "--selected": activeIndex, "--total": galleryItems.length }}
+      onPointerDown={draggable ? handlePointerDown : undefined}
+      onPointerMove={draggable ? handlePointerMove : undefined}
+      onPointerUp={draggable ? handlePointerUp : undefined}
+      onPointerCancel={draggable ? handlePointerCancel : undefined}
+      onLostPointerCapture={draggable ? handlePointerCancel : undefined}
+      style={
+        {
+          ...style,
+          "--selected": activeIndex,
+          "--total": galleryItems.length,
+        } as CSSProperties
+      }
       {...props}
     >
       {galleryItems.map((item, index) => {
