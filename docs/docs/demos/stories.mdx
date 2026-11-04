@@ -1,0 +1,47 @@
+---
+sidebar_position: 8
+---
+
+import { OpenInCodePen } from "@site/src/components/codepen/open-in-codepen"
+import { StoriesGallery } from "@site/src/components/demos/story-gallery/story-gallery"
+import { SourceTabs } from "@site/src/components/source-tabs/source-tabs"
+
+import CodeBlock from "@theme/CodeBlock"
+import storiesPen from "!!ts-to-js?codepen!@site/src/components/demos/story-gallery/story-gallery.tsx"
+import storiesSource from "!!raw-loader!@site/src/components/demos/story-gallery/story-gallery.tsx"
+import storiesJs from "!!ts-to-js!@site/src/components/demos/story-gallery/story-gallery.tsx"
+import storiesStyles from "!!raw-loader!@site/src/components/demos/story-gallery/stories.module.scss"
+
+# Stories
+
+A story viewer like the ones in social apps: it plays on its own, a bar at the top shows how far through each story you are, and tapping the left or right of the story goes back or forward. Use the button at the top right to pause.
+
+<StoriesGallery />
+
+<OpenInCodePen title="stories" source={storiesPen} />
+
+## How it works
+
+- **One story at a time:** the stories stay in one place (`transform: none`) and cross-fade. `GalleryItem` sets `--active` to `1` for the active story and `0` for the rest, so the CSS uses it directly as the opacity: `opacity: var(--active)`.
+- **Progress bars from pagination:** `GalleryPagination` draws one bar per story. Each `GalleryPaginationItem` uses `itemTag="span"` and `decorativeOnly`, so it renders a plain `<span>` instead of a button and does nothing when clicked. Bars before the active story are full; the active one fills up.
+- **Timing from CSS:** the active bar's fill is a CSS animation lasting one story. When it ends, its `onAnimationEnd` calls `next()` from `useGallery()`. Pausing just pauses the animation (`animation-play-state: paused`), so the bar and the timing can't drift apart, and the story picks up exactly where it stopped.
+- **Tap zones:** two invisible buttons cover the story, one third for "previous" and two thirds for "next", calling `previous()` and `next()`. `loop` takes the last story back to the first.
+
+## Source
+
+<SourceTabs file="StoriesGallery" ts={storiesSource} js={storiesJs} />
+
+## Styles
+
+<CodeBlock language="scss" title="stories.module.scss">
+  {storiesStyles}
+</CodeBlock>
+
+## Accessibility notes
+
+Content that changes on its own needs extra care:
+
+- **A pause button.** Anything that moves for more than five seconds needs a way to stop it ([WCAG 2.2.2](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html)). The story doesn't start playing on its own for visitors with reduced motion turned on.
+- **A quiet live region while playing.** The gallery announces every change through its live region. While the stories play by themselves that would interrupt screen reader users every five seconds, so `ariaLiveText` is an empty string while playing (which turns the announcement off) and `"Story $i of $t."` once paused. This follows the [WAI carousel pattern](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/).
+- **No `GalleryNav`.** The tap zones are plain buttons. `GalleryNav` moves focus to the active item when it reaches the first or last one, even with `loop` on (see [GalleryNav](/docs/api/gallery-nav#focus)). During playback that would pull focus away from the pause button.
+- **Hidden progress bars.** They only repeat what the live region says, so their `<ul>` has `aria-hidden="true"`.
