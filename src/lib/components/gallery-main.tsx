@@ -188,8 +188,12 @@ export const GalleryMain = <T,>({
 
   /*
     The browser can cancel the pointer (e.g. when it takes over for a vertical
-    scroll) or capture can be lost; in that case reset without navigating.
-    Capture is released implicitly in both cases, so there's nothing to release.
+    scroll); in that case reset without navigating. Capture is released
+    implicitly, so there's nothing to release.
+
+    Don't reset on lostpointercapture: touch pointers are implicitly captured by
+    the element under the finger, so moving capture to the list fires a bubbling
+    lostpointercapture from that element in the middle of the drag.
   */
   const handlePointerCancel = useCallback(
     (event: PointerEvent<HTMLUListElement>) => {
@@ -208,7 +212,6 @@ export const GalleryMain = <T,>({
       onPointerMove={draggable ? handlePointerMove : undefined}
       onPointerUp={draggable ? handlePointerUp : undefined}
       onPointerCancel={draggable ? handlePointerCancel : undefined}
-      onLostPointerCapture={draggable ? handlePointerCancel : undefined}
       style={
         {
           ...style,
