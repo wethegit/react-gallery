@@ -19,6 +19,9 @@
     },
     "./style.css": "./dist/style.css"
   },
+  "workspaces": [
+    "docs"
+  ],
   "scripts": {
     "prepare": "husky",
     "start": "vite",
@@ -31,7 +34,11 @@
     "changeset": "changeset",
     "version": "changeset version",
     "release": "npm run build && changeset publish",
-    "docs:start": "npm --prefix docs run start"
+    "docs:start": "npm run start --workspace=docs",
+    "docs:build": "npm run build --workspace=docs",
+    "docs:serve": "npm run serve --workspace=docs",
+    "docs:clear": "npm run clear --workspace=docs",
+    "docs:deploy": "npm run deploy --workspace=docs"
   },
   "publishConfig": {
     "access": "public"
