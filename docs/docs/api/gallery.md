@@ -49,8 +49,8 @@ TypeScript: `GalleryProps<T>`, where `T` is inferred from `items`.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `items` | `T[]` | required | Your gallery data, in any shape. Each entry is passed back to `renderGalleryItem` and `renderPaginationItem`. Throws if it is not an array. |
-| `children` | `ReactNode` | required | `GalleryMain`, `GalleryNav`, `GalleryPagination`, and any components that call `useGallery`. |
+| `items` | `T[]` | yes | Your gallery data, in any shape. Each entry is passed back to `renderGalleryItem` and `renderPaginationItem`. Throws if it is not an array. |
+| `children` | `ReactNode` | yes | `GalleryMain`, `GalleryNav`, `GalleryPagination`, and any components that call `useGallery`. |
 | `ariaLiveText` | `string` | `"Item $i of $t."` | Text announced to assistive technology when the active item changes. See [ariaLiveText](#arialivetext). |
 | `className` | `string` | | Extra class for the wrapper `<div>`. |
 | `draggable` | `boolean` | `true` | Lets users change items by dragging with a finger or pointer. |
