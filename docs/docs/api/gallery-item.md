@@ -18,8 +18,8 @@ TypeScript: `GalleryItemProps`. `GalleryItem` never sees your item data, so it t
 
 | Prop | Type | Required | Description |
 | --- | --- | --- | --- |
-| `index` | `number` | required | This item's index. Pass `index` through from `renderGalleryItem`. |
-| `active` | `boolean` | required | Whether this item is active. Pass `active` through from `renderGalleryItem`. |
+| `index` | `number` | yes | This item's index. Pass `index` through from `renderGalleryItem`. |
+| `active` | `boolean` | yes | Whether this item is active. Pass `active` through from `renderGalleryItem`. |
 | `children` | `ReactNode` | | The item's content. |
 | `className` | `string` | | Extra class for the `<li>`. Use it with `active` for state styling. |
 Any other `<li>` attributes are passed through.
