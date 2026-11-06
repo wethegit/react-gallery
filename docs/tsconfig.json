@@ -1,6 +1,4 @@
-// This file is not used by "docusaurus start/build" commands.
-// It is here to improve your IDE experience (type-checking, autocompletion...),
-// and can also run the package.json "typecheck" script manually.
+// This file is not used by "docusaurus start/build" commands just for the IDE experience.
 {
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {

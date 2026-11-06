@@ -189,9 +189,6 @@ export function toCodePen({
   assetOrigin: string
   versions: Versions
 }): Pen {
-  // An older ts-to-js loader ignores `?codepen` and returns a plain string.
-  // That happens when the loader file is out of date, or the dev server was
-  // started before it changed (loaders only load once, at startup).
   if (typeof source?.js !== "string" || typeof source.css !== "string") {
     throw new Error(
       `${title}: expected { js, css } from "!!ts-to-js?codepen!...", got ${typeof source}. Check that src/loaders/ts-to-js.cjs is up to date, then restart the dev server.`

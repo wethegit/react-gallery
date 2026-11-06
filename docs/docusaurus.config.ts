@@ -52,7 +52,7 @@ const config: Config = {
   },
   plugins: [
     "docusaurus-plugin-sass",
-    // This is becase using the latest gallery throwing me an error with usage of require()
+    // This is because using the latest gallery throwing me an error with usage of require()
     // Somthing we need to look into and see if this just here in doc build or everywhere
     () => ({
       name: "react-gallery-umd",
