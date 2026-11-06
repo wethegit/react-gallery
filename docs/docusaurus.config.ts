@@ -33,9 +33,8 @@ const config: Config = {
   baseUrl: "/",
 
   // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: "wethegit", // Usually your GitHub org/user name.
-  projectName: "react-gallery", // Usually your repo name.
+  organizationName: "wethegit",
+  projectName: "react-gallery",
 
   onBrokenLinks: "throw",
 
@@ -88,8 +87,6 @@ const config: Config = {
       {
         docs: {
           sidebarPath: "./sidebars.ts",
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl: "https://github.com/wethegit/react-gallery/",
         },
         blog: {
@@ -98,8 +95,6 @@ const config: Config = {
             type: ["rss", "atom"],
             xslt: true,
           },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl: "https://github.com/wethegit/react-gallery/",
           // Useful options to enforce blogging best practices
           onInlineTags: "warn",
