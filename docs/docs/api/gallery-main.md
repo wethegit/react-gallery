@@ -42,7 +42,7 @@ The main gallery view. It renders a `<ul>` and calls `renderGalleryItem` once fo
 
 TypeScript: `GalleryMainProps<T>`. Pass your item type as `<GalleryMain<Item>>`, or `item` is `unknown`; the [TypeScript guide](/docs/guides/typescript) explains why.
 
-| Prop | Type | Default | Description |
+| Prop | Type | Required | Description |
 | --- | --- | --- | --- |
 | `renderGalleryItem` | `(args: RenderGalleryItemArgs<T>) => ReactNode` | required | Called for each item. Must return a [`<GalleryItem>`](/docs/api/gallery-item). |
 | `className` | `string` | | Extra class for the `<ul>`. |
