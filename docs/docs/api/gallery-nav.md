@@ -24,7 +24,7 @@ A "previous" or "next" button. It renders a `<button>` that calls the gallery's 
 
 TypeScript: `GalleryNavProps`.
 
-| Prop | Type | Default | Description |
+| Prop | Type | Required | Description |
 | --- | --- | --- | --- |
 | `direction` | `0 \| 1` | required | `0` for previous, `1` for next. |
 | `children` | `ReactNode` | | The button's content. If it's only an icon, include visually hidden text. |
