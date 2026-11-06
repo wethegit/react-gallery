@@ -16,7 +16,7 @@ Wraps a single gallery item. It renders an `<li>` and sets the attributes and CS
 
 TypeScript: `GalleryItemProps`. `GalleryItem` never sees your item data, so it takes no type argument.
 
-| Prop | Type | Default | Description |
+| Prop | Type | Required | Description |
 | --- | --- | --- | --- |
 | `index` | `number` | required | This item's index. Pass `index` through from `renderGalleryItem`. |
 | `active` | `boolean` | required | Whether this item is active. Pass `active` through from `renderGalleryItem`. |
