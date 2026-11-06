@@ -22,8 +22,6 @@ TypeScript: `GalleryItemProps`. `GalleryItem` never sees your item data, so it t
 | `active` | `boolean` | required | Whether this item is active. Pass `active` through from `renderGalleryItem`. |
 | `children` | `ReactNode` | | The item's content. |
 | `className` | `string` | | Extra class for the `<li>`. Use it with `active` for state styling. |
-| `style` | `CSSProperties` | | Inline styles for the `<li>`. |
-
 Any other `<li>` attributes are passed through.
 
 ## Accessibility
