@@ -1,0 +1,11 @@
+// This file is not used by "docusaurus start/build" commands just for the IDE experience.
+{
+  "extends": "@docusaurus/tsconfig",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "strict": true
+  },
+  "exclude": [".docusaurus", "build"]
+}

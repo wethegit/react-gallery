@@ -1,0 +1,114 @@
+---
+sidebar_position: 2
+---
+
+import { BasicGallery } from "@site/src/components/demos/basic-gallery/basic-gallery"
+import { InstallCommand } from "@site/src/components/versions/install-command"
+
+# Getting started
+
+## Installation
+
+<InstallCommand />
+
+## Imports
+
+Everything ships from a single entry point, plus one stylesheet:
+
+```jsx
+import {
+  Gallery,
+  GalleryMain,
+  GalleryItem,
+  GalleryNav,
+  GalleryPagination,
+  GalleryPaginationItem,
+  useGallery,
+} from "@wethegit/react-gallery"
+
+// Required base styles (positions items, handles transforms and dragging)
+import "@wethegit/react-gallery/style.css"
+```
+
+## Your first gallery
+
+A gallery needs three things:
+
+1. An `items` array. Any shape you want; it is passed back to your render props.
+2. A `<GalleryMain>` with a `renderGalleryItem` function that returns a `<GalleryItem>`.
+3. Some way to navigate: `<GalleryNav>` buttons, `<GalleryPagination>`, or your own controls via [`useGallery`](/docs/api/use-gallery).
+
+```jsx
+import {
+  Gallery,
+  GalleryMain,
+  GalleryItem,
+  GalleryNav,
+  GalleryPagination,
+  GalleryPaginationItem,
+} from "@wethegit/react-gallery"
+import "@wethegit/react-gallery/style.css"
+
+const ITEMS = [
+  {
+    id: "a",
+    image: "https://picsum.photos/id/1015/480/360",
+    alt: "Description of image A",
+  },
+  {
+    id: "b",
+    image: "https://picsum.photos/id/1036/480/360",
+    alt: "Description of image B",
+  },
+  {
+    id: "c",
+    image: "https://picsum.photos/id/1056/480/360",
+    alt: "Description of image C",
+  },
+]
+
+function MyGallery() {
+  return (
+    <Gallery items={ITEMS}>
+      <GalleryMain
+        renderGalleryItem={({ item, index, active }) => (
+          <GalleryItem key={item.id} index={index} active={active}>
+            <img src={item.image} alt={item.alt} />
+          </GalleryItem>
+        )}
+      />
+
+      <GalleryNav direction={0}>
+        <span aria-hidden="true">&larr;</span>
+        <span className="visually-hidden">Previous item</span>
+      </GalleryNav>
+      <GalleryNav direction={1}>
+        <span aria-hidden="true">&rarr;</span>
+        <span className="visually-hidden">Next item</span>
+      </GalleryNav>
+
+      <GalleryPagination
+        renderPaginationItem={({ item, index, active }) => (
+          <GalleryPaginationItem key={item.id} index={index} active={active}>
+            <span className="visually-hidden">Go to item {index + 1}</span>
+          </GalleryPaginationItem>
+        )}
+      />
+    </Gallery>
+  )
+}
+```
+
+## Live result
+
+The same pattern, lightly styled for this site (arrows, dots, and a card wrapper). Drag the slides too; `draggable` is on by default.
+
+<BasicGallery />
+
+The full source for this demo is on the [basic gallery demo page](/docs/demos/basic).
+
+## Next steps
+
+- Explore the [demos](/docs/demos/basic) for looping, thumbnails, `visibleRange`, and headless controls.
+- Read the [styling guide](/docs/guides/styling) to size slides with `--item-width` and `--gap`.
+- Check the [accessibility guide](/docs/guides/accessibility) before shipping.
