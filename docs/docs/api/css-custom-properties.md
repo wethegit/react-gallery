@@ -50,7 +50,7 @@ Set by the component on each `<li>`. Read them in your CSS; don't set them.
 | `--active` | `1` for the active item, otherwise `0`. |
 | `--x` | The item's final horizontal position, calculated by the stylesheet from the properties above. Use it as the `translateX()` value if you write your own `transform`. |
 
-For reference, the stylesheet calculates `--x` as:
+For reference, the default layout's stylesheet calculates `--x` as:
 
 ```css
 --x: calc(
