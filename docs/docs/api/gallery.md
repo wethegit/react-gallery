@@ -107,4 +107,4 @@ Things to know about when it fires:
 }
 ```
 
-It does not affect accessibility: only the active item is exposed to assistive technology either way (see [GalleryItem](/docs/api/gallery-item#accessibility)). The [visible range demo](/docs/demos/visible-range) shows it in action.
+It does not affect accessibility: only the active item is exposed to assistive technology either way (see [GalleryItem](/docs/api/gallery-item#accessibility)).
