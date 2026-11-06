@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-      # Just to test if this workflow runs on a push, will be removing this after
-      - feature/docs-and-demos
     paths:
       - "docs/**"
       - "package.json"
