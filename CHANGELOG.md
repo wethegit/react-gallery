@@ -1,5 +1,11 @@
 # @wethegit/react-gallery
 
+## 6.0.0-beta.1
+
+### Patch Changes
+
+- 142fc10: Prevents multi-touch/pointer interactions from glitching gallery drag state. Outlined here: https://github.com/wethegit/react-gallery/issues/115
+
 ## 6.0.0-beta.0
 
 ### Major Changes
