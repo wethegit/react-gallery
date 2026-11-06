@@ -93,7 +93,7 @@ Things to know about when it fires:
 - For `goToIndex` and pagination, `direction` is `1` when the new index is higher and `0` otherwise, including when it is the same.
 
 :::warning[Defer state updates inside onChange]
-"Next", "previous", and dragging call `onChange` from inside the gallery's own React state update (checked in v<GalleryVersion />). Setting your own state synchronously in the callback triggers React's "Cannot update a component while rendering a different component" warning, and in development with `<StrictMode>` the callback can run twice. Defer the update with `setTimeout(..., 0)` or similar; see the [custom controls demo](/docs/demos/custom-controls).
+"Next", "previous", and dragging call `onChange` from inside the gallery's own React state update. Setting your own state synchronously in the callback triggers React's "Cannot update a component while rendering a different component" warning, and in development with `<StrictMode>` the callback can run twice. Defer the update with `setTimeout(..., 0)` or similar; see the [custom controls demo](/docs/demos/custom-controls).
 :::
 
 ## visibleRange
