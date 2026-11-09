@@ -47,7 +47,7 @@ const handleChange = ({ newIndex }) => {
 
 TypeScript: `GalleryProps<T>`, where `T` is inferred from `items`.
 
-| Prop | Type | Default | Description |
+| Prop | Type | Required | Description |
 | --- | --- | --- | --- |
 | `items` | `T[]` | yes | Your gallery data, in any shape. Each entry is passed back to `renderGalleryItem` and `renderPaginationItem`. Throws if it is not an array. |
 | `children` | `ReactNode` | yes | `GalleryMain`, `GalleryNav`, `GalleryPagination`, and any components that call `useGallery`. |
