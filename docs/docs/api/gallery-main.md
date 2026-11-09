@@ -44,7 +44,7 @@ TypeScript: `GalleryMainProps<T>`. Pass your item type as `<GalleryMain<Item>>`,
 
 | Prop | Type | Required | Description |
 | --- | --- | --- | --- |
-| `renderGalleryItem` | `(args: RenderGalleryItemArgs<T>) => ReactNode` | required | Called for each item. Must return a [`<GalleryItem>`](/docs/api/gallery-item). |
+| `renderGalleryItem` | `(args: RenderGalleryItemArgs<T>) => ReactNode` | yes | Called for each item. Must return a [`<GalleryItem>`](/docs/api/gallery-item). |
 | `className` | `string` | | Extra class for the `<ul>`. |
 | `style` | `CSSProperties` | | Inline styles for the `<ul>`. |
 
