@@ -75,7 +75,7 @@ Custom property names (`--item-width`, `--inline-gap`) are never hashed by CSS m
 
 The main ones are below; [CSS custom properties](/docs/api/css-custom-properties) in the API reference lists them all, including `--x` for custom transforms.
 
-Set these on the `<Gallery>` wrapper, either through a class or inline via `style`:
+Set these on the `<Gallery>` wrapper:
 
 | Property | Default | Description |
 | --- | --- | --- |
