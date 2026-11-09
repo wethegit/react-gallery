@@ -7,7 +7,7 @@ import TabItem from "@theme/TabItem"
 
 # useGallery
 
-A hook that returns the gallery's state and navigation methods. It reads the context created by [`<Gallery>`](/docs/api/gallery), so it only works in components rendered inside one; anywhere else it throws "useGallery must be called from within a &lt;Gallery&gt;."
+A hook that returns the gallery's state and navigation methods. It reads the context created by [`<Gallery>`](/docs/api/gallery), so it only works in components rendered inside one.
 
 <Tabs groupId="code-language">
 <TabItem value="ts" label="TypeScript" default>
