@@ -7,9 +7,13 @@ sidebar_position: 3
 Wraps a single gallery item. It renders an `<li>` and sets the attributes and CSS custom properties the stylesheet uses to position it. Always return it from `renderGalleryItem` on [`<GalleryMain>`](/docs/api/gallery-main).
 
 ```jsx
-<GalleryItem key={item.id} index={index} active={active}>
-  <img src={item.image} alt={item.alt} />
-</GalleryItem>
+<GalleryMain
+  renderGalleryItem={({ item, index, active }) => (
+    <GalleryItem key={item.id} index={index} active={active}>
+      <img src={item.image} alt={item.alt} />
+    </GalleryItem>
+  )}
+/>
 ```
 
 ## Props
