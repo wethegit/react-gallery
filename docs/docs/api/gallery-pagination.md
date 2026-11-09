@@ -66,7 +66,7 @@ TypeScript: `RenderPaginationItemArgs<T>`.
 
 TypeScript: `GalleryPaginationItemProps`.
 
-| Prop | Type | Default | Description |
+| Prop | Type | Required | Description |
 | --- | --- | --- | --- |
 | `index` | `number` | required | The item this button goes to. Pass `index` through from `renderPaginationItem`. |
 | `active` | `boolean` | required | Whether that item is active. Sets `aria-current="true"` on the button. |
