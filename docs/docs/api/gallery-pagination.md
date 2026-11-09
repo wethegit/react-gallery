@@ -42,7 +42,7 @@ Pagination is the row of controls (dots, thumbnails, labels) that jump straight 
 
 TypeScript: `GalleryPaginationProps<T>`. Pass your item type as `<GalleryPagination<Item>>`, or `item` is `unknown`; see the [TypeScript guide](/docs/guides/typescript).
 
-| Prop | Type | Default | Description |
+| Prop | Type | Required | Description |
 | --- | --- | --- | --- |
 | `renderPaginationItem` | `(args: RenderPaginationItemArgs<T>) => ReactNode` | required | Called for each item. Return a `<GalleryPaginationItem>`. |
 | `className` | `string` | | Extra class for the `<ul>`. |
