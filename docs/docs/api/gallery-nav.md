@@ -60,7 +60,7 @@ The button already gets the `disabled` and `aria-disabled="true"` attributes whe
 
 ## Disabled state
 
-With `loop` off, the "previous" button is disabled on the first item and the "next" button on the last. Style it with `:disabled`. With `loop` on, the buttons are never disabled.
+With `loop` off, the "previous" button is disabled on the first item and the "next" button on the last. Style it with `:disabled` or `[aria-disabled="true"]`. With `loop` on, the buttons are never disabled.
 
 ## Focus
 
