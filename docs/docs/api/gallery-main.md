@@ -46,8 +46,6 @@ TypeScript: `GalleryMainProps<T>`. Pass your item type as `<GalleryMain<Item>>`,
 | --- | --- | --- | --- |
 | `renderGalleryItem` | `(args: RenderGalleryItemArgs<T>) => ReactNode` | yes | Called for each item. Must return a [`<GalleryItem>`](/docs/api/gallery-item). |
 | `className` | `string` | | Extra class for the `<ul>`. |
-| `style` | `CSSProperties` | | Inline styles for the `<ul>`. |
-
 Any other `<ul>` attributes (`id`, `aria-label`, `data-*`, ...) are passed through to the list.
 
 ## renderGalleryItem arguments
