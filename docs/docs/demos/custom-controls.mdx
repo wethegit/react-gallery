@@ -29,6 +29,6 @@ For anything the built-in nav and pagination components don't cover, the [`useGa
 ## Notes
 
 - `useGallery` must be called from a component **inside** `<Gallery>`; calling it outside the provider throws. That is why `Controls` is a separate component.
-- `next`, `previous`, and `goToIndex` all trigger the `onChange` callback; `setActiveIndex` (also returned by the hook) changes the index silently without firing it.
+- `next`, `previous`, and `goToIndex` all trigger the `onChange` callback.
 - The event log shows `direction` as `1` for forward moves and `0` for backward moves, including wraps when `loop` is set.
 - `styles.*` comes from the demos' shared SCSS module; see the [basic gallery demo](/docs/demos/basic#styles) for the relevant excerpt.
