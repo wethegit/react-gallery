@@ -44,7 +44,7 @@ TypeScript: `GalleryPaginationProps<T>`. Pass your item type as `<GalleryPaginat
 
 | Prop | Type | Required | Description |
 | --- | --- | --- | --- |
-| `renderPaginationItem` | `(args: RenderPaginationItemArgs<T>) => ReactNode` | required | Called for each item. Return a `<GalleryPaginationItem>`. |
+| `renderPaginationItem` | `(args: RenderPaginationItemArgs<T>) => ReactNode` | yes | Called for each item. Return a `<GalleryPaginationItem>`. |
 | `className` | `string` | | Extra class for the `<ul>`. |
 
 Any other `<ul>` attributes are passed through.
