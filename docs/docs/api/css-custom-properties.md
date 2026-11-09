@@ -17,7 +17,7 @@ Your class and the gallery's class are on the same element with equal specificit
 
 ## On `<Gallery>`
 
-Set these on `<Gallery>`'s `className` or `style`. Children inherit them.
+Set these on `<Gallery>`'s `className`. Children inherit them.
 
 | Property | Default | Description |
 | --- | --- | --- |
