@@ -29,7 +29,7 @@ Any other `<li>` attributes are passed through.
 - Every item gets `tabIndex={-1}`, so items can receive focus from code (the gallery uses this, see [GalleryNav](/docs/api/gallery-nav#focus)) but are never in the Tab order.
 - Items that aren't active get `aria-hidden="true"`, which hides them from assistive technology. Only the active item is exposed.
 
-This depends only on `active`, not on `visibleRange`. If a slide contains links or buttons, only the active slide's controls can be reached, which is usually what you want in a carousel.
+If a slide contains links, buttons, or other focusable elements, they may still be accessible when the slide is inactive. Adding the inert attribute to inactive slides prevents focus and navigation. Consumers need to do this for now; we plan to enable it by default in a future release.
 
 ## Data attributes
 
