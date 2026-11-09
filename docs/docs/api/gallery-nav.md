@@ -26,7 +26,7 @@ TypeScript: `GalleryNavProps`.
 
 | Prop | Type | Required | Description |
 | --- | --- | --- | --- |
-| `direction` | `0 \| 1` | required | `0` for previous, `1` for next. |
+| `direction` | `0 \| 1` | yes | `0` for previous, `1` for next. |
 | `children` | `ReactNode` | | The button's content. If it's only an icon, include visually hidden text. |
 | `renderNavItem` | `(args: RenderNavItemArgs) => ReactNode` | | Renders the button's content instead of `children`, with access to the gallery's state. See [renderNavItem](#rendernavitem). |
 | `className` | `string` | | Extra class for the `<button>`. |
