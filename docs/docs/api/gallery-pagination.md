@@ -68,8 +68,8 @@ TypeScript: `GalleryPaginationItemProps`.
 
 | Prop | Type | Required | Description |
 | --- | --- | --- | --- |
-| `index` | `number` | required | The item this button goes to. Pass `index` through from `renderPaginationItem`. |
-| `active` | `boolean` | required | Whether that item is active. Sets `aria-current="true"` on the button. |
+| `index` | `number` | yes | The item this button goes to. Pass `index` through from `renderPaginationItem`. |
+| `active` | `boolean` | yes | Whether that item is active. Sets `aria-current="true"` on the button. |
 | `children` | `ReactNode` | | The button's content: hidden text, a thumbnail, a label. |
 | `className` | `string` | | Extra class for the `<li>`. |
 | `buttonClassName` | `string` | | Class for the `<button>`. |
