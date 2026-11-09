@@ -23,14 +23,8 @@ The stylesheet uses CSS-module-style hashed class names (for example `gallery-mo
 Because every component accepts `className` (and pagination buttons accept `buttonClassName`), the gallery pairs naturally with scoped styling like SCSS modules. All demos on this site are styled that way:
 
 ```scss title="shared.module.scss"
-.card {
-  // Makes .card a size container, so cqi below means "% of .card's width".
-  container-type: inline-size;
-}
-
 .gallery {
-  // Not %: see "Sizing items" in the styling guide.
-  --item-width: min(70cqi, 640px);
+  --item-width: min(100%, 640px);
   --inline-gap: 4rem;
   --duration: 0.45s;
 
