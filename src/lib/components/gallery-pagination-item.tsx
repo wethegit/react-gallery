@@ -57,7 +57,12 @@ export const GalleryPaginationItem = ({
     (event: MouseEvent<HTMLElement>) => {
       goToIndex(index)
 
-      itemNodes.current[index]?.focus({ preventScroll: true })
+      const node = itemNodes.current[index]
+      if (node) {
+        // The item only loses `inert` on the next render, so clear it now to allow focus
+        node.inert = false
+        node.focus({ preventScroll: true })
+      }
 
       if (onClick) onClick({ event, index })
     },

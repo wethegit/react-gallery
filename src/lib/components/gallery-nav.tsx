@@ -55,7 +55,12 @@ export const GalleryNav = ({
    * to the document, so we are redirecting the focus within the gallery
    */
   if (shouldDisable) {
-    itemNodes.current[activeIndex]?.focus({ focusVisible: false })
+    const node = itemNodes.current[activeIndex]
+    if (node) {
+      // This runs during render, before the item loses `inert`, so clear it now to allow focus
+      node.inert = false
+      node.focus({ focusVisible: false })
+    }
   }
 
   return (

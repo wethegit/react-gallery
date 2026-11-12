@@ -286,6 +286,12 @@ Required component that wraps each child inside the `renderGalleryitem` prop. Re
 | active | Boolean | Whether the current item being iterated over is the active item. |
 | index | Number | The index of the currently active gallery item. |
 
+Inactive items are rendered with the [`inert`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inert) attribute (along with `aria-hidden`), so any focusable content inside them can't be tabbed to or focused. To opt out, for example when several items are visible at once, pass `inert={false}`:
+
+```jsx
+<GalleryItem key={item.id} index={index} active={active} inert={false}>
+```
+
 ### &lt;GalleryNav&gt;
 
 The navigational "next" and "previous" buttons. Must be used within a `<Gallery>`. You can render your buttons either by passing regular JSX children to them, or by using the `renderNavItem` render prop.
@@ -441,7 +447,7 @@ const handlePaginationItemClick = ({ event, index }: GalleryPaginationItemClickA
 
 ## Accessibility
 
-The gallery component handles tabbing, focus management, and live-region announcements out-of-the-box. All relevant patterns used in this component follow the guidelines for carousels as documented by the [Web Accessibility Initiative](https://www.w3.org/WAI/).
+The gallery component handles tabbing, focus management, and live-region announcements out-of-the-box. All relevant patterns used in this component follow the guidelines for carousels as documented by the [Web Accessibility Initiative](https://www.w3.org/WAI/). Inactive items are made `inert` by default, so their content can't be focused until they become active.
 
 That said, you must still code responsibly! Ensure that your gallery contents, nav buttons, and pagination items all have discernible text — whether that be image `alt` text, or [visually-hidden](https://css-tricks.com/inclusively-hidden/) text intended for screen readers (the stylesheet included with the Gallery component inclues a CSS utility class for this: `.gallery-util-visually-hidden`).
 
