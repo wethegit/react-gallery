@@ -1,0 +1,152 @@
+.gallery {
+  --duration: 0.4s;
+
+  @media (prefers-reduced-motion: reduce) {
+    --duration: 0s;
+  }
+}
+
+.frame {
+  aspect-ratio: 4 / 5;
+  background: #000;
+  border-radius: 16px;
+  color: #fff;
+  margin-inline: auto;
+  max-inline-size: min(360px, 85cqi);
+  overflow: clip;
+  position: relative;
+}
+
+// isolation keeps the gallery's per-item z-index values inside the <ul>, so
+// the tap zones and controls below can sit on top with a z-index of 1.
+.stage {
+  block-size: 100%;
+  isolation: isolate;
+}
+
+// Two classes to incease the specifity
+// whatever order the stylesheets load in.
+.stage .story {
+  block-size: 100%;
+  inline-size: 100%;
+
+  // --active is 1 for the active story and 0 for the rest, so it works as
+  // the opacity directly. No transform: every story sits in the same place.
+  opacity: var(--active);
+  position: relative;
+  transform: none;
+  transition: opacity var(--duration);
+
+  img {
+    block-size: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: left center;
+    width: 100%;
+  }
+}
+
+.caption {
+  background: linear-gradient(transparent, rgb(0 0 0 / 70%));
+  bottom: 0;
+  font-size: 0.95rem;
+  inset-inline: 0;
+  margin: 0;
+  padding: 3rem 1rem 1rem;
+  position: absolute;
+}
+
+// The gallery stylesheet makes pagination a centred grid; stretch the bars
+// to share the width equally instead.
+.frame .progress {
+  --inline-gap: 4px;
+
+  grid-auto-columns: 1fr;
+  inset: 0.75rem 0.75rem auto;
+  justify-content: stretch;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.segment {
+  background: rgb(255 255 255 / 35%);
+  block-size: 3px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.fill {
+  background: #fff;
+  block-size: 100%;
+  display: block;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.done {
+  transform: scaleX(1);
+}
+
+.running {
+  animation: story-progress var(--story-duration) linear forwards;
+}
+
+.paused .running {
+  animation-play-state: paused;
+}
+
+@keyframes story-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.tap {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  inset-block: 0;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: -4px;
+  }
+}
+
+.tapPrevious {
+  inline-size: 45%;
+  inset-inline-start: 0;
+}
+
+.tapNext {
+  inline-size: 55%;
+  inset-inline-end: 0;
+}
+
+.playPause {
+  align-items: center;
+  background: rgb(0 0 0 / 45%);
+  block-size: 2.25rem;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 0.8rem;
+  inline-size: 2.25rem;
+  inset-block-start: 1.5rem;
+  inset-inline-end: 0.75rem;
+  justify-content: center;
+  position: absolute;
+  z-index: 2;
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+}
