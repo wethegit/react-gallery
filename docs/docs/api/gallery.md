@@ -58,7 +58,7 @@ TypeScript: `GalleryProps<T>`, where `T` is inferred from `items`.
 | `onChange` | `GalleryChangeCallback` | | Called when the active item changes through "next", "previous", pagination, dragging, or `goToIndex`. See [onChange](#onchange). |
 | `startIndex` | `number` | `0` | Index of the item that is active on mount. |
 | `style` | `CSSProperties` | | Inline styles for the wrapper. This is how you set [CSS custom properties](/docs/api/css-custom-properties) per gallery. |
-| `visibleRange` | `number` | `-1` | How many items on each side of the active one count as visible. Items in range get `data-item-visible="true"`, the rest `data-item-visible="false"`. `-1` marks every item visible. Applies to only default layout. See [visibleRange](#visiblerange). |
+| `visibleRange` | `number` | `-1` | How many items on each side of the active one count as visible. Items in range get `data-item-visible="true"`, the rest `data-item-visible="false"`. `-1` marks every item visible. See [visibleRange](#visiblerange). |
 
 Only the props above are used. Anything else you pass, such as `id` or `data-*` attributes, is not forwarded to the wrapper.
 
