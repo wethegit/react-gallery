@@ -81,8 +81,6 @@ Respect the user's reduced motion setting by setting `--duration` to `0s`. In CS
 }
 ```
 
-Or in JavaScript, through `style`:
-
 <Tabs groupId="code-language">
 <TabItem value="ts" label="TypeScript" default>
 
