@@ -12,7 +12,7 @@ The base stylesheet (`@wethegit/react-gallery/style.css`) lays the gallery out w
 :::note[Set them on your own classes]
 The stylesheet's class names are generated (for example `gallery-module__gallery__VCgDes`) and can change between releases, so you can't target `.gallery` or `.gallery__item` directly. Custom properties are inherited and keep their names, so set them on the `className` you pass to `<Gallery>`, or through its `style` prop.
 
-Your class and the gallery's class are on the same element with equal specificity, so whichever stylesheet loads last wins. If a value doesn't take effect, import your styles after `@wethegit/react-gallery/style.css`, make your selector more specific, or use `style`.
+Your class and the gallery's class are on the same element with equal specificity, so whichever stylesheet loads last wins. If a value doesn't take effect, import your styles after `@wethegit/react-gallery/style.css` or make your selector more specific.
 :::
 
 ## On `<Gallery>`
