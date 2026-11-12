@@ -84,6 +84,8 @@ Any other `<li>` attributes are passed through.
 
 Clicking the button moves the gallery to `index`, focuses that item, and then calls your `onClick` with an object. TypeScript: `GalleryPaginationItemClickArgs`.
 
+> When users select an item with those navigation buttons, the focus should be set on the selected item. In this case, the focus needs to be set to the `<li>` element that has the class current set, after the change or transition. This makes interaction easier for keyboard and assistive technology users. See heading ["Add navigation buttons"](https://www.w3.org/WAI/tutorials/carousels/functionality/) for example and the reference on [w3.org](https://www.w3.org/).
+
 | Field | Type | Description |
 | --- | --- | --- |
 | `event` | `MouseEvent` | The click event. |
