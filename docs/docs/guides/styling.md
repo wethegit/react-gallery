@@ -118,7 +118,7 @@ Use a unit that means the same thing in both places:
 }
 ```
 
-The package's own default, `min(75%, 1000px)`, has the same approach which will get updated on the next releases. Its large default `--inline-gap` (`25vw`) usually hides it, but if you reduce the gap, set `--item-width` too. Checked in v<GalleryVersion />.
+The package's own default, `min(75%, 1000px)`, has the same approach which will get updated on the next releases. Its large default `--inline-gap` (`25vw`) usually hides it, but if you reduce the gap, set `--item-width` too.
 
 ## Per-item custom properties
 
