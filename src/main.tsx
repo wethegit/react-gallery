@@ -75,6 +75,7 @@ function App() {
         renderGalleryItem={({ item, index, active }) => (
           <GalleryItem key={item.id} index={index} active={active}>
             <img src={item.image} alt={item.alt} />
+            <a href="#">Link in item {index + 1}</a>
           </GalleryItem>
         )}
       />
