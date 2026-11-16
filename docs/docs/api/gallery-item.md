@@ -56,4 +56,4 @@ Style them with attribute selectors, for example `.my-slide[data-item-visible="f
 | `--side` | `-1` before the active item, `0` for the active item, `1` after it. |
 | `--active` | `1` for the active item, otherwise `0`. |
 
-They're handy in your own CSS, for example `transition-delay: calc(0.05s * var(--center-offset))`. The full list, including `--x`, is in [Styling](docs/guides/styling).
+They're handy in your own CSS, for example `transition-delay: calc(0.05s * var(--center-offset))`. The full list, including `--x`, is in [Styling](/docs/guides/styling).

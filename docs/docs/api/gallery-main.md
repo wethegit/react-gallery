@@ -61,7 +61,7 @@ TypeScript: `RenderGalleryItemArgs<T>`.
 
 ## Layout
 
-With the base stylesheet, the `<ul>` is a CSS grid with a single cell. Every item sits in that cell and is moved sideways with a `transform` built from [Styling](docs/guides/styling). Remove the transform in your own item CSS and the items stack instead, which is a starting point for a fading gallery.
+With the base stylesheet, the `<ul>` is a CSS grid with a single cell. Every item sits in that cell and is moved sideways with a `transform` built from [Styling](/docs/guides/styling). Remove the transform in your own item CSS and the items stack instead, which is a starting point for a fading gallery.
 
 `GalleryMain` sets two of those properties on the `<ul>`: `--selected` (the active index) and `--total` (the number of items).
 
