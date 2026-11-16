@@ -2,7 +2,9 @@
 sidebar_position: 1
 ---
 
-import { GalleryVersion } from "@site/src/components/versions/gallery-versions"
+import GalleryItemCSSProps from "@site/docs/snippets/gallery-item-css-props.mdx"
+import GalleryCSSProps from "@site/docs/snippets/gallery-css-props.mdx"
+import ReducedMotionCss from "@site/docs/snippets/reduced-motion-css.mdx"
 
 # Styling
 
@@ -71,13 +73,7 @@ The main ones are below; [CSS custom properties](/docs/api/css-custom-properties
 
 Set these on the `<Gallery>` wrapper:
 
-| Property | Default | Description |
-| --- | --- | --- |
-| `--item-width` | `min(75%, 1000px)` | Width of each item. Avoid `%`; see [Sizing items](#sizing-items). |
-| `--inline-gap` | `25vw` | Horizontal space between items. |
-| `--active-gap` | `0px` | Extra space on both sides of the active item. |
-| `--duration` | `0.5s` | Transition duration for slide movement. |
-| `--position-offset` | `0px` | Constant offset applied to all items, useful for asymmetric layouts. |
+<GalleryCSSProps />
 
 ```css
 .my-gallery {
@@ -124,13 +120,8 @@ The package's own default, `min(75%, 1000px)`, has the same approach which will 
 
 Each `<GalleryItem>` receives these inline; use them in your own CSS for state-driven effects:
 
-| Property | Description |
-| --- | --- |
-| `--i` | Item index. |
-| `--center-offset` | Absolute distance from the active item. |
-| `--index-offset` | Signed distance from the active item. |
-| `--side` | `-1` (left of active), `0` (active), `1` (right of active). |
-| `--active` | `1` when active, `0` otherwise. |
+<GalleryItemCSSProps />
+
 
 For example, fading items by distance from center and staggering their transitions:
 
@@ -151,12 +142,6 @@ For example, fading items by distance from center and staggering their transitio
 
 Honor `prefers-reduced-motion` by zeroing the transition duration:
 
-```css
-@media (prefers-reduced-motion: reduce) {
-  .my-gallery {
-    --duration: 0s;
-  }
-}
-```
+<ReducedMotionCss />
 
 This is pure CSS; no JavaScript media-query checks needed. All demos on this site apply it.

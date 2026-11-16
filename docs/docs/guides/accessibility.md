@@ -3,6 +3,7 @@ sidebar_position: 2
 ---
 
 import { GalleryVersion } from "@site/src/components/versions/gallery-versions"
+import ReducedMotionCss from "@site/snippets/reduced-motion-css.mdx"
 
 # Accessibility
 
@@ -59,13 +60,7 @@ When a pagination thumbnail repeats the slide's image, give the thumbnail an emp
 
 Slide transitions are controlled by the `--duration` custom property, so honoring `prefers-reduced-motion` is one media query:
 
-```css
-@media (prefers-reduced-motion: reduce) {
-  .my-gallery {
-    --duration: 0s;
-  }
-}
-```
+<ReducedMotionCss />
 
 ## Keep custom controls accessible
 

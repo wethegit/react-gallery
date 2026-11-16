@@ -4,6 +4,8 @@ sidebar_position: 7
 
 import Tabs from "@theme/Tabs"
 import TabItem from "@theme/TabItem"
+import ReducedMotionCss from "@site/snippets/reduced-motion-css.mdx"
+import GalleryCSSProps from "@site/snippets/gallery-css-props.mdx"
 
 # CSS custom properties
 
@@ -19,14 +21,7 @@ Your class and the gallery's class are on the same element with equal specificit
 
 Set these on the Gallery component's CSS selector.
 
-| Property | Default | Description |
-| --- | --- | --- |
-| `--item-width` | `min(75%, 1000px)` | Width of each item in `<GalleryMain>`. Avoid using `%` items may end up too close together and can overlap. Use `px`, `rem`, `vw`, or `cqi`; see [Sizing items](/docs/guides/styling#sizing-items). |
-| `--inline-gap` | `25vw` | Horizontal space between items. |
-| `--active-gap` | `0px` | Extra horizontal space between the active item and the items on either side. |
-| `--duration` | `0.5s` | Length of the slide transition. See [Reduced motion](#reduced-motion). |
-| `--position-offset` | `0px` | Shifts every item sideways by the same amount, for off-center layouts. |
-| `--touch-offset` | `0` | How far the current drag has moved, in pixels without a unit. Set by the gallery while dragging; don't set it yourself. |
+<GalleryCSSProps />
 
 ## On `<GalleryMain>`
 
@@ -73,13 +68,7 @@ So if you need a custom transform, keep `translateX(var(--x))` in it, for exampl
 
 Respect the user's reduced motion setting by setting `--duration` to `0s`. In CSS:
 
-```css
-@media (prefers-reduced-motion: reduce) {
-  .my-gallery {
-    --duration: 0s;
-  }
-}
-```
+<ReducedMotionCss />
 
 <Tabs groupId="code-language">
 <TabItem value="ts" label="TypeScript" default>
