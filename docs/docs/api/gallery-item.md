@@ -30,7 +30,7 @@ Any other `<li>` attributes are passed through.
 
 ## Accessibility
 
-- Every item gets `tabIndex={-1}`, so items can receive focus from code (the gallery uses this, see [GalleryNav](/docs/api/gallery-nav#focus)) but are never in the Tab order.
+- Every item gets `tabIndex={-1}`, so items can receive focus to the active gallery item when the user navigates to it via a button of some sort, eg: with pagination. (the gallery uses this, see [GalleryNav](/docs/api/gallery-nav#focus)).
 - Items that aren't active get `aria-hidden="true"`, which hides them from assistive technology. Only the active item is exposed.
 
 If a slide contains links, buttons, or other focusable elements, they may still be accessible when the slide is inactive. Adding the inert attribute to inactive slides prevents focus and navigation. Consumers need to do this for now; we plan to enable it by default in a future release.
