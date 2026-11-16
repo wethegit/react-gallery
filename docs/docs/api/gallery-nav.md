@@ -47,12 +47,15 @@ Use it when the content depends on the gallery's state, for example a different 
 ```jsx
 <GalleryNav
   direction={1}
-  renderNavItem={({ disabled }) => (
+  renderNavItem={({ disabled, activeIndex }) => {
+    const hiddenText = disabled ? 'no more items' : `Next item, ${activeIndex + 2} of 5`
+    return (
     <>
       <span aria-hidden="true">{disabled ? "■" : "→"}</span>
-      <span className="visually-hidden">Next item</span>
+      <span className="visually-hidden">{hiddenText}</span>
     </>
-  )}
+    )
+  }}
 />
 ```
 
