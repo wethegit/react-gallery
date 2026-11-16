@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Gallery, GalleryItem, GalleryMain, useGallery } from "@wethegit/react-gallery"
 import "@wethegit/react-gallery/style.css"
 
@@ -51,26 +50,9 @@ function Controls() {
 }
 
 export function CustomControlsGallery() {
-  const [events, setEvents] = useState<string[]>([])
-
   return (
     <div className={styles.card}>
-      <Gallery
-        items={SLIDES}
-        loop
-        className={styles.gallery}
-        onChange={({ oldIndex, newIndex, direction }) => {
-          // The gallery invokes onChange from inside its own state updater,
-          // so updating our state synchronously here would trigger React's
-          // "cannot update while rendering" error. So defering with timeout one tick.
-          setTimeout(() => {
-            setEvents((log) => [
-              `onChange: oldIndex=${oldIndex} newIndex=${newIndex} direction=${direction}`,
-              ...log.slice(0, 19),
-            ])
-          }, 0)
-        }}
-      >
+      <Gallery items={SLIDES} loop className={styles.gallery}>
         <GalleryMain<Slide>
           renderGalleryItem={({ item, index, active }) => (
             <GalleryItem
@@ -86,14 +68,6 @@ export function CustomControlsGallery() {
 
         <Controls />
       </Gallery>
-
-      <div className={styles.log} role="log" aria-label="onChange events">
-        {events.length === 0 ? (
-          <p>Navigate the gallery to see onChange events here.</p>
-        ) : (
-          events.map((entry, i) => <p key={`${entry}-${i}`}>{entry}</p>)
-        )}
-      </div>
     </div>
   )
 }
