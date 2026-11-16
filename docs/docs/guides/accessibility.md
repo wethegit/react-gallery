@@ -12,7 +12,7 @@ The gallery follows the [WAI carousel tutorial](https://www.w3.org/WAI/tutorials
 - **Live region announcements** when the active item changes, using the `ariaLiveText` template (`"Item $i of $t."` by default).
 - **Semantic markup**: items render as list items, pagination as a list of buttons, and the active pagination button carries `aria-current`.
 
-Non-active items are removed from the accessibility tree (`aria-hidden="true"`, `tabIndex={-1}`), so interactive content inside a slide is only reachable while that slide is active. Note this is driven by the active item alone; `visibleRange` does not affect it.
+Non-active items are removed from the accessibility tree (`aria-hidden="true"`, `tabIndex={-1}`), however, interactive elements inside inactive slides can still be navigable via tabbing. There's an open issue for this, and it will be fixed in a future release.
 
 A few things remain your responsibility.
 
