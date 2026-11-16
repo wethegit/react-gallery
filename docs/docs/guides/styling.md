@@ -1,10 +1,11 @@
 ---
 sidebar_position: 1
 ---
-
-import GalleryItemCSSProps from "@site/docs/snippets/gallery-item-css-props.mdx"
-import GalleryCSSProps from "@site/docs/snippets/gallery-css-props.mdx"
-import ReducedMotionCss from "@site/docs/snippets/reduced-motion-css.mdx"
+import Tabs from "@theme/Tabs"
+import TabItem from "@theme/TabItem"
+import GalleryItemCSSProps from "@site/snippets/gallery-item-css-props.mdx"
+import GalleryCSSProps from "@site/snippets/gallery-css-props.mdx"
+import ReducedMotionCss from "@site/snippets/reduced-motion-css.mdx"
 
 # Styling
 
@@ -16,10 +17,11 @@ import "@wethegit/react-gallery/style.css"
 
 Everything visual beyond that is yours. There are two layers of customization: CSS custom properties for layout and motion, and `className` props for your own design.
 
-:::warning[Hashed class names]
-The stylesheet uses CSS-module-style hashed class names (for example `gallery-module__gallery__VCgDes`), so you cannot reliably target the library's internal classes from your own CSS. Style through the `className`/`buttonClassName` props and the custom properties below instead.
-:::
+:::note[Set them on your own classes]
+The stylesheet's class names are generated (for example `gallery-module__gallery__VCgDes`) and can change between releases, so you can't target `.gallery` or `.gallery__item` directly. Custom properties are inherited and keep their names, so set them on the `className` you pass to `<Gallery>`, or through its `style` prop.
 
+Your class and the gallery's class are on the same element with equal specificity, so whichever stylesheet loads last wins. If a value doesn't take effect, import your styles after `@wethegit/react-gallery/style.css` or make your selector more specific.
+:::
 ## Works well with CSS/SCSS modules
 
 Because every component accepts `className` (and pagination buttons accept `buttonClassName`), the gallery pairs naturally with scoped styling like SCSS modules. All demos on this site are styled that way:
@@ -67,13 +69,54 @@ import styles from "./shared.module.scss"
 
 Custom property names (`--item-width`, `--inline-gap`) are never hashed by CSS modules, so the gallery's stylesheet picks them up regardless of scoping.
 
-## Layout custom properties
+## Layout custom css properties
 
-The main ones are below; [CSS custom properties](/docs/api/css-custom-properties) in the API reference lists them all, including `--x` for custom transforms.
+## On `<Gallery>`
 
-Set these on the `<Gallery>` wrapper:
+Set these on the Gallery component's CSS selector.
 
 <GalleryCSSProps />
+
+## On `<GalleryMain>`
+
+Set by the component on its `<ul>`. Read them in your CSS; don't set them.
+
+| Property | Description |
+| --- | --- |
+| `--selected` | Index of the active item. |
+| `--total` | Number of items. |
+
+## On `<GalleryItem>`
+
+Set by the component on each `<li>`. Read them in your CSS; don't set them.
+
+| Property | Description |
+| --- | --- |
+| `--i` | This item's index. |
+| `--center-offset` | Distance from the active item, in items (always positive). |
+| `--index-offset` | Distance from the active item, in items: negative before it, positive after it. |
+| `--side` | `-1` before the active item, `0` for the active item, `1` after it. |
+| `--active` | `1` for the active item, otherwise `0`. |
+| `--x` | The item's final horizontal position, calculated by the stylesheet from the properties above. Use it as the `translateX()` value if you write your own `transform`. |
+
+For reference, the default layout's stylesheet calculates `--x` as:
+
+```css
+--x: calc(
+  (var(--touch-offset, 0) * 1px) + var(--position-offset) +
+    (var(--active-gap) * var(--side)) +
+    (var(--item-width) + var(--inline-gap)) * (var(--i) - var(--selected))
+);
+transform: translateX(var(--x));
+```
+
+So if you need a custom transform, keep `translateX(var(--x))` in it, for example `transform: translateX(var(--x)) scale(calc(1 - var(--center-offset) * 0.1))`. Set `transform: none` on your item class and the items stack in one place instead.
+
+## On `<GalleryPagination>`
+
+| Property | Default | Description |
+| --- | --- | --- |
+| `--inline-gap` | `10px` | Space between pagination items. Set it on the `className` you pass to `<GalleryPagination>`. |
 
 ```css
 .my-gallery {
@@ -140,8 +183,55 @@ For example, fading items by distance from center and staggering their transitio
 
 ## Reduced motion
 
-Honor `prefers-reduced-motion` by zeroing the transition duration:
+Respect the user's reduced motion setting by setting `--duration` to `0s`. In CSS:
 
 <ReducedMotionCss />
 
-This is pure CSS; no JavaScript media-query checks needed. All demos on this site apply it.
+<Tabs groupId="code-language">
+<TabItem value="ts" label="TypeScript" default>
+
+```tsx
+import type { CSSProperties } from "react"
+
+function YourGallery() {
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches
+
+  const style = {
+    "--duration": prefersReducedMotion ? "0s" : "0.5s",
+  } as CSSProperties
+
+  return (
+    <Gallery items={ITEMS} style={style}>
+      {/* ... */}
+    </Gallery>
+  )
+}
+```
+
+</TabItem>
+<TabItem value="js" label="JavaScript">
+
+```jsx
+function YourGallery() {
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches
+
+  const style = {
+    "--duration": prefersReducedMotion ? "0s" : "0.5s",
+  }
+
+  return (
+    <Gallery items={ITEMS} style={style}>
+      {/* ... */}
+    </Gallery>
+  )
+}
+```
+
+</TabItem>
+</Tabs>
+
+The CSS version is simpler and works with server rendering, where `window` doesn't exist.
