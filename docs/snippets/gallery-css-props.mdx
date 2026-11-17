@@ -1,8 +1,11 @@
 | Property            | Default            | Description                                                                                                                                                                                         |
 | ------------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--item-width`      | `min(75%, 1000px)` | Width of each item in `<GalleryMain>`. Avoid using `%` items may end up too close together and can overlap. Use `px`, `rem`, `vw`, or `cqi`; see [Sizing items](/docs/guides/styling#sizing-items). |
-| `--inline-gap`      | `25vw`             | Horizontal space between items. (Applies only to default layout since this depends on `--x` value)                                                                                                  |
-| `--active-gap`      | `0px`              | Extra horizontal space between the active item and the items on either side. (Applies only to default layout since this depends on `--x` value)                                                     |
+| `--inline-gap`      | `25vw`             | Horizontal space between items. (Applies to default layout only)                                                                                                                                    |
+| `--active-gap`      | `0px`              | Extra horizontal space between the active item and the items on either side. (Applies to default layout only)                                                                                       |
 | `--duration`        | `0.5s`             | Length of the slide transition. See [Reduced motion](#reduced-motion).                                                                                                                              |
-| `--position-offset` | `0px`              | Shifts every item sideways by the same amount, for off-center layouts. (Applies only to default layout since this depends on `--x` value)                                                           |
+| `--position-offset` | `0px`              | Shifts every item sideways by the same amount, for off-center layouts. (Applies to default layout only)                                                                                             |
 | `--touch-offset`    | `0`                | How far the current drag has moved, in pixels without a unit. Set by the gallery while dragging; don't set it yourself.                                                                             |
+
+:::note[Appiles to default layout only]
+Some CSS variables noted above affect only the default layout because the `--x` value used to position the active and adjacent items in that layout is based on these variables.
