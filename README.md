@@ -286,7 +286,7 @@ Required component that wraps each child inside the `renderGalleryitem` prop. Re
 | active | Boolean | Whether the current item being iterated over is the active item. |
 | index | Number | The index of the currently active gallery item. |
 
-Inactive items are rendered with the [`inert`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inert) attribute (along with `aria-hidden`), so any focusable content inside them can't be tabbed to or focused. To opt out, for example when several items are visible at once, pass `inert={false}`:
+Inactive items are rendered with the [`inert`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inert) attribute, which hides them from assistive technology and stops any focusable content inside them from being tabbed to or focused. To opt out, for example when several items are visible at once, pass `inert={false}`:
 
 ```jsx
 <GalleryItem key={item.id} index={index} active={active} inert={false}>
