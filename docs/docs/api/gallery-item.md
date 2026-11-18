@@ -1,0 +1,57 @@
+---
+sidebar_position: 3
+---
+
+# GalleryItem
+
+Wraps a single gallery item. It renders an `<li>` and sets the attributes and CSS custom properties the stylesheet uses to position it. Always return it from `renderGalleryItem` on [`<GalleryMain>`](/docs/api/gallery-main).
+
+```jsx
+<GalleryMain
+  renderGalleryItem={({ item, index, active }) => (
+    <GalleryItem key={item.id} index={index} active={active}>
+      <img src={item.image} alt={item.alt} />
+    </GalleryItem>
+  )}
+/>
+```
+
+## Props
+
+TypeScript: `GalleryItemProps`. `GalleryItem` never sees your item data, so it takes no type argument.
+
+| Prop | Type | Required | Description |
+| --- | --- | --- | --- |
+| `index` | `number` | yes | This item's index. Pass `index` through from `renderGalleryItem`. |
+| `active` | `boolean` | yes | Whether this item is active. Pass `active` through from `renderGalleryItem`. |
+| `children` | `ReactNode` | | The item's content. |
+| `className` | `string` | | Extra class for the `<li>`. Use it with `active` for state styling. |
+Any other `<li>` attributes are passed through.
+
+## Accessibility
+
+- Every item gets `tabIndex={-1}`, so items can receive focus to the active gallery item when the user navigates to it via a button of some sort, eg: with pagination. (the gallery uses this, see [GalleryNav](/docs/api/gallery-nav#focus)).
+
+
+## Data attributes
+
+| Attribute | Value |
+| --- | --- |
+| `data-item-visible` | `"true"` if the item is within the gallery's [`visibleRange`](/docs/api/gallery#visiblerange) of the active item, otherwise `"false"`. Always `"true"` when `visibleRange` is `-1`. |
+| `data-was-active` | `"true"` on the item that was active before the last change. |
+
+Style them with attribute selectors, for example `.my-slide[data-item-visible="false"]`.
+
+## CSS custom properties
+
+`GalleryItem` sets these inline on the `<li>`. The base stylesheet combines them into `--x`, the item's horizontal position.
+
+| Property | Description |
+| --- | --- |
+| `--i` | This item's index. |
+| `--center-offset` | Distance from the active item, in items (always positive). |
+| `--index-offset` | Distance from the active item, in items: negative before it, positive after it. |
+| `--side` | `-1` before the active item, `0` for the active item, `1` after it. |
+| `--active` | `1` for the active item, otherwise `0`. |
+
+They're handy in your own CSS, for example `transition-delay: calc(0.05s * var(--center-offset))`. The full list, including `--x`, is in [Styling](/docs/guides/styling).

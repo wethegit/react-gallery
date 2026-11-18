@@ -1,0 +1,73 @@
+---
+sidebar_position: 1
+---
+
+import { SourceTabs } from "@site/src/components/source-tabs/source-tabs"
+import { BasicGallery } from "@site/src/components/demos/basic-gallery/basic-gallery"
+import { OpenInCodePen } from "@site/src/components/codepen/open-in-codepen"
+
+import basicSource from "!!raw-loader!@site/src/components/demos/basic-gallery/basic-gallery.tsx"
+import basicJs from "!!ts-to-js!@site/src/components/demos/basic-gallery/basic-gallery.tsx"
+import basicPen from "!!ts-to-js?codepen!@site/src/components/demos/basic-gallery/basic-gallery.tsx"
+
+# Basic Gallery
+
+The canonical setup: a main view, previous/next arrows, and dot pagination. Slides can also be dragged with a mouse or finger (`draggable` defaults to `true`).
+
+<BasicGallery />
+
+<OpenInCodePen title="basic gallery" source={basicPen} />
+
+## Source
+
+The demos on this site are styled with [SCSS modules](https://github.com/css-modules/css-modules); `styles.*` references below come from the shared [shared.module.scss](#styles).
+
+<SourceTabs file="BasicGallery" ts={basicSource} js={basicJs} />
+
+## Styles
+
+The relevant pieces of the shared SCSS module:
+
+```scss title="shared.module.scss"
+.gallery {
+  --item-width: min(70%, 640px);
+  --gap: 25vw;
+  --duration: 0.45s;
+
+  @media (prefers-reduced-motion: reduce) {
+    --duration: 0s;
+  }
+}
+
+.slide {
+  border-radius: 10px;
+  cursor: grab;
+  overflow: hidden;
+  opacity: 0.45;
+  transition:
+    opacity var(--duration),
+    transform var(--duration);
+
+  &.isActive {
+    opacity: 1;
+  }
+}
+
+.dot {
+  background: var(--ifm-color-emphasis-300);
+  border-radius: 50%;
+  height: 0.75rem;
+  width: 0.75rem;
+
+  &[aria-current="true"] {
+    background: var(--ifm-color-primary);
+  }
+}
+```
+
+## Notes
+
+- Without `loop`, the previous arrow is disabled on the first item and the next arrow on the last. `GalleryNav` sets the `disabled` attribute for you.
+- The active slide gets full opacity through `styles.isActive`; the `active` flag comes straight from `renderGalleryItem`.
+- The dot styling targets `aria-current="true"`, which `GalleryPaginationItem` sets on the active button, so no extra class wiring is needed.
+- The gallery's own class names are CSS-module hashed too, so passing your module's classes through `className`/`buttonClassName` props (rather than targeting library selectors) is the supported way to style it.

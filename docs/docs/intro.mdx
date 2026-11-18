@@ -1,0 +1,38 @@
+---
+sidebar_position: 1
+slug: /intro
+---
+
+import { GalleryVersion } from "@site/src/components/versions/gallery-versions"
+
+# Introduction
+
+[`@wethegit/react-gallery`](https://www.npmjs.com/package/@wethegit/react-gallery) is a customizable, accessible gallery component for React projects. This site documents **version <GalleryVersion/>** and pairs every concept with a live, interactive demo.
+
+:::info
+This demo and documentation playground is built around the react gallery package. The official source is available at [wethegit/react-gallery](https://github.com/wethegit/react-gallery).
+:::
+
+## Why this gallery?
+
+- **Accessible by default.** Focus management, tabbing, and live-region announcements follow the [WAI carousel pattern](https://www.w3.org/WAI/tutorials/carousels/). You provide `alt` text and visually-hidden labels; the gallery handles the rest.
+- **Compound components.** Instead of one monolithic component with dozens of props, you compose `<Gallery>`, `<GalleryMain>`, `<GalleryNav>`, and `<GalleryPagination>` however your layout needs.
+- **Render props for full markup control.** `renderGalleryItem` and `renderPaginationItem` let you render any markup for slides and pagination, from simple dots to thumbnail strips.
+- **Styling via CSS custom properties.** Item width, gaps, and transition duration are all plain CSS variables, so theming requires no JavaScript.
+- **Headless-friendly.** The `useGallery` hook exposes the full gallery state (`activeIndex`, `next`, `previous`, `goToIndex`, and more) for completely custom UIs.
+- **Light footprint.** Two peer dependencies (`react`, `react-dom`, versions 17 through 19) and a single small stylesheet.
+
+## How the rendering works
+
+Under the hood the gallery is a CSS grid with a single grid area. Every item occupies the same cell and is moved with a `transform` computed from CSS variables the library sets per item (`--i`, `--center-offset`, `--side`, and friends). That means:
+
+- Transitions are pure CSS, driven by the `--duration` variable.
+- The layout never reflows when slides change; only transforms update.
+- Drag/swipe support works on both touch and mouse pointers via the `draggable` prop.
+
+## Where to go next
+
+- [Getting started](/docs/getting-started) walks through install and a first gallery.
+- The [demos](/docs/demos/basic) show common patterns with source code.
+- The [API reference](/docs/api/gallery) documents every component and prop.
+- The [styling](/docs/guides/styling) and [accessibility](/docs/guides/accessibility) guides cover theming and inclusive usage.
