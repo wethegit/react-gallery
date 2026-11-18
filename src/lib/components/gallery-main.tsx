@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback } from "react"
+import { useCallback, useRef } from "react"
 
 import type { RenderGalleryItemArgs } from "../types/types"
 import type {
@@ -53,7 +53,17 @@ export const GalleryMain = <T,>({
     swipeThreshold,
   } = useGallery<T>()
 
+  /*
+    Only the primary pointer can drive the drag; any other pointers (e.g. a
+    second finger) are ignored. A new primary pointer can only go down once
+    every previous touch has lifted, so if one arrives while a drag is still
+    recorded we've missed its up/cancel event and it simply takes over.
+  */
+  const activePointerId = useRef<number | null>(null)
+
   const resetTouchState = useCallback(() => {
+    activePointerId.current = null
+
     setTouchState((prevState) => ({
       ...prevState,
       isDragging: false,
@@ -67,14 +77,19 @@ export const GalleryMain = <T,>({
   const handlePointerDown = useCallback(
     (event: PointerEvent<HTMLUListElement>) => {
       if (!draggable) return
-      event.currentTarget.setPointerCapture?.(event.pointerId)
+      if (!event.isPrimary) return
+
+      activePointerId.current = event.pointerId
+
       /*
-        We are storing the start positions on touch down instead on first move, so the the dragging works from the first interaction
+        We are storing the start positions on touch down instead on first move, so the the dragging works from the first interaction.
+        Everything else is cleared too, discarding whatever a missed release left over.
       */
       setTouchState((prevState) => ({
         ...prevState,
         start: { x: event.clientX, y: event.clientY },
         isDragging: true,
+        xOffset: 0,
         offsetting: false,
         scrolling: false,
       }))
@@ -85,6 +100,7 @@ export const GalleryMain = <T,>({
   const handlePointerMove = useCallback(
     (event: PointerEvent<HTMLUListElement>) => {
       if (!draggable) return
+      if (event.pointerId !== activePointerId.current) return
 
       /*
         first check if we haven't already determined if
@@ -111,7 +127,13 @@ export const GalleryMain = <T,>({
             /*
                 if the user appears to be scrolling sideways we'll set the
                 offset position and put this in offseting mode (scrolling horizontally)
+
+                Capture the pointer only now that it's a real drag, so it keeps
+                tracking outside the gallery. Capturing on pointerdown would
+                retarget the click from a plain tap away from links/buttons
+                inside the slides.
               */
+            event.currentTarget.setPointerCapture?.(event.pointerId)
             setTouchState((d) => ({ ...d, offsetting: true, xOffset }))
           }
         } else {
@@ -135,6 +157,7 @@ export const GalleryMain = <T,>({
   const handlePointerUp = useCallback(
     (event: PointerEvent<HTMLUListElement>) => {
       if (!draggable) return
+      if (event.pointerId !== activePointerId.current) return
 
       event.currentTarget.releasePointerCapture?.(event.pointerId)
       if (touchState.isDragging) {
@@ -147,9 +170,10 @@ export const GalleryMain = <T,>({
           if (touchState.xOffset < 0) next()
           else previous()
         }
-
-        resetTouchState()
       }
+
+      // reset all the touchState values.
+      resetTouchState()
     },
     [
       draggable,
@@ -162,12 +186,23 @@ export const GalleryMain = <T,>({
     ]
   )
 
+  /*
+    The browser can cancel the pointer (e.g. when it takes over for a vertical
+    scroll); in that case reset without navigating. Capture is released
+    implicitly, so there's nothing to release.
+
+    Don't reset on lostpointercapture: touch pointers are implicitly captured by
+    the element under the finger, so moving capture to the list fires a bubbling
+    lostpointercapture from that element in the middle of the drag.
+  */
   const handlePointerCancel = useCallback(
     (event: PointerEvent<HTMLUListElement>) => {
-      event.currentTarget.releasePointerCapture?.(event.pointerId)
+      if (!draggable) return
+      if (event.pointerId !== activePointerId.current) return
+
       resetTouchState()
     },
-    [resetTouchState]
+    [draggable, resetTouchState]
   )
 
   return (
