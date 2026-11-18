@@ -127,12 +127,8 @@ const config: Config = {
         },
         { to: "/docs/demos/basic", label: "Demos", position: "left" },
         {
-          type: "docsVersionDropdown",
-          position: "right",
-        },
-        {
-          href: "https://www.npmjs.com/package/@wethegit/react-gallery",
-          label: "npm",
+          href: `https://www.npmjs.com/package/@wethegit/react-gallery/v/${GALLERY_VERSION}`,
+          label: `npm v${GALLERY_VERSION}`,
           position: "right",
         },
         {
