@@ -113,7 +113,11 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: "React Gallery",
+      title: "@wethegit/react-gallery",
+      logo: {
+        alt: "@wethegit/react-gallery",
+        src: "img/logo.svg",
+      },
       items: [
         {
           type: "docSidebar",
@@ -122,6 +126,10 @@ const config: Config = {
           label: "Docs",
         },
         { to: "/docs/demos/basic", label: "Demos", position: "left" },
+        {
+          type: "docsVersionDropdown",
+          position: "right",
+        },
         {
           href: "https://www.npmjs.com/package/@wethegit/react-gallery",
           label: "npm",
@@ -163,8 +171,12 @@ const config: Config = {
               href: "https://codepen.io/team/wtc",
             },
             {
-              label: "X",
-              href: "https://twitter.com/wethetweet",
+              label: "Instagram",
+              href: "https://www.instagram.com/wethegram",
+            },
+            {
+              label: "LinkedIn",
+              href: "https://www.linkedin.com/company/we-the-collective-design-inc-/",
             },
             {
               label: "NPM",
