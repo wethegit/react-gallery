@@ -1,0 +1,37 @@
+---
+sidebar_position: 10
+---
+
+import { SourceTabs } from "@site/src/components/source-tabs/source-tabs"
+import { MorphGallery } from "@site/src/components/demos/morph-gallery/morph-gallery"
+import { OpenInCodePen } from "@site/src/components/codepen/open-in-codepen"
+
+import morphSource from "!!raw-loader!@site/src/components/demos/morph-gallery/morph-gallery.tsx"
+import morphRendererSource from "!!raw-loader!@site/src/components/demos/morph-gallery/morph-renderer.ts"
+import morphStyles from "!!raw-loader!@site/src/components/demos/morph-gallery/morph-gallery.module.scss"
+import morphJs from "!!ts-to-js!@site/src/components/demos/morph-gallery/morph-gallery.tsx"
+import morphPen from "!!ts-to-js?codepen!@site/src/components/demos/morph-gallery/morph-gallery.tsx"
+
+# Morph Gallery
+
+Morph gallery using a smooth, eased WebGL image morphing transition.
+
+Under the hood, it cross-blends and warps between two images on a full-bleed canvas using custom shaders, quintic easing (easeInOutQuint), aspect-ratio scaling, and directional movement.
+
+<MorphGallery />
+
+<OpenInCodePen title="Morph Gallery" source={morphPen} />
+
+## Source
+
+<SourceTabs file="morph-gallery" ts={morphSource} js={morphJs} />
+
+## Renderer (WebGL & Shaders)
+
+<SourceTabs file="morph-renderer.ts" ts={morphRendererSource} />
+
+## Styles
+
+The demos on this site are styled with [SCSS modules](https://github.com/css-modules/css-modules).
+
+<SourceTabs file="morph-gallery" scss={morphStyles} />
