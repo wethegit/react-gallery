@@ -1,0 +1,170 @@
+.root {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-block-end: 16px;
+}
+
+.root > div {
+  width: 100%;
+  height: 100%;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 220px;
+  background: linear-gradient(to bottom, transparent, rgb(0 0 0 / 65%));
+  pointer-events: none;
+  z-index: 5;
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.navPrev,
+.navNext {
+  backdrop-filter: contrast(2) brightness(0.7) blur(10px);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 12%);
+  border: 1px solid rgb(255 255 255 / 18%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.navPrev:hover,
+.navNext:hover {
+  background: rgb(255 255 255 / 22%);
+}
+
+.navPrev:disabled,
+.navNext:disabled {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.navPrev {
+  left: 2rem;
+}
+
+.navNext {
+  right: 2rem;
+}
+
+.thumbs {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+
+  width: max-content;
+  max-width: calc(100% - 2rem);
+
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  padding: 0 0 10px 0;
+  z-index: 10;
+
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+.thumbs::-webkit-scrollbar {
+  height: 6px;
+}
+.thumbs::-webkit-scrollbar-track {
+  background: rgb(255 255 255 / 10%);
+  border-radius: 4px;
+}
+.thumbs::-webkit-scrollbar-thumb {
+  background: rgb(255 255 255 / 30%);
+  border-radius: 4px;
+}
+.thumbItem {
+  list-style: none;
+  flex-shrink: 0;
+  margin-block-start: 0;
+}
+
+.thumbButton {
+  display: block;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  background: none;
+  transition:
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+  opacity: 0.55;
+}
+
+.thumbButton[aria-current="true"] {
+  border-color: #fff;
+  opacity: 1;
+}
+
+.thumbButton:hover {
+  opacity: 0.85;
+}
+
+.thumbButton img {
+  display: block;
+  width: 80px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (max-width: 600px) {
+  .thumbs {
+    display: none;
+  }
+
+  .navPrev {
+    left: 1rem;
+  }
+
+  .navNext {
+    right: 1rem;
+  }
+}
