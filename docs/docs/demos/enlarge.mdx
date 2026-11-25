@@ -1,0 +1,30 @@
+---
+sidebar_position: 12
+---
+
+import { SourceTabs } from "@site/src/components/source-tabs/source-tabs"
+import { EnlargeGallery } from "@site/src/components/demos/enlarge-gallery/enlarge-gallery"
+import { OpenInCodePen } from "@site/src/components/codepen/open-in-codepen"
+
+import enlargeSource from "!!raw-loader!@site/src/components/demos/enlarge-gallery/enlarge-gallery.tsx"
+import enlargeStyles from "!!raw-loader!@site/src/components/demos/enlarge-gallery/enlarge-gallery.module.scss"
+import enlargeJs from "!!ts-to-js!@site/src/components/demos/enlarge-gallery/enlarge-gallery.tsx"
+import enlargePen from "!!ts-to-js?codepen!@site/src/components/demos/enlarge-gallery/enlarge-gallery.tsx"
+
+# Enlarge Gallery
+
+Enlarge Gallery using custom state control and the useGallery hook.
+
+<EnlargeGallery />
+
+<OpenInCodePen title="Enlarge Gallery" source={enlargePen} />
+
+## Source
+
+<SourceTabs file="enlarge-gallery" ts={enlargeSource} js={enlargeJs} />
+
+## Styles
+
+The demos on this site are styled with [SCSS modules](https://github.com/css-modules/css-modules).
+
+<SourceTabs file="enlarge-gallery" scss={enlargeStyles} />
