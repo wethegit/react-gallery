@@ -1,0 +1,206 @@
+.root {
+  --thumb-scale: 0.11;
+  --thumb-gap: 14px;
+  --thumb-bottom: 28px;
+  --zoom-duration: 0.8s;
+  --zoom-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  background: #0b0b0f;
+  color: #fff;
+  block-size: auto;
+  inline-size: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  position: relative;
+  margin-block-end: 16px;
+  border-radius: 10px;
+
+  // To increase the specificty
+  .item {
+    inset: 0;
+    margin: 0;
+    pointer-events: none;
+    position: absolute;
+    transform: none;
+    width: auto;
+  }
+
+  .gallery {
+    height: 100%;
+  }
+
+  .track {
+    height: 100%;
+    overflow: visible;
+  }
+
+  .item[data-active="true"] {
+    z-index: 1;
+  }
+
+  .item[data-active="false"] {
+    z-index: 10;
+  }
+}
+
+.slide {
+  border-radius: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: auto;
+  position: absolute;
+  transform: translate(0, 0) scale(1);
+  transition:
+    transform var(--zoom-duration) var(--zoom-ease),
+    border-radius var(--zoom-duration) var(--zoom-ease),
+    filter 0.25s ease;
+  will-change: transform;
+}
+
+.item[data-active="false"] .slide {
+  border-radius: 48px;
+  filter: brightness(0.7);
+  transform: translate(
+      calc(var(--offset) * (var(--thumb-scale) * 100vw + var(--thumb-gap))),
+      calc((50vh - var(--thumb-scale) * 50vh) - var(--thumb-bottom))
+    )
+    scale(var(--thumb-scale));
+}
+
+.item[data-active="false"] .slide:hover {
+  filter: brightness(1);
+}
+
+.image {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.thumbButton {
+  appearance: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  inset: 0;
+  padding: 0;
+  position: absolute;
+}
+
+.rail {
+  align-items: flex-start;
+  background: linear-gradient(90deg, rgb(0 0 0 / 60%), transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  inset: 0 auto 0 0;
+  justify-content: center;
+  max-width: min(620px, 70%);
+  padding: 0 3.5rem 0 3rem;
+  pointer-events: none;
+  position: absolute;
+  z-index: 5;
+}
+
+.content {
+  animation: content-in 0.6s var(--zoom-ease) calc(var(--zoom-duration) * 0.4) backwards;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.kicker {
+  font-size: 0.8rem;
+  margin: 0;
+  opacity: 0.7;
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.description {
+  color: rgb(255 255 255 / 85%);
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.controls {
+  display: flex;
+  gap: 0.75rem;
+  pointer-events: auto;
+}
+
+.navBtn {
+  align-items: center;
+  appearance: none;
+  backdrop-filter: blur(8px);
+  background: rgb(255 255 255 / 10%);
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  height: 3rem;
+  justify-content: center;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    opacity 0.2s;
+  width: 3rem;
+}
+
+.navBtn:hover:not(:disabled) {
+  background: rgb(255 255 255 / 22%);
+  border-color: rgb(255 255 255 / 40%);
+}
+
+.navBtn:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.visuallyHidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+@media (width <= 640px) {
+  .root {
+    --thumb-scale: 0.16;
+    --thumb-gap: 10px;
+    --thumb-bottom: 20px;
+  }
+
+  .rail {
+    max-width: 90%;
+    padding: 0 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: none;
+  }
+
+  .content {
+    animation: none;
+  }
+}
+
+@keyframes content-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
