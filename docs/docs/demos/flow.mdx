@@ -1,0 +1,30 @@
+---
+sidebar_position: 14
+---
+
+import { SourceTabs } from "@site/src/components/source-tabs/source-tabs"
+import { FlowGallery } from "@site/src/components/demos/flow-gallery/flow-gallery"
+import { OpenInCodePen } from "@site/src/components/codepen/open-in-codepen"
+
+import flowSource from "!!raw-loader!@site/src/components/demos/flow-gallery/flow-gallery.tsx"
+import flowStyles from "!!raw-loader!@site/src/components/demos/flow-gallery/flow-gallery.module.scss"
+import flowJs from "!!ts-to-js!@site/src/components/demos/flow-gallery/flow-gallery.tsx"
+import flowPen from "!!ts-to-js?codepen!@site/src/components/demos/flow-gallery/flow-gallery.tsx"
+
+# Flow Gallery
+
+Flow Gallery using custom css tranform calculations.
+
+<FlowGallery />
+
+<OpenInCodePen title="Flow Gallery" source={flowPen} />
+
+## Source
+
+<SourceTabs file="flow-gallery" ts={flowSource} js={flowJs} />
+
+## Styles
+
+The demos on this site are styled with [SCSS modules](https://github.com/css-modules/css-modules).
+
+<SourceTabs file="flow-gallery" scss={flowStyles} />
